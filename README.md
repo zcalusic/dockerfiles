@@ -33,43 +33,36 @@ mounted from the host.
 If you need to override Bamboo's default memory allocation parameters, you can control the minimum heap (Xms) and
 maximum heap (Xmx) via the environment variables:
 
-* `JVM_MINIMUM_MEMORY` (default: 512m)
+* `JVM_MINIMUM_MEMORY`
+  * The minimum heap size of the JVM (default: `512m`).
 
-   The minimum heap size of the JVM.
-
-* `JVM_MAXIMUM_MEMORY` (default: 1024m)
-
-   The maximum heap size of the JVM.
+* `JVM_MAXIMUM_MEMORY`
+  * The maximum heap size of the JVM (default: `1024m`).
 
 ### Reverse proxy settings
 
 If Bamboo is run behind a reverse proxy server, then you need to specify extra options to make Bamboo aware of the
 setup.  They can be controlled via the environment variables:
 
-* `CATALINA_CONNECTOR_PROXYNAME` (default: NONE)
+* `CATALINA_CONNECTOR_PROXYNAME`
+  * The reverse proxy's fully qualified hostname (default: NONE).
 
-   The reverse proxy's fully qualified hostname.
+* `CATALINA_CONNECTOR_PROXYPORT`
+  * The reverse proxy's port number via which Bamboo is accessed (default: NONE).
 
-* `CATALINA_CONNECTOR_PROXYPORT` (default: NONE)
+* `CATALINA_CONNECTOR_SCHEME`
+  * The protocol via which Bamboo is accessed (default: `http`).
 
-   The reverse proxy's port number via which Bamboo is accessed.
-
-* `CATALINA_CONNECTOR_SCHEME` (default: http)
-
-   The protocol via which Bamboo is accessed.
-
-* `CATALINA_CONNECTOR_SECURE` (default: false)
-
-   Set 'true' if CATALINA_CONNECTOR_SCHEME is 'https'.
+* `CATALINA_CONNECTOR_SECURE`
+  * Set `true` if `CATALINA_CONNECTOR_SCHEME` is `https` (default: `false`).
 
 ### JVM configuration
 
 If you need to pass additional JVM arguments to Bamboo, you can add them via the environment variable:
 
 * `JVM_SUPPORT_RECOMMENDED_ARGS`
+  * Additional JVM arguments for Bamboo.
 
-   Additional JVM arguments for Bamboo.
-   
 ## Building container image
 
 ```
