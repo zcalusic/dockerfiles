@@ -28,6 +28,8 @@ RUN mkdir -p "$JIRA_INSTALL_DIR" \
     && wget --dot-style=mega -O- "https://downloads.atlassian.com/software/jira/downloads/atlassian-jira-core-${JIRA_VERSION}.tar.gz" | tar xz --strip-components=1 -C "$JIRA_INSTALL_DIR" \
     && sed -i -e 's/port="8080"/port="8080" secure="${catalinaConnectorSecure}" scheme="${catalinaConnectorScheme}" proxyName="${catalinaConnectorProxyName}" proxyPort="${catalinaConnectorProxyPort}"/' "$JIRA_INSTALL_DIR/conf/server.xml"
 
+EXPOSE 8080
+
 COPY entrypoint.sh /entrypoint.sh
 
 CMD ["/entrypoint.sh"]
