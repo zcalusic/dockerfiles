@@ -16,7 +16,7 @@ LABEL org.label-schema.name="Atlassian Confluence in Docker" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0"
 
-ARG CONFLUENCE_VERSION=6.4.0
+ARG CONFLUENCE_VERSION=6.4.1
 
 ENV RUN_USER daemon
 ENV RUN_GROUP daemon
