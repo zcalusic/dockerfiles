@@ -29,6 +29,8 @@ RUN mkdir -p "$CONFLUENCE_INSTALL_DIR" \
     && sed -i -e 's/-Xms\([0-9]\+[kmg]\) -Xmx\([0-9]\+[kmg]\)/-Xms\${JVM_MINIMUM_MEMORY:=\1} -Xmx\${JVM_MAXIMUM_MEMORY:=\2} \${JVM_SUPPORT_RECOMMENDED_ARGS} -Dconfluence.home=\${CONFLUENCE_HOME}/g' "$CONFLUENCE_INSTALL_DIR/bin/setenv.sh" \
     && sed -i -e 's/port="8090"/port="8090" secure="${catalinaConnectorSecure}" scheme="${catalinaConnectorScheme}" proxyName="${catalinaConnectorProxyName}" proxyPort="${catalinaConnectorProxyPort}"/' "$CONFLUENCE_INSTALL_DIR/conf/server.xml"
 
+EXPOSE 8090 8091
+
 COPY entrypoint.sh /entrypoint.sh
 
 CMD ["/entrypoint.sh"]
