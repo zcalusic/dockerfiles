@@ -93,13 +93,13 @@ func main() {
 		HostConfig: hostconfig,
 	}
 
-	c, err := client.CreateContainer(options)
-	if err != nil {
+	if _, err = client.CreateContainer(options); err != nil && err != docker.ErrContainerAlreadyExists {
 		log.Fatal(err)
 	}
 
-	err = client.StartContainer(c.ID, hostconfig)
-	if err != nil {
-		log.Fatal(err)
+	if err = client.StartContainer(name, hostconfig); err != nil {
+		if err, ok := err.(*docker.ContainerAlreadyRunning); !ok {
+			log.Fatal(err)
+		}
 	}
 }
