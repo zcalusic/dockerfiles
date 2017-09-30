@@ -37,4 +37,4 @@ RUN apt-get update \
 
 EXPOSE 17500
 
-CMD ["dropboxd"]
+CMD [ "dropboxd" ]
