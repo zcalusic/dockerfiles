@@ -33,4 +33,4 @@ EXPOSE 8090 8091
 
 COPY entrypoint.sh /entrypoint.sh
 
-CMD ["/entrypoint.sh"]
+CMD [ "/entrypoint.sh" ]
