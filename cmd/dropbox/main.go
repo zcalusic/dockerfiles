@@ -5,6 +5,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/user"
@@ -93,13 +94,81 @@ func main() {
 		HostConfig: hostconfig,
 	}
 
-	if _, err = client.CreateContainer(options); err != nil && err != docker.ErrContainerAlreadyExists {
-		log.Fatal(err)
+	if len(os.Args) == 1 {
+		os.Args = append(os.Args, "help")
 	}
 
-	if err = client.StartContainer(name, hostconfig); err != nil {
-		if err, ok := err.(*docker.ContainerAlreadyRunning); !ok {
+	if os.Args[1] == "start" {
+		if _, err = client.CreateContainer(options); err != nil && err != docker.ErrContainerAlreadyExists {
 			log.Fatal(err)
 		}
+
+		if err = client.StartContainer(name, hostconfig); err != nil {
+			if _, ok := err.(*docker.ContainerAlreadyRunning); !ok {
+				log.Fatal(err)
+			}
+		} else {
+			return
+		}
+	}
+
+	execOptions := docker.CreateExecOptions{
+		Container:    name,
+		Cmd:          os.Args,
+		User:         current.Uid + ":" + current.Gid,
+		AttachStdin:  true,
+		AttachStdout: true,
+		AttachStderr: true,
+	}
+
+	exec, err := client.CreateExec(execOptions)
+	switch os.Args[1] {
+	case "running":
+		if err != nil {
+			os.Exit(0)
+		} else {
+			os.Exit(1)
+		}
+	case "help":
+		if err != nil {
+			fmt.Print(`Dropbox command-line interface
+
+commands:
+
+Note: use dropbox help <command> to view usage for a specific command.
+
+ status       get current status of the dropboxd
+ throttle     set bandwidth limits for Dropbox
+ help         provide help
+ puburl       get public url of a file in your dropbox's public folder
+ stop         stop dropboxd
+ running      return whether dropbox is running
+ start        start dropboxd
+ filestatus   get current sync status of one or more files
+ ls           list directory contents with current sync status
+ autostart    automatically start dropbox at login
+ exclude      ignores/excludes a directory from syncing
+ lansync      enables or disables LAN sync
+ sharelink    get a shared link for a file in your dropbox
+ proxy        set proxy settings for Dropbox
+
+`)
+			os.Exit(0)
+		}
+	default:
+		if err != nil {
+			fmt.Println("Dropbox isn't running!")
+			os.Exit(0)
+		}
+	}
+
+	startExecOptions := docker.StartExecOptions{
+		InputStream:  os.Stdin,
+		OutputStream: os.Stdout,
+		ErrorStream:  os.Stderr,
+	}
+
+	if err = client.StartExec(exec.ID, startExecOptions); err != nil {
+		log.Fatal(err)
 	}
 }
