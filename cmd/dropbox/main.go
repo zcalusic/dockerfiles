@@ -15,15 +15,6 @@ import (
 	docker "github.com/fsouza/go-dockerclient"
 )
 
-const (
-	endpoint  = "unix:///var/run/docker.sock"
-	imageName = "zcalusic/dropbox"
-)
-
-var (
-	client *docker.Client
-)
-
 func main() {
 	log.SetFlags(0)
 
@@ -62,7 +53,7 @@ func main() {
 	os.MkdirAll(dropboxSyncPath, 0755)
 	os.Chown(dropboxSyncPath, uid, gid)
 
-	client, err = docker.NewClient(endpoint)
+	client, err := docker.NewClient("unix:///var/run/docker.sock")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -72,7 +63,7 @@ func main() {
 	}
 
 	config := &docker.Config{
-		Image:    imageName,
+		Image:    "zcalusic/dropbox",
 		Hostname: hostname,
 		User:     current.Uid + ":" + current.Gid,
 		Env:      env,
