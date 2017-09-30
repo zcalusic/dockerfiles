@@ -5,9 +5,20 @@
 
 DOCKER_IMAGE ?= zcalusic/dropbox
 
-.PHONY: default docker_build docker_push
+.PHONY: default dropbox install uninstall docker_build docker_push clean
 
-default: docker_build
+default: dropbox
+
+dropbox:
+	GOBIN=$(PWD)/usr/bin go install ./cmd/dropbox
+
+install:
+	docker pull zcalusic/dropbox
+	install -o root -g docker -m 2755 usr/bin/dropbox /usr/bin/dropbox
+
+uninstall:
+	-docker rmi -f zcalusic/dropbox
+	rm -f /usr/bin/dropbox
 
 docker_build:
 	docker build \
@@ -21,3 +32,6 @@ docker_push:
 	docker push $(DOCKER_IMAGE):latest
 	curl -X POST https://hooks.microbadger.com/images/zcalusic/dropbox/TlMSoYTkG4K_QCR88AjYP_McCyc=
 	@echo
+
+clean:
+	rm -rf usr/bin
