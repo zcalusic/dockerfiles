@@ -34,4 +34,4 @@ docker_push:
 	@echo
 
 clean:
-	rm -rf pkg usr/bin
+	rm -rf pkg usr
