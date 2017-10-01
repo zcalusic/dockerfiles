@@ -9,14 +9,13 @@
 
 ## Installation
 
-* `sudo apt-get purge dropbox` - remove legacy Dropbox package on the host
-  * dockerized Dropbox install new CLI binary as `/usr/bin/dropbox`
+* `sudo apt-get purge dropbox` - remove legacy Dropbox Debian package
+  * dockerized Dropbox installs new CLI binary as `/usr/bin/dropbox`
 * `sudo apt-get install docker-ce` - install [Docker CE](https://docs.docker.com/engine/installation/) engine
   * Docker installation from your Linux distribution might also work!
-* `make`
-  * builds new CLI binary
 * `sudo make install`
   * pulls [Dropbox Docker image](https://hub.docker.com/r/zcalusic/dropbox/) from [Docker Hub](https://hub.docker.com/)
+  * builds new CLI binary
   * installs new CLI binary
 
 ## Uninstallation
