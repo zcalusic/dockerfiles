@@ -12,7 +12,7 @@ default: dropbox
 dropbox:
 	GOPATH=$(PWD) GOBIN=$(PWD)/usr/bin go install ./cmd/dropbox
 
-install:
+install: dropbox
 	docker pull zcalusic/dropbox
 	install -o root -g docker -m 2755 usr/bin/dropbox /usr/bin/dropbox
 
