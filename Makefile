@@ -10,7 +10,7 @@ DOCKER_IMAGE ?= zcalusic/dropbox
 default: dropbox
 
 dropbox:
-	GOBIN=$(PWD)/usr/bin go install ./cmd/dropbox
+	GOPATH=$(PWD) GOBIN=$(PWD)/usr/bin go install ./cmd/dropbox
 
 install:
 	docker pull zcalusic/dropbox
@@ -34,4 +34,4 @@ docker_push:
 	@echo
 
 clean:
-	rm -rf usr/bin
+	rm -rf pkg usr/bin
