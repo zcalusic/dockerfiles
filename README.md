@@ -9,6 +9,33 @@
 
 Based on the official Debian 9 Stretch Docker base image.
 
+## Features
+
+* Locale preset to C.UTF-8
+  * `LC_ALL=C.UTF-8`
+  * `LANG=C.UTF-8`
+  * `LANGUAGE=C.UTF-8`
+
+* Additional Debian packages:
+  * `apt-utils`
+    * optimize installation of additional Debian packages
+  * `ca-certificates`
+    * verify communication when downloading third-party software
+  * `dirmngr`
+    * required by GnuPG v2, see below
+  * `dumb-init`
+    * minimal init system for containers, killing zombies, redirecting signals...
+  * `gnupg`
+    * verify authentication keys from third-party repositories
+  * `gosu`
+    * robust setuid + setgid + setgroups + exec with sane tty and signal forwarding behavior
+  * `procps`
+    * /proc file system utilities, indispensable
+  * `tzdata`
+    * time zone and daylight-saving time data, time is money
+  * `wget`
+    * retrieves files from the web, indispensable
+
 ## Usage
 
 Pull image:
@@ -40,6 +67,7 @@ sudo make docker_build
 Project | Description |
 --------|-------------|
 [`docker-oracle-java8`](https://github.com/zcalusic/docker-oracle-java8) | Debian 9 Stretch Docker base image including Oracle Java(TM) Development Kit (JDK) 8 |
+[`docker-dropbox`](https://github.com/zcalusic/docker-dropbox) | Run Dropbox Linux client in a Docker container |
 
 ## License
 
