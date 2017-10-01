@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM zcalusic/debian-stretch
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL
@@ -16,26 +16,17 @@ LABEL org.label-schema.name="Dropbox in Docker" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0"
 
-ENV LC_ALL C.UTF-8
-ENV LANG C.UTF-8
-ENV LANGUAGE C.UTF-8
-
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        python \
-       ca-certificates \
-       wget \
+    && rm -rf /var/lib/apt/lists/* \
     && wget "https://www.dropbox.com/download?dl=packages/dropbox.py" -O /usr/bin/dropbox \
     && chmod 755 /usr/bin/dropbox \
     && mkdir -p /opt/dropbox \
     && wget --dot-style=mega -O- "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzo --strip-components=1 -C /opt/dropbox \
-    && ln -s /opt/dropbox/dropboxd /usr/bin \
-    && apt-get purge -y --auto-remove \
-       ca-certificates \
-       wget \
-    && rm -rf /var/lib/apt/lists/*
+    && ln -s /opt/dropbox/dropboxd /usr/bin
 
 EXPOSE 17500
 
