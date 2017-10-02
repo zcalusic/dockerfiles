@@ -16,13 +16,11 @@ LABEL org.label-schema.name="Atlassian JIRA Core in Docker" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0"
 
-ARG JIRA_VERSION=7.5.0
-
-ENV RUN_USER daemon
-ENV RUN_GROUP daemon
-
-ENV JIRA_HOME /var/atlassian/application-data/jira
+ENV JIRA_VERSION 7.5.0
 ENV JIRA_INSTALL_DIR /opt/atlassian/jira
+ENV JIRA_HOME /var/atlassian/application-data/jira
+ENV JIRA_USER daemon
+ENV JIRA_GROUP daemon
 
 RUN mkdir -p "$JIRA_INSTALL_DIR" \
     && wget --dot-style=mega -O- "https://downloads.atlassian.com/software/jira/downloads/atlassian-jira-core-${JIRA_VERSION}.tar.gz" | tar xz --strip-components=1 -C "$JIRA_INSTALL_DIR" \

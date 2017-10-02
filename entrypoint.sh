@@ -20,6 +20,6 @@ CATALINA_OPTS="$CATALINA_OPTS -DcatalinaConnectorSecure=$CATALINA_CONNECTOR_SECU
 
 export CATALINA_OPTS
 
-chown -R "$RUN_USER:$RUN_GROUP" "$JIRA_INSTALL_DIR" "$JIRA_HOME"
+chown -R "$JIRA_USER:$JIRA_GROUP" "$JIRA_INSTALL_DIR" "$JIRA_HOME"
 
-exec gosu "$RUN_USER:$RUN_GROUP" "$JIRA_INSTALL_DIR/bin/start-jira.sh" -fg
+exec gosu "$JIRA_USER:$JIRA_GROUP" "$JIRA_INSTALL_DIR/bin/start-jira.sh" -fg
