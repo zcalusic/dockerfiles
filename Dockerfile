@@ -16,15 +16,11 @@ LABEL org.label-schema.name="Atlassian Bamboo in Docker" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0"
 
-ARG BAMBOO_VERSION=6.2.1
-
-ENV RUN_USER daemon
-ENV RUN_GROUP daemon
-
-ENV BAMBOO_HOME /var/atlassian/application-data/bamboo
+ENV BAMBOO_VERSION 6.2.1
 ENV BAMBOO_INSTALL_DIR /opt/atlassian/bamboo
-
-ARG DEBIAN_FRONTEND=noninteractive
+ENV BAMBOO_HOME /var/atlassian/application-data/bamboo
+ENV BAMBOO_USER daemon
+ENV BAMBOO_GROUP daemon
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
