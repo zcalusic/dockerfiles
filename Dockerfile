@@ -16,8 +16,6 @@ LABEL org.label-schema.name="Dropbox in Docker" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0"
 
-ARG DEBIAN_FRONTEND=noninteractive
-
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        python \
