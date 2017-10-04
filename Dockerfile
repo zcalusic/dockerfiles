@@ -1,4 +1,4 @@
-FROM zcalusic/oracle-java8
+FROM zcalusic/debian-stretch
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL
@@ -21,6 +21,10 @@ ENV BAMBOO_INSTALL_DIR /opt/atlassian/bamboo
 ENV BAMBOO_HOME /var/atlassian/application-data/bamboo
 ENV BAMBOO_USER daemon
 ENV BAMBOO_GROUP daemon
+ENV JAVA_HOME /usr/java
+ENV PATH $JAVA_HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+COPY java $JAVA_HOME
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
