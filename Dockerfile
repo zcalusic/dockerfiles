@@ -1,4 +1,4 @@
-FROM zcalusic/oracle-java8
+FROM zcalusic/debian-stretch
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL
@@ -21,6 +21,10 @@ ENV JIRA_INSTALL_DIR /opt/atlassian/jira
 ENV JIRA_HOME /var/atlassian/application-data/jira
 ENV JIRA_USER daemon
 ENV JIRA_GROUP daemon
+ENV JAVA_HOME /usr/java
+ENV PATH $JAVA_HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+COPY java $JAVA_HOME
 
 RUN mkdir -p "$JIRA_INSTALL_DIR" \
     && wget --dot-style=mega -O- "https://downloads.atlassian.com/software/jira/downloads/atlassian-jira-core-${JIRA_VERSION}.tar.gz" | tar xz --strip-components=1 -C "$JIRA_INSTALL_DIR" \
