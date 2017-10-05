@@ -66,8 +66,10 @@ sudo make docker_build
 
 Project | Description |
 --------|-------------|
-[`docker-oracle-java8`](https://github.com/zcalusic/docker-oracle-java8) | Debian 9 Stretch Docker base image including Oracle Java(TM) Development Kit (JDK) 8 |
 [`docker-dropbox`](https://github.com/zcalusic/docker-dropbox) | Run Dropbox Linux client in a Docker container |
+[`docker-atlassian-bamboo`](https://github.com/zcalusic/docker-atlassian-bamboo) | Run Atlassian Bamboo in a Docker Container |
+[`docker-atlassian-confluence`](https://github.com/zcalusic/docker-atlassian-confluence) | Run Atlassian Confluence in a Docker Container |
+[`docker-atlassian-jira-core`](https://github.com/zcalusic/docker-atlassian-jira-core) | Run Atlassian JIRA Core in a Docker Container |
 
 ## License
 
