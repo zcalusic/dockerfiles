@@ -1,0 +1,4 @@
+0 0 * * *    www-data  nice -n 19 /opt/observium/housekeeping.php -yseuirptb >> /dev/null 2>&1
+34 */6 * * * www-data  nice -n 19 /opt/observium/observium-wrapper discovery >> /dev/null 2>&1
+*/5 * * * *  www-data  nice -n 19 /opt/observium/observium-wrapper discovery --host new >> /dev/null 2>&1
+*/5 * * * *  www-data  nice -n 19 /opt/observium/observium-wrapper poller >> /dev/null 2>&1

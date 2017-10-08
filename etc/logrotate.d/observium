@@ -1,0 +1,10 @@
+/opt/observium/logs/*.log {
+	daily
+	rotate 7
+	copytruncate
+	compress
+	delaycompress
+	missingok
+	notifempty
+	create 0640 www-data www-data
+}
