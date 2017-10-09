@@ -10,10 +10,10 @@ set -eu
 : "${TZ:=Etc/UTC}"
 : "${LISTEN_ADDR:=80}"
 : "${PHP_MEMORY_LIMIT:=256M}"
-: "${DB_HOST:=localhost}"
+: "${DB_HOST:=127.0.0.1}"
 : "${DB_PORT:=3306}"
-: "${DB_USER:=USERNAME}"
-: "${DB_PASS:=PASSWORD}"
+: "${DB_USER:=username}"
+: "${DB_PASS:=password}"
 : "${DB_NAME:=observium}"
 
 # Timezone
