@@ -70,6 +70,7 @@ Project | Description |
 [`docker-atlassian-bamboo`](https://github.com/zcalusic/docker-atlassian-bamboo) | Run Atlassian Bamboo in a Docker Container |
 [`docker-atlassian-confluence`](https://github.com/zcalusic/docker-atlassian-confluence) | Run Atlassian Confluence in a Docker Container |
 [`docker-atlassian-jira-core`](https://github.com/zcalusic/docker-atlassian-jira-core) | Run Atlassian JIRA Core in a Docker Container |
+[`docker-observium-ce`](https://github.com/zcalusic/docker-observium-ce) | Run Observium Community Edition in a Docker container |
 
 ## License
 
