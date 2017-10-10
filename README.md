@@ -7,8 +7,7 @@
 [![Commit](https://images.microbadger.com/badges/commit/zcalusic/atlassian-bamboo.svg)](https://microbadger.com/images/zcalusic/atlassian-bamboo/)
 [![License](https://images.microbadger.com/badges/license/zcalusic/atlassian-bamboo.svg)](https://microbadger.com/images/zcalusic/atlassian-bamboo/)
 
-This Docker container makes it easy to get an instance of Bamboo up and running.  Learn more about Atlassian Bamboo:
-<https://www.atlassian.com/software/bamboo>
+This Docker container makes it easy to get an instance of Bamboo up and running.  Learn more about Atlassian Bamboo: <https://www.atlassian.com/software/bamboo>
 
 ## Usage
 
@@ -24,14 +23,11 @@ Run container:
 sudo docker run -d -p 8085:8085 -v your-bamboo-home:/var/atlassian/application-data/bamboo --name bamboo zcalusic/atlassian-bamboo
 ```
 
-You need to mount host directory that will contain Bamboo data and expose port 8085 when starting the container.  Bamboo
-will run with ```daemon``` user privileges, and will take care of ownership of the files in your Bamboo data directory
-mounted from the host.
+You need to mount host directory that will contain Bamboo data and expose port 8085 when starting the container.  Bamboo will run with ```daemon``` user privileges, and will take care of ownership of the files in your Bamboo data directory mounted from the host.
 
 ### Memory / Heap size
 
-If you need to override Bamboo's default memory allocation parameters, you can control the minimum heap (Xms) and
-maximum heap (Xmx) via the environment variables:
+If you need to override Bamboo's default memory allocation parameters, you can control the minimum heap (Xms) and maximum heap (Xmx) via the environment variables:
 
 * `JVM_MINIMUM_MEMORY`
   * The minimum heap size of the JVM (default: `512m`).
@@ -41,8 +37,7 @@ maximum heap (Xmx) via the environment variables:
 
 ### Reverse proxy settings
 
-If Bamboo is run behind a reverse proxy server, then you need to specify extra options to make Bamboo aware of the
-setup.  They can be controlled via the environment variables:
+If Bamboo is run behind a reverse proxy server, then you need to specify extra options to make Bamboo aware of the setup.  They can be controlled via the environment variables:
 
 * `CATALINA_CONNECTOR_PROXYNAME`
   * The reverse proxy's fully qualified hostname (default: NONE).
