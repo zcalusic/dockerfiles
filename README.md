@@ -7,8 +7,7 @@
 [![Commit](https://images.microbadger.com/badges/commit/zcalusic/atlassian-confluence.svg)](https://microbadger.com/images/zcalusic/atlassian-confluence/)
 [![License](https://images.microbadger.com/badges/license/zcalusic/atlassian-confluence.svg)](https://microbadger.com/images/zcalusic/atlassian-confluence/)
 
-This Docker container makes it easy to get an instance of Confluence up and running.  Learn more about Atlassian
-Confluence: <https://www.atlassian.com/software/confluence>
+This Docker container makes it easy to get an instance of Confluence up and running.  Learn more about Atlassian Confluence: <https://www.atlassian.com/software/confluence>
 
 ## Usage
 
@@ -24,14 +23,11 @@ Run container:
 sudo docker run -d -p 8090:8090 -p 8091:8091 -v your-confluence-home:/var/atlassian/application-data/confluence --name confluence zcalusic/atlassian-confluence
 ```
 
-You need to mount host directory that will contain Confluence data and expose needed ports when starting the container.
-Confluence will run with ```daemon``` user privileges, and will take care of ownership of the files in your Confluence
-data directory mounted from the host.
+You need to mount host directory that will contain Confluence data and expose needed ports when starting the container.  Confluence will run with ```daemon``` user privileges, and will take care of ownership of the files in your Confluence data directory mounted from the host.
 
 ### Memory / Heap size
 
-If you need to override Confluence's default memory allocation parameters, you can control the minimum heap (Xms) and
-maximum heap (Xmx) via the environment variables:
+If you need to override Confluence's default memory allocation parameters, you can control the minimum heap (Xms) and maximum heap (Xmx) via the environment variables:
 
 * `JVM_MINIMUM_MEMORY`
   * The minimum heap size of the JVM (default: `1024m`).
@@ -41,8 +37,7 @@ maximum heap (Xmx) via the environment variables:
 
 ### Reverse proxy settings
 
-If Confluence is run behind a reverse proxy server, then you need to specify extra options to make Confluence aware of
-the setup.  They can be controlled via the environment variables:
+If Confluence is run behind a reverse proxy server, then you need to specify extra options to make Confluence aware of the setup.  They can be controlled via the environment variables:
 
 * `CATALINA_CONNECTOR_PROXYNAME`
   * The reverse proxy's fully qualified hostname (default: NONE).
