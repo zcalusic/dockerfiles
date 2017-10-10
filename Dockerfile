@@ -29,7 +29,10 @@ RUN apt-get update \
     dumb-init \
     gnupg \
     gosu \
+    less \
+    net-tools \
     procps \
+    telnet \
     tzdata \
     wget \
     && rm -rf /var/lib/apt/lists/*

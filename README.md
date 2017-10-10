@@ -29,8 +29,14 @@ Based on the official Debian 9 Stretch Docker base image.
     * verify authentication keys from third-party repositories
   * `gosu`
     * robust setuid + setgid + setgroups + exec with sane tty and signal forwarding behavior
+  * `less`
+    * less is more, more or less
+  * `net-tools`
+    * for the gray-bearded among us
   * `procps`
     * /proc file system utilities, indispensable
+  * `telnet`
+    * useful to help debug network issues
   * `tzdata`
     * time zone and daylight-saving time data, time is money
   * `wget`
