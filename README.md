@@ -23,6 +23,8 @@ Based on the official Debian 8 Jessie Docker base image.
     * verify communication when downloading third-party software
   * `less`
     * less is more, more or less
+  * `jq`
+    * lightweight and flexible command-line JSON processor
   * `net-tools`
     * for the gray-bearded among us
   * `telnet`
