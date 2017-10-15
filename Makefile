@@ -10,6 +10,7 @@ DOCKER_IMAGE ?= zcalusic/debian-stretch
 default: docker_build
 
 docker_build:
+	docker pull debian:stretch
 	docker build \
 		--build-arg URL=$(strip $(shell git config --get remote.origin.url | sed 's/\.git$$//')) \
 		--build-arg VCS_URL=$(strip $(shell git config --get remote.origin.url)) \
