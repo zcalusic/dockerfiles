@@ -29,6 +29,8 @@ Based on the official Debian 9 Stretch Docker base image.
     * verify authentication keys from third-party repositories
   * `gosu`
     * robust setuid + setgid + setgroups + exec with sane tty and signal forwarding behavior
+  * `jq`
+    * lightweight and flexible command-line JSON processor
   * `less`
     * less is more, more or less
   * `net-tools`

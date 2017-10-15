@@ -29,6 +29,7 @@ RUN apt-get update \
     dumb-init \
     gnupg \
     gosu \
+    jq \
     less \
     net-tools \
     procps \
