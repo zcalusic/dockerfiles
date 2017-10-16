@@ -19,6 +19,7 @@ endif
 	tar xz --strip-components=1 -C java -f $(JAVA_PACKAGE)
 
 docker_build: server_jre
+	docker pull zcalusic/debian-stretch
 	docker build \
 		--build-arg URL=$(strip $(shell git config --get remote.origin.url | sed 's/\.git$$//')) \
 		--build-arg VCS_URL=$(strip $(shell git config --get remote.origin.url)) \
