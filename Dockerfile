@@ -16,7 +16,7 @@ LABEL org.label-schema.name="Atlassian Bamboo in Docker" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0"
 
-ENV BAMBOO_VERSION 6.2.1
+ENV BAMBOO_VERSION 6.2.2
 ENV BAMBOO_INSTALL_DIR /opt/atlassian/bamboo
 ENV BAMBOO_HOME /var/atlassian/application-data/bamboo
 ENV BAMBOO_USER daemon
