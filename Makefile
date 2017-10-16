@@ -21,6 +21,7 @@ uninstall:
 	rm -f /usr/bin/dropbox
 
 docker_build:
+	docker pull zcalusic/debian-stretch
 	docker build \
 		--build-arg URL=$(strip $(shell git config --get remote.origin.url | sed 's/\.git$$//')) \
 		--build-arg VCS_URL=$(strip $(shell git config --get remote.origin.url)) \
