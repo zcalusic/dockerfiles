@@ -10,6 +10,7 @@ DOCKER_IMAGE ?= zcalusic/observium-ce
 default: docker_build
 
 docker_build:
+	docker pull zcalusic/debian-stretch
 	docker build \
 		--build-arg URL=$(strip $(shell git config --get remote.origin.url | sed 's/\.git$$//')) \
 		--build-arg VCS_URL=$(strip $(shell git config --get remote.origin.url)) \
