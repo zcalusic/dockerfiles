@@ -31,6 +31,8 @@ Based on the official Debian 8 Jessie Docker base image.
     * useful to help debug network issues
   * `wget`
     * retrieves files from the web, indispensable
+  * `xmlstarlet`
+    * command line XML toolkit
 
 ## Usage
 

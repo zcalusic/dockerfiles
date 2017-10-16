@@ -30,4 +30,5 @@ RUN apt-get update \
     net-tools \
     telnet \
     wget \
+    xmlstarlet \
     && rm -rf /var/lib/apt/lists/*
