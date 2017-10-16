@@ -43,6 +43,8 @@ Based on the official Debian 9 Stretch Docker base image.
     * time zone and daylight-saving time data, time is money
   * `wget`
     * retrieves files from the web, indispensable
+  * `xmlstarlet`
+    * command line XML toolkit
 
 ## Usage
 

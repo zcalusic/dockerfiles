@@ -36,4 +36,5 @@ RUN apt-get update \
     telnet \
     tzdata \
     wget \
+    xmlstarlet \
     && rm -rf /var/lib/apt/lists/*
