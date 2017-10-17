@@ -11,10 +11,16 @@ This Docker container makes it easy to get an instance of Bamboo up and running.
 
 ## Usage
 
-Pull image:
+Pull latest version:
 
 ```
 sudo docker pull zcalusic/atlassian-bamboo
+```
+
+Pull specific version:
+
+```
+sudo docker pull zcalusic/atlassian-bamboo:6.2.1
 ```
 
 Run container:
@@ -60,8 +66,16 @@ If you need to pass additional JVM arguments to Bamboo, you can add them via the
 
 ## Building container image
 
+Build latest version:
+
 ```
 sudo make docker_build
+```
+
+Build specific version:
+
+```
+sudo make docker_build BAMBOO_VERSION=6.2.1
 ```
 
 ## License
