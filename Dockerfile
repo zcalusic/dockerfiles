@@ -16,7 +16,7 @@ LABEL org.label-schema.name="Atlassian JIRA Core in Docker" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0"
 
-ENV JIRA_VERSION 7.5.0
+ENV JIRA_VERSION 7.5.1
 ENV JIRA_INSTALL_DIR /opt/atlassian/jira
 ENV JIRA_HOME /var/atlassian/application-data/jira
 ENV JIRA_USER daemon
