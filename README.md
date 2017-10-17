@@ -11,10 +11,16 @@ This Docker container makes it easy to get an instance of JIRA Core up and runni
 
 ## Usage
 
-Pull image:
+Pull latest version:
 
 ```
 sudo docker pull zcalusic/atlassian-jira-core
+```
+
+Pull specific version:
+
+```
+sudo docker pull zcalusic/atlassian-jira-core:7.5.0
 ```
 
 Run container:
@@ -60,8 +66,16 @@ If you need to pass additional JVM arguments to JIRA, you can add them via the e
 
 ## Building container image
 
+Build latest version:
+
 ```
 sudo make docker_build
+```
+
+Build specific version:
+
+```
+sudo make docker_build JIRA_VERSION=7.5.0
 ```
 
 ## License
