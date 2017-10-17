@@ -11,10 +11,16 @@ This Docker container makes it easy to get an instance of Confluence up and runn
 
 ## Usage
 
-Pull image:
+Pull latest version:
 
 ```
 sudo docker pull zcalusic/atlassian-confluence
+```
+
+Pull specific version:
+
+```
+sudo docker pull zcalusic/atlassian-confluence:6.4.0
 ```
 
 Run container:
@@ -60,8 +66,16 @@ If you need to pass additional JVM arguments to Confluence, you can add them via
 
 ## Building container image
 
+Build latest version:
+
 ```
 sudo make docker_build
+```
+
+Build specific version:
+
+```
+sudo make docker_build CONFLUENCE_VERSION=6.4.0
 ```
 
 ## License
