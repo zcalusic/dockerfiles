@@ -5,6 +5,7 @@ ARG URL
 ARG VCS_URL
 ARG VCS_REF
 ARG BUILD_DATE
+ARG CONFLUENCE_VERSION
 
 LABEL org.label-schema.name="Atlassian Confluence in Docker" \
       org.label-schema.description="Run Atlassian Confluence team collaboration software in a Docker container" \
@@ -16,7 +17,7 @@ LABEL org.label-schema.name="Atlassian Confluence in Docker" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0"
 
-ENV CONFLUENCE_VERSION 6.4.2
+ENV CONFLUENCE_VERSION $CONFLUENCE_VERSION
 ENV CONFLUENCE_INSTALL_DIR /opt/atlassian/confluence
 ENV CONFLUENCE_HOME /var/atlassian/application-data/confluence
 ENV CONFLUENCE_USER daemon
