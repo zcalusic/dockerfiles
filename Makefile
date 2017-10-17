@@ -4,7 +4,10 @@
 #
 
 DOCKER_IMAGE ?= zcalusic/atlassian-jira-core
-JAVA_PACKAGE = server-jre-8u144-linux-x64.tar.gz
+JAVA_PACKAGE ?= server-jre-8u144-linux-x64.tar.gz
+
+JIRA_CURRENT_VERSION := $(strip $(shell wget -qO- https://my.atlassian.com/download/feeds/current/jira-core.json | sed -e 's/^downloads(//' -e 's/)$$//' | jq -r '.[0] | .version'))
+JIRA_VERSION ?= $(JIRA_CURRENT_VERSION)
 
 .PHONY: default server_jre docker_build docker_push clean
 
@@ -25,10 +28,17 @@ docker_build: server_jre
 		--build-arg VCS_URL=$(strip $(shell git config --get remote.origin.url)) \
 		--build-arg VCS_REF=$(strip $(shell git rev-parse --short HEAD)) \
 		--build-arg BUILD_DATE=$(strip $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")) \
-		-t $(DOCKER_IMAGE) .
+		--build-arg JIRA_VERSION=$(JIRA_VERSION) \
+		-t $(DOCKER_IMAGE):$(JIRA_VERSION) .
+ifeq ($(JIRA_VERSION),$(JIRA_CURRENT_VERSION))
+	docker tag $(DOCKER_IMAGE):$(JIRA_VERSION) $(DOCKER_IMAGE):latest
+endif
 
 docker_push:
+	docker push $(DOCKER_IMAGE):$(JIRA_VERSION)
+ifeq ($(JIRA_VERSION),$(JIRA_CURRENT_VERSION))
 	docker push $(DOCKER_IMAGE):latest
+endif
 	curl -X POST https://hooks.microbadger.com/images/zcalusic/atlassian-jira-core/n5eBnkQCy6hhrs_ijlQGeD2CK7U=
 	@echo
 
