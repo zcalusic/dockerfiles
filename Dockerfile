@@ -35,6 +35,7 @@ RUN apt-get update \
     procps \
     telnet \
     tzdata \
+    vim-tiny \
     wget \
     xmlstarlet \
     && rm -rf /var/lib/apt/lists/*

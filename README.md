@@ -41,6 +41,8 @@ Based on the official Debian 9 Stretch Docker base image.
     * useful to help debug network issues
   * `tzdata`
     * time zone and daylight-saving time data, time is money
+  * `vim-tiny`
+    * vi editor - compact version
   * `wget`
     * retrieves files from the web, indispensable
   * `xmlstarlet`
@@ -77,10 +79,11 @@ sudo make docker_build
 Project | Description |
 --------|-------------|
 [`docker-dropbox`](https://github.com/zcalusic/docker-dropbox) | Run Dropbox Linux client in a Docker container |
+[`docker-syncthing`](https://github.com/zcalusic/docker-syncthing) | Run Syncthing in a Docker container |
+[`docker-observium-ce`](https://github.com/zcalusic/docker-observium-ce) | Run Observium Community Edition in a Docker container |
 [`docker-atlassian-bamboo`](https://github.com/zcalusic/docker-atlassian-bamboo) | Run Atlassian Bamboo in a Docker Container |
 [`docker-atlassian-confluence`](https://github.com/zcalusic/docker-atlassian-confluence) | Run Atlassian Confluence in a Docker Container |
 [`docker-atlassian-jira-core`](https://github.com/zcalusic/docker-atlassian-jira-core) | Run Atlassian JIRA Core in a Docker Container |
-[`docker-observium-ce`](https://github.com/zcalusic/docker-observium-ce) | Run Observium Community Edition in a Docker container |
 
 ## License
 
