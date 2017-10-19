@@ -21,14 +21,20 @@ Based on the official Debian 8 Jessie Docker base image.
     * optimize installation of additional Debian packages
   * `ca-certificates`
     * verify communication when downloading third-party software
-  * `less`
-    * less is more, more or less
+  * `dumb-init`
+    * minimal init system for containers, killing zombies, redirecting signals... (borrowed from Stretch)
+  * `gosu`
+    * robust setuid + setgid + setgroups + exec with sane tty and signal forwarding behavior (borrowed from Stretch)
   * `jq`
     * lightweight and flexible command-line JSON processor
+  * `less`
+    * less is more, more or less
   * `net-tools`
     * for the gray-bearded among us
   * `telnet`
     * useful to help debug network issues
+  * `vim-tiny`
+    * vi editor - compact version
   * `wget`
     * retrieves files from the web, indispensable
   * `xmlstarlet`

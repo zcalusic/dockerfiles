@@ -21,14 +21,20 @@ ENV LANG C.UTF-8
 ENV LANGUAGE C.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
 
+COPY stretch.list /etc/apt/sources.list.d/stretch.list
+COPY stretch-lower-prio /etc/apt/preferences.d/stretch-lower-prio
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     apt-utils \
     ca-certificates \
+    dumb-init \
+    gosu \
     jq \
     less \
     net-tools \
     telnet \
+    vim-tiny \
     wget \
     xmlstarlet \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/stretch.list /etc/apt/preferences.d/stretch-lower-prio
