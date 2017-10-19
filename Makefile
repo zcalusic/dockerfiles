@@ -4,7 +4,7 @@
 #
 
 DOCKER_IMAGE ?= zcalusic/atlassian-bamboo
-JAVA_PACKAGE ?= server-jre-8u144-linux-x64.tar.gz
+JAVA_PACKAGE ?= server-jre-8u152-linux-x64.tar.gz
 
 BAMBOO_CURRENT_VERSION := $(strip $(shell wget -qO- https://my.atlassian.com/download/feeds/current/bamboo.json | sed -e 's/^downloads(//' -e 's/)$$//' | jq -r '.[0] | .version'))
 BAMBOO_VERSION ?= $(BAMBOO_CURRENT_VERSION)
