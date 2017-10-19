@@ -4,7 +4,7 @@
 #
 
 DOCKER_IMAGE ?= zcalusic/atlassian-jira-core
-JAVA_PACKAGE ?= server-jre-8u144-linux-x64.tar.gz
+JAVA_PACKAGE ?= server-jre-8u152-linux-x64.tar.gz
 
 JIRA_CURRENT_VERSION := $(strip $(shell wget -qO- https://my.atlassian.com/download/feeds/current/jira-core.json | sed -e 's/^downloads(//' -e 's/)$$//' | jq -r '.[0] | .version'))
 JIRA_VERSION ?= $(JIRA_CURRENT_VERSION)
