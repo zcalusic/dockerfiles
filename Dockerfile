@@ -19,7 +19,7 @@ LABEL org.label-schema.name="Rest Server in Docker" \
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        git \
-    && wget -qO- https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz | tar xz -C /usr/local  \
+    && wget --dot-style=mega -O- https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz | tar xz -C /usr/local  \
     && export PATH="/usr/local/go/bin:$PATH" \
     && export GOPATH=/usr \
     && go get -d github.com/restic/rest-server \
