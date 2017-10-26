@@ -20,19 +20,19 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        build-essential \
        git \
-       golang-go \
+    && wget --dot-style=mega -O- https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz | tar xz -C /usr/local  \
+    && export PATH="/usr/local/go/bin:$PATH" \
     && export GOPATH=/usr \
     && go get -d github.com/gliderlabs/logspout \
     && go get -d github.com/looplab/logspout-logstash \
-    && cd /usr/src/github.com/gliderlabs/logspout \
+    && cd "$GOPATH/src/github.com/gliderlabs/logspout" \
     && sed -i -e "s/^)$/\t_ \"github.com\/looplab\/logspout-logstash\"\n)/" modules.go \
     && go build -ldflags "-X main.Version=$(cat VERSION)" -o /usr/bin/logspout \
     && cd / \
-    && rm -rf /usr/pkg /usr/src/* \
+    && rm -rf /usr/pkg /usr/src/* /usr/local/go \
     && apt-get purge -y --auto-remove \
        build-essential \
        git \
-       golang-go \
     && rm -rf /var/lib/apt/lists/*
 
 CMD [ "logspout" ]
