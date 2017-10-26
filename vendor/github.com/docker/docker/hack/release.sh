@@ -57,7 +57,7 @@ if [ "$1" != '--release-regardless-of-test-failure' ]; then
 	RELEASE_BUNDLES=(
 		test-unit
 		"${RELEASE_BUNDLES[@]}"
-		test-integration-cli
+		test-integration
 	)
 fi
 
@@ -207,10 +207,6 @@ release_build() {
 		linux)
 			s3Os=Linux
 			;;
-		solaris)
-			echo skipping solaris release
-			return 0
-			;;
 		windows)
 			# this is windows use the .zip and .exe extensions for the files.
 			s3Os=Windows
@@ -295,18 +291,10 @@ EOF
 	fi
 }
 
-# Upload the index script
-release_index() {
-	echo "Releasing index"
-	url="$(s3_url)/" hack/make.sh install-script
-	write_to_s3 "s3://$BUCKET_PATH/index" < "bundles/$VERSION/install-script/install.sh"
-}
-
 main() {
-	[ "$SKIP_RELEASE_BUILD" -eq 1 ] || build_all
+	[ "$SKIP_RELEASE_BUILD" = '1' ] || build_all
 	setup_s3
 	release_binaries
-	release_index
 }
 
 main

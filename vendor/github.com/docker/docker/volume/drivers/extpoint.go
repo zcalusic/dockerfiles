@@ -4,11 +4,13 @@ package volumedrivers
 
 import (
 	"fmt"
+	"sort"
 	"sync"
 
 	"github.com/docker/docker/pkg/locker"
 	getter "github.com/docker/docker/pkg/plugingetter"
 	"github.com/docker/docker/volume"
+	"github.com/pkg/errors"
 )
 
 // currently created by hand. generation tool would generate this like:
@@ -30,6 +32,7 @@ func NewVolumeDriver(name string, baseHostPath string, c client) volume.Driver {
 // volumeDriver defines the available functions that volume plugins must implement.
 // This interface is only defined to generate the proxy objects.
 // It's not intended to be public or reused.
+// nolint: deadcode
 type volumeDriver interface {
 	// Create a volume with the given name
 	Create(name string, opts map[string]string) (err error)
@@ -98,6 +101,14 @@ func Unregister(name string) bool {
 	return true
 }
 
+type driverNotFoundError string
+
+func (e driverNotFoundError) Error() string {
+	return "volume driver not found: " + string(e)
+}
+
+func (driverNotFoundError) NotFound() {}
+
 // lookup returns the driver associated with the given name. If a
 // driver with the given name has not been registered it checks if
 // there is a VolumeDriver plugin available with the given name.
@@ -114,7 +125,7 @@ func lookup(name string, mode int) (volume.Driver, error) {
 	if drivers.plugingetter != nil {
 		p, err := drivers.plugingetter.Get(name, extName, mode)
 		if err != nil {
-			return nil, fmt.Errorf("Error looking up volume plugin %s: %v", name, err)
+			return nil, errors.Wrap(err, "error looking up volume plugin "+name)
 		}
 
 		d := NewVolumeDriver(p.Name(), p.BasePath(), p.Client())
@@ -129,7 +140,7 @@ func lookup(name string, mode int) (volume.Driver, error) {
 		}
 		return d, nil
 	}
-	return nil, fmt.Errorf("Error looking up volume plugin %s", name)
+	return nil, driverNotFoundError(name)
 }
 
 func validateDriver(vd volume.Driver) error {
@@ -146,7 +157,7 @@ func GetDriver(name string) (volume.Driver, error) {
 	if name == "" {
 		name = volume.DefaultDriverName
 	}
-	return lookup(name, getter.LOOKUP)
+	return lookup(name, getter.Lookup)
 }
 
 // CreateDriver returns a volume driver by its name and increments RefCount.
@@ -155,7 +166,7 @@ func CreateDriver(name string) (volume.Driver, error) {
 	if name == "" {
 		name = volume.DefaultDriverName
 	}
-	return lookup(name, getter.ACQUIRE)
+	return lookup(name, getter.Acquire)
 }
 
 // RemoveDriver returns a volume driver by its name and decrements RefCount..
@@ -164,7 +175,7 @@ func RemoveDriver(name string) (volume.Driver, error) {
 	if name == "" {
 		name = volume.DefaultDriverName
 	}
-	return lookup(name, getter.RELEASE)
+	return lookup(name, getter.Release)
 }
 
 // GetDriverList returns list of volume drivers registered.
@@ -176,6 +187,7 @@ func GetDriverList() []string {
 		driverList = append(driverList, driverName)
 	}
 	drivers.Unlock()
+	sort.Strings(driverList)
 	return driverList
 }
 
@@ -200,12 +212,12 @@ func GetAllDrivers() ([]volume.Driver, error) {
 
 	for _, p := range plugins {
 		name := p.Name()
-		ext, ok := drivers.extensions[name]
-		if ok {
+
+		if _, ok := drivers.extensions[name]; ok {
 			continue
 		}
 
-		ext = NewVolumeDriver(name, p.BasePath(), p.Client())
+		ext := NewVolumeDriver(name, p.BasePath(), p.Client())
 		if p.IsV1() {
 			drivers.extensions[name] = ext
 		}
