@@ -74,9 +74,18 @@ func main() {
 		dropboxSyncPath + ":" + dropboxSyncPath,
 	}
 
+	portbindings := map[docker.Port][]docker.PortBinding{
+		"17500/tcp": []docker.PortBinding{
+			{
+				HostIP:   "0.0.0.0",
+				HostPort: "17500",
+			},
+		},
+	}
+
 	hostconfig := &docker.HostConfig{
-		NetworkMode: "host",
-		Binds:       binds,
+		Binds:        binds,
+		PortBindings: portbindings,
 	}
 
 	options := docker.CreateContainerOptions{
