@@ -5,14 +5,20 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
 	"os/user"
 	"path"
 	"strconv"
+	"strings"
 
-	docker "github.com/fsouza/go-dockerclient"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/client"
+	"github.com/docker/docker/pkg/stdcopy"
+	"github.com/docker/go-connections/nat"
 )
 
 func main() {
@@ -27,8 +33,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	name := "dropbox_" + current.Username
 
 	homeDir := os.Getenv("HOME")
 	if homeDir == "" {
@@ -53,16 +57,16 @@ func main() {
 	os.MkdirAll(dropboxSyncPath, 0755)
 	os.Chown(dropboxSyncPath, uid, gid)
 
-	client, err := docker.NewClient("unix:///var/run/docker.sock")
+	cli, err := client.NewClient("unix:///var/run/docker.sock", "", nil, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	env := docker.Env{
+	env := []string{
 		"HOME=" + homeDir,
 	}
 
-	config := &docker.Config{
+	config := &container.Config{
 		Image:    "zcalusic/dropbox",
 		Hostname: hostname,
 		User:     current.Uid + ":" + current.Gid,
@@ -74,8 +78,8 @@ func main() {
 		dropboxSyncPath + ":" + dropboxSyncPath,
 	}
 
-	portbindings := map[docker.Port][]docker.PortBinding{
-		"17500/tcp": []docker.PortBinding{
+	portMap := nat.PortMap{
+		"17500/tcp": []nat.PortBinding{
 			{
 				HostIP:   "0.0.0.0",
 				HostPort: "17500",
@@ -83,54 +87,59 @@ func main() {
 		},
 	}
 
-	hostconfig := &docker.HostConfig{
+	hostConfig := &container.HostConfig{
 		Binds:        binds,
-		PortBindings: portbindings,
+		PortBindings: portMap,
 	}
 
-	options := docker.CreateContainerOptions{
-		Name:       name,
-		Config:     config,
-		HostConfig: hostconfig,
-	}
+	ctx := context.Background()
+	name := "dropbox_" + current.Username
 
 	if len(os.Args) == 1 {
 		os.Args = append(os.Args, "help")
 	}
 
 	if os.Args[1] == "start" {
-		if _, err = client.CreateContainer(options); err != nil && err != docker.ErrContainerAlreadyExists {
-			log.Fatal(err)
-		}
+		resp, err := cli.ContainerCreate(ctx, config, hostConfig, nil, name)
+		if err != nil {
+			if strings.Contains(err.Error(), "is already in use by container") {
+				if err = cli.ContainerRemove(ctx, name, types.ContainerRemoveOptions{}); err != nil {
+					if strings.Contains(err.Error(), "You cannot remove a running container") {
+						goto exec
+					} else {
+						log.Fatal(err)
+					}
+				}
 
-		if err = client.StartContainer(name, hostconfig); err != nil {
-			if _, ok := err.(*docker.ContainerAlreadyRunning); !ok {
+				resp, err = cli.ContainerCreate(ctx, config, hostConfig, nil, name)
+				if err != nil {
+					log.Fatal(err)
+				}
+			} else {
 				log.Fatal(err)
 			}
+		}
+
+		if err = cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{}); err != nil {
+			log.Fatal(err)
 		} else {
 			return
 		}
 	}
 
-	execOptions := docker.CreateExecOptions{
-		Container:    name,
-		Cmd:          os.Args,
+exec:
+	execConfig := types.ExecConfig{
 		User:         current.Uid + ":" + current.Gid,
-		AttachStdin:  true,
 		AttachStdout: true,
 		AttachStderr: true,
+		Cmd:          os.Args,
 	}
 
-	exec, err := client.CreateExec(execOptions)
-	switch os.Args[1] {
-	case "running":
-		if err != nil {
-			os.Exit(0)
-		} else {
-			os.Exit(1)
-		}
-	case "help":
-		if err != nil {
+	resp, err := cli.ContainerExecCreate(ctx, name, execConfig)
+	if err != nil {
+		switch os.Args[1] {
+		case "running":
+		case "help":
 			fmt.Print(`Dropbox command-line interface
 
 commands:
@@ -153,22 +162,27 @@ Note: use dropbox help <command> to view usage for a specific command.
  proxy        set proxy settings for Dropbox
 
 `)
-			os.Exit(0)
-		}
-	default:
-		if err != nil {
+		default:
 			fmt.Println("Dropbox isn't running!")
-			os.Exit(0)
 		}
+		os.Exit(0)
 	}
 
-	startExecOptions := docker.StartExecOptions{
-		InputStream:  os.Stdin,
-		OutputStream: os.Stdout,
-		ErrorStream:  os.Stderr,
-	}
-
-	if err = client.StartExec(exec.ID, startExecOptions); err != nil {
+	att, err := cli.ContainerExecAttach(ctx, resp.ID, execConfig)
+	if err != nil {
 		log.Fatal(err)
 	}
+
+	if _, err = stdcopy.StdCopy(os.Stdout, os.Stderr, att.Reader); err != nil {
+		log.Fatal(err)
+	}
+
+	att.Close()
+
+	insp, err := cli.ContainerExecInspect(ctx, resp.ID)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	os.Exit(insp.ExitCode)
 }

@@ -7,16 +7,13 @@ import (
 	"path/filepath"
 
 	"github.com/docker/docker/pkg/archive"
-	"github.com/docker/docker/pkg/containerfs"
 	"github.com/docker/docker/pkg/idtools"
 	"github.com/docker/docker/pkg/plugingetter"
-	"github.com/docker/docker/pkg/plugins"
 )
 
 type graphDriverProxy struct {
 	name string
 	p    plugingetter.CompatPlugin
-	caps Capabilities
 }
 
 type graphDriverRequest struct {
@@ -27,14 +24,13 @@ type graphDriverRequest struct {
 }
 
 type graphDriverResponse struct {
-	Err          string            `json:",omitempty"`
-	Dir          string            `json:",omitempty"`
-	Exists       bool              `json:",omitempty"`
-	Status       [][2]string       `json:",omitempty"`
-	Changes      []archive.Change  `json:",omitempty"`
-	Size         int64             `json:",omitempty"`
-	Metadata     map[string]string `json:",omitempty"`
-	Capabilities Capabilities      `json:",omitempty"`
+	Err      string            `json:",omitempty"`
+	Dir      string            `json:",omitempty"`
+	Exists   bool              `json:",omitempty"`
+	Status   [][2]string       `json:",omitempty"`
+	Changes  []archive.Change  `json:",omitempty"`
+	Size     int64             `json:",omitempty"`
+	Metadata map[string]string `json:",omitempty"`
 }
 
 type graphDriverInitRequest struct {
@@ -64,42 +60,34 @@ func (d *graphDriverProxy) Init(home string, opts []string, uidMaps, gidMaps []i
 	if ret.Err != "" {
 		return errors.New(ret.Err)
 	}
-	caps, err := d.fetchCaps()
-	if err != nil {
-		return err
-	}
-	d.caps = caps
 	return nil
-}
-
-func (d *graphDriverProxy) fetchCaps() (Capabilities, error) {
-	args := &graphDriverRequest{}
-	var ret graphDriverResponse
-	if err := d.p.Client().Call("GraphDriver.Capabilities", args, &ret); err != nil {
-		if !plugins.IsNotFound(err) {
-			return Capabilities{}, err
-		}
-	}
-	return ret.Capabilities, nil
 }
 
 func (d *graphDriverProxy) String() string {
 	return d.name
 }
 
-func (d *graphDriverProxy) Capabilities() Capabilities {
-	return d.caps
-}
-
 func (d *graphDriverProxy) CreateReadWrite(id, parent string, opts *CreateOpts) error {
-	return d.create("GraphDriver.CreateReadWrite", id, parent, opts)
+	args := &graphDriverRequest{
+		ID:     id,
+		Parent: parent,
+	}
+	if opts != nil {
+		args.MountLabel = opts.MountLabel
+		args.StorageOpt = opts.StorageOpt
+	}
+
+	var ret graphDriverResponse
+	if err := d.p.Client().Call("GraphDriver.CreateReadWrite", args, &ret); err != nil {
+		return err
+	}
+	if ret.Err != "" {
+		return errors.New(ret.Err)
+	}
+	return nil
 }
 
 func (d *graphDriverProxy) Create(id, parent string, opts *CreateOpts) error {
-	return d.create("GraphDriver.Create", id, parent, opts)
-}
-
-func (d *graphDriverProxy) create(method, id, parent string, opts *CreateOpts) error {
 	args := &graphDriverRequest{
 		ID:     id,
 		Parent: parent,
@@ -109,7 +97,7 @@ func (d *graphDriverProxy) create(method, id, parent string, opts *CreateOpts) e
 		args.StorageOpt = opts.StorageOpt
 	}
 	var ret graphDriverResponse
-	if err := d.p.Client().Call(method, args, &ret); err != nil {
+	if err := d.p.Client().Call("GraphDriver.Create", args, &ret); err != nil {
 		return err
 	}
 	if ret.Err != "" {
@@ -130,20 +118,20 @@ func (d *graphDriverProxy) Remove(id string) error {
 	return nil
 }
 
-func (d *graphDriverProxy) Get(id, mountLabel string) (containerfs.ContainerFS, error) {
+func (d *graphDriverProxy) Get(id, mountLabel string) (string, error) {
 	args := &graphDriverRequest{
 		ID:         id,
 		MountLabel: mountLabel,
 	}
 	var ret graphDriverResponse
 	if err := d.p.Client().Call("GraphDriver.Get", args, &ret); err != nil {
-		return nil, err
+		return "", err
 	}
 	var err error
 	if ret.Err != "" {
 		err = errors.New(ret.Err)
 	}
-	return containerfs.NewLocalContainerFS(filepath.Join(d.p.BasePath(), ret.Dir)), err
+	return filepath.Join(d.p.BasePath(), ret.Dir), err
 }
 
 func (d *graphDriverProxy) Put(id string) error {

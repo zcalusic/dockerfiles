@@ -6,47 +6,45 @@
 package main
 
 import (
+	"github.com/docker/docker/daemon"
+	"github.com/docker/docker/pkg/testutil/assert"
+	"github.com/docker/docker/pkg/testutil/tempfile"
 	"testing"
-
-	"github.com/docker/docker/daemon/config"
-	"github.com/gotestyourself/gotestyourself/fs"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func TestLoadDaemonCliConfigWithDaemonFlags(t *testing.T) {
 	content := `{"log-opts": {"max-size": "1k"}}`
-	tempFile := fs.NewFile(t, "config", fs.WithContent(content))
+	tempFile := tempfile.NewTempFile(t, "config", content)
 	defer tempFile.Remove()
 
-	opts := defaultOptions(tempFile.Path())
-	opts.Debug = true
-	opts.LogLevel = "info"
-	assert.NoError(t, opts.flags.Set("selinux-enabled", "true"))
+	opts := defaultOptions(tempFile.Name())
+	opts.common.Debug = true
+	opts.common.LogLevel = "info"
+	assert.NilError(t, opts.flags.Set("selinux-enabled", "true"))
 
 	loadedConfig, err := loadDaemonCliConfig(opts)
-	require.NoError(t, err)
-	require.NotNil(t, loadedConfig)
+	assert.NilError(t, err)
+	assert.NotNil(t, loadedConfig)
 
-	assert.True(t, loadedConfig.Debug)
-	assert.Equal(t, "info", loadedConfig.LogLevel)
-	assert.True(t, loadedConfig.EnableSelinuxSupport)
-	assert.Equal(t, "json-file", loadedConfig.LogConfig.Type)
-	assert.Equal(t, "1k", loadedConfig.LogConfig.Config["max-size"])
+	assert.Equal(t, loadedConfig.Debug, true)
+	assert.Equal(t, loadedConfig.LogLevel, "info")
+	assert.Equal(t, loadedConfig.EnableSelinuxSupport, true)
+	assert.Equal(t, loadedConfig.LogConfig.Type, "json-file")
+	assert.Equal(t, loadedConfig.LogConfig.Config["max-size"], "1k")
 }
 
 func TestLoadDaemonConfigWithNetwork(t *testing.T) {
 	content := `{"bip": "127.0.0.2", "ip": "127.0.0.1"}`
-	tempFile := fs.NewFile(t, "config", fs.WithContent(content))
+	tempFile := tempfile.NewTempFile(t, "config", content)
 	defer tempFile.Remove()
 
-	opts := defaultOptions(tempFile.Path())
+	opts := defaultOptions(tempFile.Name())
 	loadedConfig, err := loadDaemonCliConfig(opts)
-	require.NoError(t, err)
-	require.NotNil(t, loadedConfig)
+	assert.NilError(t, err)
+	assert.NotNil(t, loadedConfig)
 
-	assert.Equal(t, "127.0.0.2", loadedConfig.IP)
-	assert.Equal(t, "127.0.0.1", loadedConfig.DefaultIP.String())
+	assert.Equal(t, loadedConfig.IP, "127.0.0.2")
+	assert.Equal(t, loadedConfig.DefaultIP.String(), "127.0.0.1")
 }
 
 func TestLoadDaemonConfigWithMapOptions(t *testing.T) {
@@ -54,61 +52,63 @@ func TestLoadDaemonConfigWithMapOptions(t *testing.T) {
 		"cluster-store-opts": {"kv.cacertfile": "/var/lib/docker/discovery_certs/ca.pem"},
 		"log-opts": {"tag": "test"}
 }`
-	tempFile := fs.NewFile(t, "config", fs.WithContent(content))
+	tempFile := tempfile.NewTempFile(t, "config", content)
 	defer tempFile.Remove()
 
-	opts := defaultOptions(tempFile.Path())
+	opts := defaultOptions(tempFile.Name())
 	loadedConfig, err := loadDaemonCliConfig(opts)
-	require.NoError(t, err)
-	require.NotNil(t, loadedConfig)
+	assert.NilError(t, err)
+	assert.NotNil(t, loadedConfig)
 	assert.NotNil(t, loadedConfig.ClusterOpts)
 
 	expectedPath := "/var/lib/docker/discovery_certs/ca.pem"
-	assert.Equal(t, expectedPath, loadedConfig.ClusterOpts["kv.cacertfile"])
+	assert.Equal(t, loadedConfig.ClusterOpts["kv.cacertfile"], expectedPath)
 	assert.NotNil(t, loadedConfig.LogConfig.Config)
-	assert.Equal(t, "test", loadedConfig.LogConfig.Config["tag"])
+	assert.Equal(t, loadedConfig.LogConfig.Config["tag"], "test")
 }
 
 func TestLoadDaemonConfigWithTrueDefaultValues(t *testing.T) {
 	content := `{ "userland-proxy": false }`
-	tempFile := fs.NewFile(t, "config", fs.WithContent(content))
+	tempFile := tempfile.NewTempFile(t, "config", content)
 	defer tempFile.Remove()
 
-	opts := defaultOptions(tempFile.Path())
+	opts := defaultOptions(tempFile.Name())
 	loadedConfig, err := loadDaemonCliConfig(opts)
-	require.NoError(t, err)
-	require.NotNil(t, loadedConfig)
+	assert.NilError(t, err)
+	assert.NotNil(t, loadedConfig)
+	assert.NotNil(t, loadedConfig.ClusterOpts)
 
-	assert.False(t, loadedConfig.EnableUserlandProxy)
+	assert.Equal(t, loadedConfig.EnableUserlandProxy, false)
 
 	// make sure reloading doesn't generate configuration
 	// conflicts after normalizing boolean values.
-	reload := func(reloadedConfig *config.Config) {
-		assert.False(t, reloadedConfig.EnableUserlandProxy)
+	reload := func(reloadedConfig *daemon.Config) {
+		assert.Equal(t, reloadedConfig.EnableUserlandProxy, false)
 	}
-	assert.NoError(t, config.Reload(opts.configFile, opts.flags, reload))
+	assert.NilError(t, daemon.ReloadConfiguration(opts.configFile, opts.flags, reload))
 }
 
 func TestLoadDaemonConfigWithTrueDefaultValuesLeaveDefaults(t *testing.T) {
-	tempFile := fs.NewFile(t, "config", fs.WithContent(`{}`))
+	tempFile := tempfile.NewTempFile(t, "config", `{}`)
 	defer tempFile.Remove()
 
-	opts := defaultOptions(tempFile.Path())
+	opts := defaultOptions(tempFile.Name())
 	loadedConfig, err := loadDaemonCliConfig(opts)
-	require.NoError(t, err)
-	require.NotNil(t, loadedConfig)
+	assert.NilError(t, err)
+	assert.NotNil(t, loadedConfig)
+	assert.NotNil(t, loadedConfig.ClusterOpts)
 
-	assert.True(t, loadedConfig.EnableUserlandProxy)
+	assert.Equal(t, loadedConfig.EnableUserlandProxy, true)
 }
 
 func TestLoadDaemonConfigWithLegacyRegistryOptions(t *testing.T) {
-	content := `{"disable-legacy-registry": false}`
-	tempFile := fs.NewFile(t, "config", fs.WithContent(content))
+	content := `{"disable-legacy-registry": true}`
+	tempFile := tempfile.NewTempFile(t, "config", content)
 	defer tempFile.Remove()
 
-	opts := defaultOptions(tempFile.Path())
+	opts := defaultOptions(tempFile.Name())
 	loadedConfig, err := loadDaemonCliConfig(opts)
-	require.NoError(t, err)
-	require.NotNil(t, loadedConfig)
-	assert.False(t, loadedConfig.V2Only)
+	assert.NilError(t, err)
+	assert.NotNil(t, loadedConfig)
+	assert.Equal(t, loadedConfig.V2Only, true)
 }

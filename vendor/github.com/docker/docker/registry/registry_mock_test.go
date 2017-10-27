@@ -17,11 +17,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/docker/distribution/reference"
 	registrytypes "github.com/docker/docker/api/types/registry"
+	"github.com/docker/docker/reference"
 	"github.com/gorilla/mux"
 
-	"github.com/sirupsen/logrus"
+	"github.com/Sirupsen/logrus"
 )
 
 var (
@@ -175,7 +175,7 @@ func makePublicIndex() *registrytypes.IndexInfo {
 	return index
 }
 
-func makeServiceConfig(mirrors []string, insecureRegistries []string) (*serviceConfig, error) {
+func makeServiceConfig(mirrors []string, insecureRegistries []string) *serviceConfig {
 	options := ServiceOptions{
 		Mirrors:            mirrors,
 		InsecureRegistries: insecureRegistries,
