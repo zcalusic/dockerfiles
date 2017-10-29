@@ -80,12 +80,18 @@ sudo make docker_build
 
 Project | Description |
 --------|-------------|
+[`docker-nginx`](https://github.com/zcalusic/docker-nginx) | Run NGINX in a Docker Container |
 [`docker-dropbox`](https://github.com/zcalusic/docker-dropbox) | Run Dropbox Linux client in a Docker container |
 [`docker-syncthing`](https://github.com/zcalusic/docker-syncthing) | Run Syncthing in a Docker container |
+[`docker-logspout`](https://github.com/zcalusic/docker-logspout) | Run Logspout in a Docker Container |
+[`docker-rest-server`](https://github.com/zcalusic/docker-rest-server) | Run Rest Server in a Docker Container |
 [`docker-observium-ce`](https://github.com/zcalusic/docker-observium-ce) | Run Observium Community Edition in a Docker container |
 [`docker-atlassian-bamboo`](https://github.com/zcalusic/docker-atlassian-bamboo) | Run Atlassian Bamboo in a Docker Container |
 [`docker-atlassian-confluence`](https://github.com/zcalusic/docker-atlassian-confluence) | Run Atlassian Confluence in a Docker Container |
 [`docker-atlassian-jira-core`](https://github.com/zcalusic/docker-atlassian-jira-core) | Run Atlassian JIRA Core in a Docker Container |
+[`docker-elastic-elasticsearch`](https://github.com/zcalusic/docker-elastic-elasticsearch) | Run Elastic Elasticsearch in a Docker Container |
+[`docker-elastic-logstash`](https://github.com/zcalusic/docker-elastic-logstash) | Run Elastic Logstash in a Docker Container |
+[`docker-elastic-kibana`](https://github.com/zcalusic/docker-elastic-kibana) | Run Elastic Kibana in a Docker Container |
 
 ## License
 
