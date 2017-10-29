@@ -23,20 +23,22 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    apt-transport-https \
-    apt-utils \
-    ca-certificates \
-    dirmngr \
-    dumb-init \
-    gnupg \
-    gosu \
-    jq \
-    less \
-    net-tools \
-    procps \
-    telnet \
-    tzdata \
-    vim-tiny \
-    wget \
-    xmlstarlet \
+       apt-transport-https \
+       apt-utils \
+       ca-certificates \
+       dirmngr \
+       dumb-init \
+       gnupg \
+       gosu \
+       jq \
+       less \
+       net-tools \
+       procps \
+       telnet \
+       tzdata \
+       vim-tiny \
+       wget \
+       xmlstarlet \
     && rm -rf /var/lib/apt/lists/*
+
+COPY sources.list /etc/apt/sources.list
