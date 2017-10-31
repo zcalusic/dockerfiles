@@ -25,6 +25,8 @@ Based on the official Debian 9 Stretch Docker base image.
     * verify communication when downloading third-party software
   * `dirmngr`
     * required by GnuPG v2, see below
+  * `dnsutils`
+    * client programs related to DNS
   * `dumb-init`
     * minimal init system for containers, killing zombies, redirecting signals...
   * `gnupg`
