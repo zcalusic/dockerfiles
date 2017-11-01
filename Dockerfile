@@ -26,6 +26,7 @@ COPY stretch-lower-prio /etc/apt/preferences.d/stretch-lower-prio
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+    apt-transport-https \
     apt-utils \
     ca-certificates \
     dumb-init \

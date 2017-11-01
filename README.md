@@ -17,6 +17,8 @@ Based on the official Debian 8 Jessie Docker base image.
   * `LANGUAGE=C.UTF-8`
 
 * Additional Debian packages:
+  * `apt-transport-https`
+    * https download transport for APT
   * `apt-utils`
     * optimize installation of additional Debian packages
   * `ca-certificates`
