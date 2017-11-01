@@ -1,4 +1,4 @@
-FROM golang:1.9.1-stretch
+FROM golang:stretch
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL
