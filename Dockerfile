@@ -29,6 +29,7 @@ RUN apt-get update \
        apt-transport-https \
        apt-utils \
        ca-certificates \
+       dnsutils \
        dumb-init \
        gosu \
        jq \

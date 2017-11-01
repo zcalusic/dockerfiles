@@ -23,6 +23,8 @@ Based on the official Debian 8 Jessie Docker base image.
     * optimize installation of additional Debian packages
   * `ca-certificates`
     * verify communication when downloading third-party software
+  * `dnsutils`
+    * client programs related to DNS
   * `dumb-init`
     * minimal init system for containers, killing zombies, redirecting signals... (borrowed from Stretch)
   * `gosu`
