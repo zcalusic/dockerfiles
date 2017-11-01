@@ -20,3 +20,5 @@ docker_build:
 
 docker_push:
 	docker push $(DOCKER_IMAGE):latest
+	curl -X POST https://hooks.microbadger.com/images/zcalusic/gogs/YTAlo4Vnqy0i0srkf12NVT0FAKg=
+	@echo
