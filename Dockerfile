@@ -26,16 +26,18 @@ COPY stretch-lower-prio /etc/apt/preferences.d/stretch-lower-prio
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    apt-transport-https \
-    apt-utils \
-    ca-certificates \
-    dumb-init \
-    gosu \
-    jq \
-    less \
-    net-tools \
-    telnet \
-    vim-tiny \
-    wget \
-    xmlstarlet \
+       apt-transport-https \
+       apt-utils \
+       ca-certificates \
+       dumb-init \
+       gosu \
+       jq \
+       less \
+       net-tools \
+       telnet \
+       vim-tiny \
+       wget \
+       xmlstarlet \
     && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/stretch.list /etc/apt/preferences.d/stretch-lower-prio
+
+COPY sources.list /etc/apt/sources.list
