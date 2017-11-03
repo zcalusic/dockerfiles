@@ -6,9 +6,11 @@ ENV NGINX_VERSION 1.12.2
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        build-essential \
+       libgd-dev \
+       libgeoip-dev \
        libpcre3-dev \
        libssl-dev \
-       zlib1g-dev \
+       libxslt1-dev \
     && wget -O- "http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz" | tar xzo -C /usr/src \
     && cd "/usr/src/nginx-${NGINX_VERSION}" \
     && ./configure \
@@ -33,9 +35,12 @@ RUN apt-get update \
        --with-http_addition_module \
        --with-http_auth_request_module \
        --with-http_dav_module \
+       --with-http_degradation_module \
        --with-http_flv_module \
+       --with-http_geoip_module \
        --with-http_gunzip_module \
        --with-http_gzip_static_module \
+       --with-http_image_filter_module \
        --with-http_mp4_module \
        --with-http_random_index_module \
        --with-http_realip_module \
@@ -45,9 +50,11 @@ RUN apt-get update \
        --with-http_stub_status_module \
        --with-http_sub_module \
        --with-http_v2_module \
+       --with-http_xslt_module \
        --with-mail \
        --with-mail_ssl_module \
        --with-stream \
+       --with-stream_geoip_module \
        --with-stream_realip_module \
        --with-stream_ssl_module \
        --with-stream_ssl_preread_module \
@@ -75,6 +82,12 @@ LABEL org.label-schema.name="NGINX in Docker" \
 
 COPY --from=builder /usr/sbin/nginx /usr/sbin/nginx
 COPY --from=builder /etc/nginx /etc/nginx.default
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       geoip-database-contrib \
+       libgd3 \
+    && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 80 443
 
