@@ -76,7 +76,7 @@ LABEL org.label-schema.name="NGINX in Docker" \
 COPY --from=builder /usr/sbin/nginx /usr/sbin/nginx
 COPY --from=builder /etc/nginx /etc/nginx.default
 
-EXPOSE 80
+EXPOSE 80 443
 
 COPY entrypoint.sh /entrypoint.sh
 
