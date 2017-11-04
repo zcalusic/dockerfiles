@@ -22,11 +22,11 @@ RUN apt-get update \
        --http-log-path=/dev/stdout \
        --pid-path=/run/nginx.pid \
        --lock-path=/run/nginx.lock \
-       --http-client-body-temp-path=/dev/shm/nginx/client_temp \
-       --http-proxy-temp-path=/dev/shm/nginx/proxy_temp \
-       --http-fastcgi-temp-path=/dev/shm/nginx/fastcgi_temp \
-       --http-uwsgi-temp-path=/dev/shm/nginx/uwsgi_temp \
-       --http-scgi-temp-path=/dev/shm/nginx/scgi_temp \
+       --http-client-body-temp-path=/var/cache/nginx/client_temp \
+       --http-proxy-temp-path=/var/cache/nginx/proxy_temp \
+       --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
+       --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
+       --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
        --user=www-data \
        --group=www-data \
        --with-compat \
@@ -87,7 +87,8 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        geoip-database-contrib \
        libgd3 \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir /var/cache/nginx
 
 EXPOSE 80 443
 

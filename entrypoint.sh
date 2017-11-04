@@ -9,6 +9,4 @@ set -eu
 
 [ "$(ls -A /etc/nginx)" ] || cp -a /etc/nginx.default/. /etc/nginx
 
-mkdir /dev/shm/nginx
-
 exec nginx -g "daemon off;"
