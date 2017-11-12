@@ -39,6 +39,8 @@ Based on the official Debian 9 Stretch Docker base image.
     * less is more, more or less
   * `net-tools`
     * for the gray-bearded among us
+  * `netcat-openbsd`
+    * TCP/IP swiss army knife
   * `procps`
     * /proc file system utilities, indispensable
   * `telnet`
