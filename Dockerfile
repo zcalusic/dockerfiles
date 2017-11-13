@@ -14,7 +14,7 @@ RUN apt-get update \
        libxslt1-dev \
     && cd /usr/src \
     && wget -O- "http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz" | tar xzo \
-    && git clone https://github.com/wdaike/ngx_upstream_jdomain \
+    && git clone https://github.com/GUI/nginx-upstream-dynamic-servers \
     && cd "/usr/src/nginx-${NGINX_VERSION}" \
     && ./configure \
        --prefix=/etc/nginx \
@@ -63,7 +63,7 @@ RUN apt-get update \
        --with-stream_ssl_preread_module \
        --with-cc-opt='-O2 -fstack-protector-strong -Wformat -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fPIC' \
        --with-ld-opt='-s -Wl,-z,relro -Wl,-z,now -Wl,--as-needed -pie' \
-       --add-module=/usr/src/ngx_upstream_jdomain \
+       --add-module=/usr/src/nginx-upstream-dynamic-servers \
     && make -j8 install
 
 FROM zcalusic/debian-stretch
