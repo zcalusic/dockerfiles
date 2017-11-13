@@ -35,6 +35,7 @@ RUN apt-get update \
        jq \
        less \
        net-tools \
+       netcat-openbsd \
        telnet \
        vim-tiny \
        wget \

@@ -35,6 +35,8 @@ Based on the official Debian 8 Jessie Docker base image.
     * less is more, more or less
   * `net-tools`
     * for the gray-bearded among us
+  * `netcat-openbsd`
+    * TCP/IP swiss army knife
   * `telnet`
     * useful to help debug network issues
   * `vim-tiny`
