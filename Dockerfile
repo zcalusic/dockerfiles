@@ -1,3 +1,8 @@
+FROM golang:stretch as builder
+MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
+
+RUN go get -v github.com/gogits/gogs
+
 FROM zcalusic/debian-stretch
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
@@ -21,18 +26,17 @@ ENV PATH $GOGS_WORK_DIR:$PATH
 ENV USER daemon
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends git \
+    && apt-get install -y --no-install-recommends \
+       git \
     && rm -rf /var/lib/apt/lists/* \
-    && wget --dot-style=mega -O- https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz | tar xz -C /usr/local  \
-    && export PATH="/usr/local/go/bin:$PATH" \
-    && export GOPATH=/usr \
-    && export GOBIN="$GOGS_WORK_DIR" \
-    && go get -v github.com/gogits/gogs \
-    && usermod -d "$GOGS_WORK_DIR" daemon \
+    && mkdir -p "$GOGS_WORK_DIR" "$GOGS_WORK_DIR/conf" "$GOGS_WORK_DIR/public" "$GOGS_WORK_DIR/templates" \
     && chown daemon:daemon "$GOGS_WORK_DIR" \
-    && cd "$GOPATH/src/github.com/gogits/gogs" \
-    && mv conf public templates "$GOGS_WORK_DIR" \
-    && rm -rf /usr/pkg /usr/src/* /usr/local/go
+    && usermod -d "$GOGS_WORK_DIR" daemon
+
+COPY --from=builder /go/bin/gogs $GOGS_WORK_DIR
+COPY --from=builder /go/src/github.com/gogits/gogs/conf $GOGS_WORK_DIR/conf
+COPY --from=builder /go/src/github.com/gogits/gogs/public $GOGS_WORK_DIR/public
+COPY --from=builder /go/src/github.com/gogits/gogs/templates $GOGS_WORK_DIR/templates
 
 EXPOSE 3000
 
