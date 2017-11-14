@@ -5,13 +5,15 @@ ENV NGINX_VERSION 1.12.2
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       build-essential \
+       gcc \
        git \
+       libc6-dev \
        libgd-dev \
        libgeoip-dev \
        libpcre3-dev \
        libssl-dev \
        libxslt1-dev \
+       make \
     && cd /usr/src \
     && wget -O- "http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz" | tar xzo \
     && git clone https://github.com/GUI/nginx-upstream-dynamic-servers \
@@ -64,7 +66,7 @@ RUN apt-get update \
        --with-cc-opt='-O2 -fstack-protector-strong -Wformat -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fPIC' \
        --with-ld-opt='-s -Wl,-z,relro -Wl,-z,now -Wl,--as-needed -pie' \
        --add-module=/usr/src/nginx-upstream-dynamic-servers \
-    && make -j8 install
+    && make -j "$(nproc)" install
 
 FROM zcalusic/debian-stretch
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
