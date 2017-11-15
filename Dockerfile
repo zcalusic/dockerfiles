@@ -33,6 +33,7 @@ RUN apt-get update \
        python-mysqldb \
        rrdtool \
        snmp \
+       snmp-mibs-downloader \
        whois \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p "$OBSERVIUM_HOME" \
