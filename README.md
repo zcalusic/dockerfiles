@@ -87,6 +87,10 @@ Project | Description |
 [`docker-nginx`](https://github.com/zcalusic/docker-nginx) | Run NGINX in a Docker Container |
 [`docker-dropbox`](https://github.com/zcalusic/docker-dropbox) | Run Dropbox Linux client in a Docker container |
 [`docker-syncthing`](https://github.com/zcalusic/docker-syncthing) | Run Syncthing in a Docker container |
+[`docker-gogs`](https://github.com/zcalusic/docker-gogs) | Run Gogs in a Docker Container |
+[`docker-redis`](https://github.com/zcalusic/docker-redis) | Run Redis in a Docker Container |
+[`docker-dynomite`](https://github.com/zcalusic/docker-dynomite) | Run Dynomite in a Docker container |
+[`docker-transmission`](https://github.com/zcalusic/docker-transmission) | Run Transmission in a Docker Container |
 [`docker-logspout`](https://github.com/zcalusic/docker-logspout) | Run Logspout in a Docker Container |
 [`docker-rest-server`](https://github.com/zcalusic/docker-rest-server) | Run Rest Server in a Docker Container |
 [`docker-observium-ce`](https://github.com/zcalusic/docker-observium-ce) | Run Observium Community Edition in a Docker container |
