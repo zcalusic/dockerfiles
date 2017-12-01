@@ -97,10 +97,6 @@ Project | Description |
 [`docker-atlassian-bamboo`](https://github.com/zcalusic/docker-atlassian-bamboo) | Run Atlassian Bamboo in a Docker Container |
 [`docker-atlassian-confluence`](https://github.com/zcalusic/docker-atlassian-confluence) | Run Atlassian Confluence in a Docker Container |
 [`docker-atlassian-jira-core`](https://github.com/zcalusic/docker-atlassian-jira-core) | Run Atlassian JIRA Core in a Docker Container |
-[`docker-elastic-elasticsearch`](https://github.com/zcalusic/docker-elastic-elasticsearch) | Run Elastic Elasticsearch in a Docker Container |
-[`docker-elastic-logstash`](https://github.com/zcalusic/docker-elastic-logstash) | Run Elastic Logstash in a Docker Container |
-[`docker-elastic-kibana`](https://github.com/zcalusic/docker-elastic-kibana) | Run Elastic Kibana in a Docker Container |
-[`docker-elastic-filebeat`](https://github.com/zcalusic/docker-elastic-filebeat) | Run Elastic Filebeat in a Docker Container |
 
 ## License
 
