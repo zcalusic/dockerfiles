@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  syncthing:
+    container_name: syncthing
+    image: zcalusic/syncthing
+    restart: always
+    network_mode: host
+    hostname: atlas
+    volumes:
+      - "/home/someuser/.config/syncthing:/home/someuser/.config/syncthing"
+      - "/home/someuser/Sync:/home/someuser/Sync"
+    environment:
+      SYNCTHING_USER: someuser
+      SYNCTHING_UID: 1000
+      SYNCTHING_GID: 100
+      SYNCTHING_HOME: /home/someuser
