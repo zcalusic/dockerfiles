@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  observium:
+    image: zcalusic/observium-ce
+    restart: always
+    network_mode: host
+    volumes:
+      - "/opt/observium/rrd:/opt/observium/rrd"
+      - "/opt/observium/logs:/opt/observium/logs"
+    environment:
+      TZ: Etc/UTC
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_USER: username
+      DB_PASS: password
+      DB_NAME: observium
+      LISTEN_ADDR: 80
+      BASE_URL: http://observium.example.com/
