@@ -5,20 +5,9 @@
 
 DOCKER_IMAGE ?= zcalusic/dropbox
 
-.PHONY: default dropbox install uninstall docker_build docker_push clean
+.PHONY: default docker_build docker_push build install uninstall clean
 
-default: dropbox
-
-dropbox:
-	GOPATH=$(shell pwd) GOBIN=$(shell pwd)/usr/bin go install ./cmd/dropbox
-
-install: dropbox
-	docker pull zcalusic/dropbox
-	install -o root -g docker -m 2755 usr/bin/dropbox /usr/bin/dropbox
-
-uninstall:
-	-docker rmi -f zcalusic/dropbox
-	rm -f /usr/bin/dropbox
+default: docker_build
 
 docker_build:
 	docker pull zcalusic/debian-stretch
@@ -34,5 +23,21 @@ docker_push:
 	curl -X POST https://hooks.microbadger.com/images/zcalusic/dropbox/TlMSoYTkG4K_QCR88AjYP_McCyc=
 	@echo
 
+dropbox: dropbox.go
+	go get -v github.com/golang/dep/cmd/dep
+	dep ensure
+	go build -v
+
+build:
+	docker run --rm -v $(shell pwd):/go/src/dropbox -w /go/src/dropbox golang:stretch make dropbox
+
+install: build
+	docker pull zcalusic/dropbox
+	install -o root -g docker -m 2755 dropbox /usr/bin/dropbox
+
+uninstall:
+	rm -f /usr/bin/dropbox
+	-docker rmi -f zcalusic/dropbox
+
 clean:
-	rm -rf pkg usr
+	rm -rf dropbox vendor
