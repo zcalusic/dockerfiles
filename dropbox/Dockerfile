@@ -23,9 +23,8 @@ RUN apt-get update \
     && wget "https://www.dropbox.com/download?dl=packages/dropbox.py" -O /usr/bin/dropbox \
     && chmod 755 /usr/bin/dropbox \
     && mkdir -p /opt/dropbox \
-    && wget --dot-style=mega -O- "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzo --strip-components=1 -C /opt/dropbox \
-    && ln -s /opt/dropbox/dropboxd /usr/bin
+    && wget --dot-style=mega -O- "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzo --strip-components=1 -C /opt/dropbox
 
 EXPOSE 17500
 
-CMD [ "dropboxd" ]
+CMD [ "/opt/dropbox/dropboxd" ]
