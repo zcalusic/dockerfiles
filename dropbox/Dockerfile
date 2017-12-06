@@ -25,6 +25,8 @@ RUN apt-get update \
     && mkdir -p /opt/dropbox \
     && wget --dot-style=mega -O- "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzo --strip-components=1 -C /opt/dropbox
 
+STOPSIGNAL SIGKILL
+
 EXPOSE 17500
 
 CMD [ "/opt/dropbox/dropboxd" ]
