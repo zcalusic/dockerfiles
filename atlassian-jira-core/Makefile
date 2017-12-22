@@ -4,24 +4,15 @@
 #
 
 DOCKER_IMAGE ?= zcalusic/atlassian-jira-core
-JAVA_PACKAGE ?= server-jre-8u152-linux-x64.tar.gz
 
 JIRA_CURRENT_VERSION := $(strip $(shell wget -qO- https://my.atlassian.com/download/feeds/current/jira-core.json | sed -e 's/^downloads(//' -e 's/)$$//' | jq -r '.[0] | .version'))
 JIRA_VERSION ?= $(JIRA_CURRENT_VERSION)
 
-.PHONY: default server_jre docker_build docker_push clean
+.PHONY: default docker_build docker_push
 
 default: docker_build
 
-server_jre:
-ifeq ($(wildcard $(JAVA_PACKAGE)),)
-	$(error Please download Server JRE Linux x64 tar.gz archive $(JAVA_PACKAGE) from http://www.oracle.com/technetwork/java/javase/downloads/server-jre8-downloads-2133154.html)
-endif
-	rm -rf java
-	mkdir java
-	tar xz --strip-components=1 -C java -f $(JAVA_PACKAGE)
-
-docker_build: server_jre
+docker_build:
 	docker pull zcalusic/debian-stretch
 	docker build \
 		--build-arg URL=$(strip $(shell git config --get remote.origin.url | sed 's/\.git$$//')) \
@@ -41,6 +32,3 @@ ifeq ($(JIRA_VERSION),$(JIRA_CURRENT_VERSION))
 endif
 	curl -X POST https://hooks.microbadger.com/images/zcalusic/atlassian-jira-core/n5eBnkQCy6hhrs_ijlQGeD2CK7U=
 	@echo
-
-clean:
-	rm -rf *.tar.gz java
