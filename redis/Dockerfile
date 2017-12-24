@@ -1,7 +1,7 @@
 FROM zcalusic/debian-stretch as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-ENV REDIS_VERSION 4.0.5
+ENV REDIS_VERSION 4.0.6
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
