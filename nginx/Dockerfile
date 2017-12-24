@@ -1,7 +1,7 @@
 FROM zcalusic/debian-stretch as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-ENV NGINX_VERSION 1.12.2
+ENV NGINX_VERSION 1.13.7
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
