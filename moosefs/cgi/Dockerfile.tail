@@ -1,0 +1,14 @@
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       man \
+       python \
+    && rm -rf /var/lib/apt/lists/*
+
+EXPOSE 9425
+
+COPY entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT [ "dumb-init" ]
+
+CMD [ "/entrypoint.sh" ]
