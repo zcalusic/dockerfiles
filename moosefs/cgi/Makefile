@@ -24,6 +24,8 @@ docker_build:
 
 docker_push:
 	docker push $(DOCKER_IMAGE):$(MOOSEFS_VERSION)
+	curl -X POST https://hooks.microbadger.com/images/zcalusic/moosefs-cgi/bBEECIpFo3RzTfG0FAQT82hCX_c=
+	@echo
 
 clean:
 	rm -f Dockerfile
