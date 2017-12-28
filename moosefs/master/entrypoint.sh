@@ -14,8 +14,8 @@ set -eu
 [ -f "/etc/mfs/mfsexports.cfg" ] || cp -a /etc/mfs.default/mfsexports.cfg.sample /etc/mfs/mfsexports.cfg
 [ -f "/etc/mfs/mfstopology.cfg" ] || cp -a /etc/mfs.default/mfstopology.cfg.sample /etc/mfs/mfstopology.cfg
 [ -f "/var/lib/mfs/metadata.mfs.empty" ] || cp -a /var/lib/mfs.default/metadata.mfs.empty /var/lib/mfs/metadata.mfs.empty
-[ -f "/var/lib/mfs/metadata.mfs" ] || cp -a /var/lib/mfs/metadata.mfs.empty /var/lib/mfs/metadata.mfs
+[ -f "/var/lib/mfs/metadata.mfs" -o -f "/var/lib/mfs/metadata.mfs.back" ] || cp -a /var/lib/mfs/metadata.mfs.empty /var/lib/mfs/metadata.mfs
 
 chown -R "$MOOSEFS_USER:$MOOSEFS_GROUP" /var/lib/mfs
 
-exec mfsmaster -f
+exec mfsmaster -f -a
