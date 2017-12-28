@@ -18,6 +18,4 @@ LABEL org.label-schema.name="MooseFS CGI monitor in Docker" \
       org.label-schema.schema-version="1.0"
 
 ENV MOOSEFS_VERSION $MOOSEFS_VERSION
-ENV MOOSEFS_USER daemon
-ENV MOOSEFS_GROUP daemon
 

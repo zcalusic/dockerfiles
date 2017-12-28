@@ -1,10 +1,11 @@
 server {
 	listen 9425 default_server;
 	server_name _;
-	access_log /dev/stdout;
-	error_log /dev/stderr;
 	root /usr/share/mfscgi;
 	index index.html;
+
+	access_log /dev/stdout;
+	error_log /dev/stderr;
 
 	location ~ \.cgi$ {
 		include fastcgi.conf;
