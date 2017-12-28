@@ -7,6 +7,13 @@
 
 set -eu
 
+: "${TZ:=Etc/UTC}"
+
+# Timezone
+echo "$TZ" > /etc/timezone
+ln -nsf "/usr/share/zoneinfo/$TZ" /etc/localtime
+dpkg-reconfigure tzdata
+
 /etc/init.d/fcgiwrap start
 
 exec nginx -g "daemon off;"
