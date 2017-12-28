@@ -7,8 +7,6 @@
 
 set -eu
 
-[ -d "/var/lib/mfs" ] || exit 1
+/etc/init.d/fcgiwrap start
 
-chown -R "$MOOSEFS_USER:$MOOSEFS_GROUP" /var/lib/mfs
-
-exec mfscgiserv -f
+exec nginx -g "daemon off;"

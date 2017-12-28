@@ -20,6 +20,6 @@ RUN apt-get update \
     && mkdir -p /usr/src/moosefs \
     && wget --dot-style=mega -O- "https://github.com/moosefs/moosefs/archive/v${MOOSEFS_VERSION}.tar.gz" | tar xz --strip-components=1 -C /usr/src/moosefs \
     && cd /usr/src/moosefs \
-    && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var/lib --with-default-user="$MOOSEFS_USER" --with-default-group="$MOOSEFS_GROUP" --disable-mfssupervisor --disable-mfsmount --disable-mfscli --disable-mfsnetdump \
+    && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var/lib --with-default-user="$MOOSEFS_USER" --with-default-group="$MOOSEFS_GROUP" --disable-mfssupervisor --disable-mfsmount --disable-mfscli --disable-mfsnetdump --disable-mfscgiserv \
     && make -j$(nproc) install
 
