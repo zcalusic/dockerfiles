@@ -1,7 +1,7 @@
 FROM zcalusic/debian-stretch as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-ENV DYNOMITE_VERSION 0.6.3
+ENV DYNOMITE_VERSION 0.6.4
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
