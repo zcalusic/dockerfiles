@@ -8,7 +8,7 @@ ENV BAMBOO_VERSION $BAMBOO_VERSION
 ENV BAMBOO_INSTALL_DIR /opt/atlassian/bamboo
 
 RUN mkdir "$JAVA_HOME" \
-    && wget --dot-style=mega -O- --header "Cookie: oraclelicense=a" "http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/server-jre-8u151-linux-x64.tar.gz" | tar xz --strip-components=1 -C "$JAVA_HOME" \
+    && wget --dot-style=mega -O- --header "Cookie: oraclelicense=a" "http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/server-jre-8u161-linux-x64.tar.gz" | tar xz --strip-components=1 -C "$JAVA_HOME" \
     && mkdir -p "$BAMBOO_INSTALL_DIR" \
     && wget --dot-style=mega -O- "https://downloads.atlassian.com/software/bamboo/downloads/atlassian-bamboo-${BAMBOO_VERSION}.tar.gz" | tar xz --strip-components=1 -C "$BAMBOO_INSTALL_DIR" \
     && sed -i -e 's/port="8085"/port="8085" secure="${catalinaConnectorSecure}" scheme="${catalinaConnectorScheme}" proxyName="${catalinaConnectorProxyName}" proxyPort="${catalinaConnectorProxyPort}"/' "$BAMBOO_INSTALL_DIR/conf/server.xml"
