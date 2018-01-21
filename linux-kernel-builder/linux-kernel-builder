@@ -1,0 +1,20 @@
+#! /bin/bash
+#
+# Copyright © 2018 Zlatko Čalušić
+#
+# Use of this source code is governed by an MIT-style license that can be found in the LICENSE file.
+#
+
+set -e
+
+if [[ "$#" != 1 ]]
+then
+    echo "Usage: linux-kernel-builder <version>" >&2
+    exit 1
+fi
+
+version="$1"
+
+mkdir -p /tmp/kernel
+
+exec docker run -it --rm -u "$(id -u):$(id -g)" -v /tmp/kernel:/tmp/kernel -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro -e DEBFULLNAME -e DEBEMAIL --hostname "$(hostname)" --name linux-kernel-builder zcalusic/linux-kernel-builder /build.sh "$version"

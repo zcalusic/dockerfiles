@@ -1,0 +1,108 @@
+#! /bin/bash
+#
+# Copyright © 2018 Zlatko Čalušić
+#
+# Use of this source code is governed by an MIT-style license that can be found in the LICENSE file.
+#
+# Inspired by builddeb 1.3
+# Copyright 2003 Wichert Akkerman <wichert@wiggy.net>
+#
+
+set -e
+
+mkdir -p debian/tmp/DEBIAN debian/tmp/boot debian/tmp/lib
+
+cp System.map "debian/tmp/boot/System.map-$KERNELRELEASE"
+cp .config "debian/tmp/boot/config-$KERNELRELEASE"
+cp arch/x86/boot/bzImage "debian/tmp/boot/vmlinuz-$KERNELRELEASE"
+
+INSTALL_MOD_PATH=debian/tmp $MAKE modules_install
+rm -f "debian/tmp/lib/modules/$KERNELRELEASE/build"
+rm -f "debian/tmp/lib/modules/$KERNELRELEASE/source"
+rm -rf "debian/tmp/lib/firmware"
+
+for script in postinst postrm preinst prerm ; do
+    cat <<EOF > "debian/tmp/DEBIAN/$script"
+#!/bin/sh
+
+set -e
+
+EOF
+
+    if [ $script = "postinst" ]; then
+	echo "depmod $KERNELRELEASE" >> "debian/tmp/DEBIAN/$script"
+	echo >> "debian/tmp/DEBIAN/$script"
+    elif [ $script = "prerm" ]; then
+	echo "rm -f /lib/modules/$KERNELRELEASE/modules.*" >> "debian/tmp/DEBIAN/$script"
+	echo >> "debian/tmp/DEBIAN/$script"
+    fi
+
+    cat <<EOF >> "debian/tmp/DEBIAN/$script"
+if [ -d /etc/kernel/$script.d ]; then
+   DEB_MAINT_PARAMS="\$*" run-parts --report --exit-on-error --arg="$KERNELRELEASE" \
+             --arg="/boot/vmlinuz-$KERNELRELEASE" /etc/kernel/$script.d
+fi
+
+exit 0
+EOF
+	chmod 755 "debian/tmp/DEBIAN/$script"
+done
+
+cat <<EOF > debian/changelog
+linux ($VERSION.$PATCHLEVEL.$SUBLEVEL-1) unstable; urgency=low
+
+  * Custom built Linux kernel.
+
+ -- $DEBFULLNAME <$DEBEMAIL>  $(date -R)
+EOF
+
+cat <<EOF > debian/copyright
+This is a packaged upstream version of the Linux kernel.
+
+The sources may be found at most Linux archive sites, including:
+https://www.kernel.org/pub/linux/kernel
+
+Copyright: 1991 - 2018 Linus Torvalds and others.
+
+The git repository for mainline kernel development is at:
+git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; version 2 dated June, 1991.
+
+On Debian GNU/Linux systems, the complete text of the GNU General Public
+License version 2 can be found in \`/usr/share/common-licenses/GPL-2'.
+EOF
+
+cat <<EOF > debian/control
+Source: linux
+Section: kernel
+Priority: optional
+Maintainer: $DEBFULLNAME <$DEBEMAIL>
+Build-Depends: bc, libelf-dev
+Homepage: https://www.kernel.org/
+
+Package: linux-image-$VERSION.$PATCHLEVEL.0$EXTRAVERSION
+Architecture: amd64
+Depends: kmod, linux-base (>= 4.3~), initramfs-tools (>= 0.120+deb8u2) | linux-initramfs-tool
+Recommends: firmware-linux-free, irqbalance
+Description: Linux $VERSION.$PATCHLEVEL for 64-bit PCs
+ The Linux kernel $VERSION.$PATCHLEVEL and modules for use on PCs with AMD64, Intel 64 or
+ VIA Nano processors.
+ .
+ This kernel also runs on a Xen hypervisor.  It supports both privileged
+ (dom0) and unprivileged (domU) operation.
+EOF
+
+mkdir -p "debian/tmp/usr/share/doc/linux-image-$KERNELRELEASE"
+cp debian/copyright "debian/tmp/usr/share/doc/linux-image-$KERNELRELEASE/"
+cp debian/changelog "debian/tmp/usr/share/doc/linux-image-$KERNELRELEASE/changelog.Debian"
+gzip -9 "debian/tmp/usr/share/doc/linux-image-$KERNELRELEASE/changelog.Debian"
+sh -c "cd debian/tmp; find . -type f ! -path './DEBIAN/*' -printf '%P\0' | xargs -r0 md5sum > DEBIAN/md5sums"
+
+chown -R root:root debian/tmp
+dpkg-gencontrol
+dpkg -b debian/tmp /tmp/kernel
+
+exit 0
