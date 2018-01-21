@@ -20,3 +20,5 @@ docker_build:
 
 docker_push:
 	docker push $(DOCKER_IMAGE):latest
+	curl -X POST https://hooks.microbadger.com/images/zcalusic/linux-kernel-builder/DVXL-xSlWCgpNhuYuI5GBPFKGLE=
+	@echo
