@@ -3,7 +3,7 @@
 # Use of this source code is governed by an MIT-style license that can be found in the LICENSE file.
 #
 
-MOOSEFS_VERSION ?= 3.0.99
+MOOSEFS_VERSION ?= 3.0.100
 
 export MOOSEFS_VERSION
 
