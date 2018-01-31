@@ -22,7 +22,7 @@ RUN apt-get update \
        libisl-dev \
        libmpc-dev \
     && mkdir -p /usr/src/gcc \
-    && wget --dot-style=mega -O- https://ftp.gwdg.de/pub/misc/gcc/snapshots/7.3.0-RC-20180117/gcc-7.3.0-RC-20180117.tar.xz | tar xJ --strip-components=1 -C /usr/src/gcc \
+    && wget --dot-style=mega -O- https://ftp.gwdg.de/pub/misc/gcc/snapshots/7.3.0-RC-20180122/gcc-7.3.0-RC-20180122.tar.xz | tar xJ --strip-components=1 -C /usr/src/gcc \
     && cd /usr/src/gcc \
     && ./configure --build="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" --disable-multilib --enable-languages=c \
     && make -j "$(nproc)" \
