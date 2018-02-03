@@ -16,32 +16,18 @@ LABEL org.label-schema.name="Build Linux kernel Debian package" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0"
 
+COPY sid.list /etc/apt/sources.list.d/sid.list
+COPY sid.pref /etc/apt/preferences.d/sid.pref
+
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-       build-essential \
-       libisl-dev \
-       libmpc-dev \
-    && mkdir -p /usr/src/gcc \
-    && wget --dot-style=mega -O- https://ftp.gwdg.de/pub/misc/gcc/snapshots/7.3.0-RC-20180122/gcc-7.3.0-RC-20180122.tar.xz | tar xJ --strip-components=1 -C /usr/src/gcc \
-    && cd /usr/src/gcc \
-    && ./configure --build="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" --disable-multilib --enable-languages=c \
-    && make -j "$(nproc)" \
-    && make install-strip \
-    && cd / \
-    && rm -rf /usr/src/gcc \
-    && apt-get purge -y \
-       build-essential \
-       libisl-dev \
-       libmpc-dev \
-    && apt-get autoremove -y --purge \
     && apt-get install -y --no-install-recommends \
        bc \
        dpkg-dev \
        fakeroot \
        libc6-dev \
        libelf-dev \
-       libisl15 \
-       libmpc3 \
+    && apt-get install -y --no-install-recommends -t sid \
+       gcc \
     && rm -rf /var/lib/apt/lists/*
 
 COPY build.sh /build.sh
