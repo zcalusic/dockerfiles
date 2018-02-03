@@ -12,17 +12,29 @@ Build stable and secure Linux kernel 4.14 Debian image optimized for desktop usa
 ## Features
 
 * Virgin Linus source, no patches applied
-* Compiled with gcc 7.3.0-RC, provides protection from Spectre v2 CPU vulnerability
+* Compiled with gcc 7.3, provides protection from Spectre v2 CPU vulnerability
 * Configuration based on the official Debian package, with the following improvements:
   * preemptable kernel for better desktop experience
   * 64 bit clean (no support for 32 bit), almost 10 degrees cooler idle CPU?!
-  * security features against Meltdown/Spectre v2 CPU bugs turned on (kpti/retpoline)
+  * security features against Meltdown/Spectre v2 CPU bugs turned on (PTI/retpoline)
   * better support for laptop touchpads
+
+```
+for file in /sys/devices/system/cpu/vulnerabilities/*
+do
+    echo -n "$(basename $file): "
+    cat $file
+done
+
+meltdown: Mitigation: PTI
+spectre_v1: Vulnerable
+spectre_v2: Mitigation: Full generic retpoline
+```
 
 ## Usage
 
 ```
-linux-kernel-builder 4.14.14
+linux-kernel-builder 4.14.16
 ```
 
 After the build finishes, you can find the Debian image in the /tmp/kernel folder.
