@@ -7,7 +7,7 @@
 [![Commit](https://images.microbadger.com/badges/commit/zcalusic/rest-server-builder.svg)](https://microbadger.com/images/zcalusic/rest-server-builder/)
 [![License](https://images.microbadger.com/badges/license/zcalusic/rest-server-builder.svg)](https://microbadger.com/images/zcalusic/rest-server-builder/)
 
-Using the official Docker [golang](https://hub.docker.com/_/golang/) container, tag 1.9-stretch, Go version 1.9 based on Debian 9 Stretch, amd64 architecture.
+Using the latest official Docker [golang](https://hub.docker.com/_/golang/) container, based on Debian 9 Stretch, amd64 architecture.
 
 ## Usage
 
@@ -17,10 +17,10 @@ Pull image:
 sudo docker pull zcalusic/rest-server-builder
 ```
 
-Build binaries for Rest Server version 0.9.4 (for example):
+Build binaries for Rest Server version 0.9.6 (for example):
 
 ```
-sudo docker run -it --rm -v /tmp/artifacts:/go/bin zcalusic/rest-server-builder build.sh 0.9.4
+sudo docker run --rm -it -v /tmp/artifacts:/go/bin zcalusic/rest-server-builder build.sh 0.9.6
 ```
 
 The binaries will be created in /tmp/artifacts directory.  If all went well, then you've produced exactly the same binaries as in the official release.
