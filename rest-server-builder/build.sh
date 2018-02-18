@@ -5,7 +5,7 @@
 # Use of this source code is governed by an MIT-style license that can be found in the LICENSE file.
 #
 
-set -e
+set -eu
 
 if [[ "$#" != 1 ]]
 then
@@ -15,14 +15,11 @@ fi
 
 version="$1"
 release="rest-server-${version}"
-bin="/go/bin"
-src="/go/src"
 
-wget -q "https://github.com/restic/rest-server/archive/v${version}.tar.gz" -O "${bin}/${release}.tar.gz"
+wget -nv "https://codeload.github.com/restic/rest-server/tar.gz/v${version}" -O "${GOPATH}/bin/${release}.tar.gz"
+tar xf "${GOPATH}/bin/${release}.tar.gz" -C "${GOPATH}/src"
 
-cd $src
-tar xf "${bin}/${release}.tar.gz"
-cd "$release"
+cd "src/${release}"
 
 # https://golang.org/doc/install/source#environment
 
@@ -72,15 +69,17 @@ do
     then
         zip -q9 "${filename%.exe}.zip" "$filename"
         rm "$filename"
-        mv "${filename%.exe}.zip" /go/bin
+        mv "${filename%.exe}.zip" "${GOPATH}/bin"
     else
         gzip -q9 "$filename"
 	chmod 644 "${filename}.gz"
-        mv "${filename}.gz" /go/bin
+        mv "${filename}.gz" "${GOPATH}/bin"
     fi
 done
 
-cd $bin
-sha256sum rest-server-*.{gz,zip} "${release}.tar.gz" > sha256sums.txt
+cd "${GOPATH}/bin"
+sha256sum rest-server-*.{gz,zip} > sha256sums.txt
+
+echo "The binaries for this release have been built with Go ${GOLANG_VERSION}."
 
 exit 0
