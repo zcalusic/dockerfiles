@@ -44,4 +44,4 @@ COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT [ "dumb-init" ]
 
-CMD ["/entrypoint.sh"]
+CMD [ "/entrypoint.sh" ]
