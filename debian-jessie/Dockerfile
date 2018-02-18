@@ -40,6 +40,6 @@ RUN apt-get update \
        vim-tiny \
        wget \
        xmlstarlet \
-    && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/stretch.list /etc/apt/preferences.d/stretch-lower-prio
+    && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/stretch.list /etc/apt/preferences.d/stretch.pref
 
 COPY sources.list /etc/apt/sources.list
