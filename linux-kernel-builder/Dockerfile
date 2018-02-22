@@ -16,18 +16,14 @@ LABEL org.label-schema.name="Build Linux kernel Debian package" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0"
 
-COPY sid.list /etc/apt/sources.list.d/sid.list
-COPY sid.pref /etc/apt/preferences.d/sid.pref
-
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        bc \
        dpkg-dev \
        fakeroot \
+       gcc \
        libc6-dev \
        libelf-dev \
-    && apt-get install -y --no-install-recommends -t sid \
-       gcc \
     && rm -rf /var/lib/apt/lists/*
 
 COPY build.sh /build.sh
