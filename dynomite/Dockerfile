@@ -39,12 +39,15 @@ LABEL org.label-schema.name="Dynomite in Docker" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0"
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       binutils \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir /conf
+
 COPY --from=builder /usr/src/dynomite/src/dynomite /usr/sbin/dynomite
 COPY --from=builder /usr/src/dynomite/src/dynomite-test /usr/sbin/dynomite-test
 COPY --from=builder /usr/src/dynomite/src/tools/dynomite-hash-tool /usr/bin/dynomite-hash-tool
-
-RUN mkdir /conf
-
 COPY --from=builder /usr/src/dynomite/conf /conf
 
 COPY dynomite.yml /conf/dynomite.yml
