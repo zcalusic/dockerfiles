@@ -27,6 +27,13 @@ echo "date.timezone = \"$TZ\"" > /etc/php/7.0/mods-available/local.ini
 ln -nsf /etc/php/7.0/mods-available/local.ini /etc/php/7.0/cli/conf.d/20-local.ini
 ln -nsf /etc/php/7.0/mods-available/local.ini /etc/php/7.0/fpm/conf.d/20-local.ini
 
+# PHP CLI opcache
+mkdir /dev/shm/php-opcache
+chown www-data:www-data /dev/shm/php-opcache
+echo "opcache.enable_cli=1" > /etc/php/7.0/mods-available/local_cli.ini
+echo "opcache.file_cache=/dev/shm/php-opcache" >> /etc/php/7.0/mods-available/local_cli.ini
+ln -nsf /etc/php/7.0/mods-available/local_cli.ini /etc/php/7.0/cli/conf.d/20-local_cli.ini
+
 # PHP logs
 sed -i -e "s/^error_log = \/var\/log\/php7\.0-fpm\.log$/error_log = $(echo "$OBSERVIUM_HOME" | sed -e 's/\//\\\//g')\/logs\/php7.0-fpm.log/" /etc/php/7.0/fpm/php-fpm.conf
 
