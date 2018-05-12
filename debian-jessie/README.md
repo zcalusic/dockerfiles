@@ -29,6 +29,8 @@ Based on the official Debian 8 Jessie Docker base image.
     * minimal init system for containers, killing zombies, redirecting signals... (borrowed from Stretch)
   * `gosu`
     * robust setuid + setgid + setgroups + exec with sane tty and signal forwarding behavior (borrowed from Stretch)
+  * `iputils-ping`
+    * tools to test the reachability of network hosts
   * `jq`
     * lightweight and flexible command-line JSON processor
   * `less`

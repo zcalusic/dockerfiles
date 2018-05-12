@@ -31,6 +31,7 @@ RUN apt-get update \
        dumb-init \
        gnupg \
        gosu \
+       iputils-ping \
        jq \
        less \
        net-tools \
