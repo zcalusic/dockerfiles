@@ -7,8 +7,6 @@ ENV JAVA_HOME /usr/java
 ENV BAMBOO_VERSION $BAMBOO_VERSION
 ENV BAMBOO_INSTALL_DIR /opt/atlassian/bamboo
 
-
-
 RUN mkdir "$JAVA_HOME" \
     && wget --dot-style=mega -O- --header "Cookie: oraclelicense=a" "http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/server-jre-8u171-linux-x64.tar.gz" | tar xz --strip-components=1 -C "$JAVA_HOME" \
     && mkdir -p "$BAMBOO_INSTALL_DIR" \
@@ -45,8 +43,11 @@ ENV PATH $JAVA_HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:
 COPY --from=builder $JAVA_HOME $JAVA_HOME
 COPY --from=builder $BAMBOO_INSTALL_DIR $BAMBOO_INSTALL_DIR
 
-RUN apt-get update \
+RUN echo "deb https://download.docker.com/linux/debian stretch stable edge" > /etc/apt/sources.list.d/docker-edge.list \
+    && apt-key adv --recv-keys --keyserver hkp://ipv4.pool.sks-keyservers.net F273FCD8 \
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
+       docker-ce \
        git \
        openssh-client \
     && rm -rf /var/lib/apt/lists/* \
