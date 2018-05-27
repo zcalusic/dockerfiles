@@ -1,7 +1,7 @@
 FROM golang:stretch as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-RUN go get -v github.com/gogits/gogs
+RUN go get -v github.com/gogs/gogs
 
 FROM zcalusic/debian-stretch
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
@@ -12,7 +12,7 @@ ARG VCS_REF
 ARG BUILD_DATE
 
 LABEL org.label-schema.name="Gogs in Docker" \
-      org.label-schema.description="Run Gogs (development version) in a Docker container" \
+      org.label-schema.description="Run Gogs in a Docker container" \
       org.label-schema.vendor="Zlatko Čalušić" \
       org.label-schema.license="MIT" \
       org.label-schema.url=$URL \
@@ -34,9 +34,9 @@ RUN apt-get update \
     && usermod -d "$GOGS_WORK_DIR" daemon
 
 COPY --from=builder /go/bin/gogs $GOGS_WORK_DIR
-COPY --from=builder /go/src/github.com/gogits/gogs/conf $GOGS_WORK_DIR/conf
-COPY --from=builder /go/src/github.com/gogits/gogs/public $GOGS_WORK_DIR/public
-COPY --from=builder /go/src/github.com/gogits/gogs/templates $GOGS_WORK_DIR/templates
+COPY --from=builder /go/src/github.com/gogs/gogs/conf $GOGS_WORK_DIR/conf
+COPY --from=builder /go/src/github.com/gogs/gogs/public $GOGS_WORK_DIR/public
+COPY --from=builder /go/src/github.com/gogs/gogs/templates $GOGS_WORK_DIR/templates
 
 EXPOSE 3000
 
