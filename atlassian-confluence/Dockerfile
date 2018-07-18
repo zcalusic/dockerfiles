@@ -8,7 +8,7 @@ ENV CONFLUENCE_VERSION $CONFLUENCE_VERSION
 ENV CONFLUENCE_INSTALL_DIR /opt/atlassian/confluence
 
 RUN mkdir "$JAVA_HOME" \
-    && wget --dot-style=mega -O- --header "Cookie: oraclelicense=a" "http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/server-jre-8u171-linux-x64.tar.gz" | tar xz --strip-components=1 -C "$JAVA_HOME" \
+    && wget --dot-style=mega -O- --header "Cookie: oraclelicense=a" "http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/server-jre-8u181-linux-x64.tar.gz" | tar xz --strip-components=1 -C "$JAVA_HOME" \
     && mkdir -p "$CONFLUENCE_INSTALL_DIR" \
     && wget --dot-style=mega -O- "https://downloads.atlassian.com/software/confluence/downloads/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz" | tar xz --strip-components=1 -C "$CONFLUENCE_INSTALL_DIR" \
     && sed -i -e 's/-Xms\([0-9]\+[kmg]\) -Xmx\([0-9]\+[kmg]\)/-Xms\${JVM_MINIMUM_MEMORY:=\1} -Xmx\${JVM_MAXIMUM_MEMORY:=\2} \${JVM_SUPPORT_RECOMMENDED_ARGS} -Dconfluence.home=\${CONFLUENCE_HOME}/g' "$CONFLUENCE_INSTALL_DIR/bin/setenv.sh" \
