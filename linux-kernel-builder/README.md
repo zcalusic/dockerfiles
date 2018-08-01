@@ -11,7 +11,7 @@ Build stable and secure Linux kernel 4.14 Debian image optimized for desktop usa
 
 ## Features
 
-* Compiled with gcc 8.1
+* Compiled with gcc 8.2
 * Configuration based on the official Debian package, with the following improvements:
   * preemptable kernel for better desktop experience
   * 64 bit clean (no support for 32 bit)
