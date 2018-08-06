@@ -9,28 +9,52 @@
 
 This Docker container makes it easy to mount your pCloud storage.  Learn more about pCloud: <https://www.pcloud.com/>
 
-## Usage
-
-Pull image:
+## Pull image
 
 ```
 sudo docker pull zcalusic/pcloud
 ```
 
-Run container:
+## Linking to pCloud account on first start
+
+You need to mount host directory that will persist pCloud cache files in `pcloud-cache-dir`, and pCloud storage data will be available inside container in `pcloud-mount-dir`.  Adapt these paths to your environment before the initial run:
+
+```
+sudo docker run -it \
+     --privileged \
+     -v pcloud-cache-dir:/root/.pcloud \
+     --name pcloud \
+     zcalusic/pcloud \
+     pcloudcc -u username@example.com -s -m pcloud-mount-dir
+```
+
+Enter password when prompted:
+
+```
+pCloud console client v.2.0.1
+Down: Everything Downloaded| Up: Everything Uploaded, status is LOGIN_REQUIRED
+Please, enter password
+```
+
+Wait for the initial sync to complete, indicated by:
+
+```
+Down: Everything Downloaded| Up: Everything Uploaded, status is READY
+```
+
+## Running container
 
 ```
 sudo docker run -d \
-     -v your-data-dir:/root/.pcloud \
+     --privileged \
+     -v pcloud-cache-dir:/root/.pcloud \
      --name pcloud \
-     zcalusic/pcloud
+     zcalusic/pcloud \
+     pcloudcc -u username@example.com
 ```
 
-You need to mount host directory that will persist pCloud configuration & cache files.
 
 ## Building container image
-
-Build image:
 
 ```
 sudo make docker_build
