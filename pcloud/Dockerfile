@@ -38,7 +38,7 @@ LABEL org.label-schema.name="pCloud in Docker" \
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       libfuse2 \
+       fuse \
        lsb-release \
     && rm -rf /var/lib/apt/lists/*
 
