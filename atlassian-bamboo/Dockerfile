@@ -47,6 +47,7 @@ RUN echo "deb https://download.docker.com/linux/debian stretch stable edge" > /e
     && apt-key adv --recv-keys --keyserver hkp://ipv4.pool.sks-keyservers.net F273FCD8 \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
+       build-essential \
        docker-ce \
        git \
        openssh-client \
