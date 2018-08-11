@@ -21,8 +21,7 @@ RUN apt-get update \
     && mkdir build \
     && cd build \
     && cmake -D CMAKE_INSTALL_PREFIX=/usr .. \
-    && make -j "$(nproc)" install \
-    && strip /usr/bin/transmission-daemon \
+    && make -j "$(nproc)" install/strip \
     && gzip -9 /usr/share/man/man1/transmission-daemon.1
 
 FROM zcalusic/debian-stretch
