@@ -1,3 +1,30 @@
+FROM zcalusic/debian-stretch as builder
+MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
+
+ENV TRANSMISSION_VERSION 2.94
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       cmake \
+       g++ \
+       git \
+       libcurl4-gnutls-dev \
+       libevent-dev \
+       libssl-dev \
+       make \
+       patch \
+       zlib1g-dev \
+    && cd /usr/src \
+    && git clone https://github.com/transmission/transmission \
+    && cd transmission \
+    && git checkout ${TRANSMISSION_VERSION} \
+    && mkdir build \
+    && cd build \
+    && cmake -D CMAKE_INSTALL_PREFIX=/usr .. \
+    && make -j "$(nproc)" install \
+    && strip /usr/bin/transmission-daemon \
+    && gzip -9 /usr/share/man/man1/transmission-daemon.1
+
 FROM zcalusic/debian-stretch
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
@@ -18,9 +45,11 @@ LABEL org.label-schema.name="Transmission in Docker" \
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       transmission-cli \
-       transmission-daemon \
+       libevent-2.0-5 \
     && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /usr/bin/transmission-daemon /usr/bin/transmission-daemon
+COPY --from=builder /usr/share/man/man1/transmission-daemon.1.gz /usr/share/man/man1/transmission-daemon.1.gz
 
 EXPOSE 9091 51413 51413/udp
 
