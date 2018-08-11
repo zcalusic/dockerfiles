@@ -49,6 +49,7 @@ RUN apt-get update \
 
 COPY --from=builder /usr/bin/transmission-daemon /usr/bin/transmission-daemon
 COPY --from=builder /usr/share/man/man1/transmission-daemon.1.gz /usr/share/man/man1/transmission-daemon.1.gz
+COPY --from=builder /usr/share/transmission/web /usr/share/transmission/web
 
 EXPOSE 9091 51413 51413/udp
 
