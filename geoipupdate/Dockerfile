@@ -24,4 +24,4 @@ LABEL org.label-schema.name="GeoIP update in Docker" \
 COPY --from=builder /go/bin/geoipupdate /usr/bin/geoipupdate
 COPY GeoIP.conf /etc/GeoIP.conf
 
-CMD [ "geoipupdate", "-f", "/etc/GeoIP.conf" ]
+CMD [ "geoipupdate", "-v", "-f", "/etc/GeoIP.conf" ]
