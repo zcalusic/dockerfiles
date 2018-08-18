@@ -22,6 +22,7 @@ RUN apt-get update \
        dpkg-dev \
        fakeroot \
        gcc \
+       kmod \
        libc6-dev \
        libelf-dev \
     && rm -rf /var/lib/apt/lists/*
