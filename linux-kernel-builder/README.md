@@ -14,13 +14,14 @@ Build stable and secure Linux kernel 4.14 Debian image optimized for desktop usa
 * Compiled with gcc 8.2
 * Configuration based on the official Debian package, with the following improvements:
   * preemptable kernel for better desktop experience
-  * 64 bit clean (no support for 32 bit)
+  * 64 bit clean (32 bit not supported)
+  * swap not supported
   * better support for laptop touchpads
 
 ## Usage
 
 ```
-./linux-kernel-builder 4.14.59
+./linux-kernel-builder 4.14.65
 ```
 
 After the build finishes, you can find the Debian image in the /tmp/kernel folder.
