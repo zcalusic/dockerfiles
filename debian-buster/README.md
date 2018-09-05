@@ -45,8 +45,6 @@ Based on the official Debian 10 Buster Docker base image.
     * /proc file system utilities, indispensable
   * `telnet`
     * useful to help debug network issues
-  * `tzdata`
-    * time zone and daylight-saving time data, time is money
   * `vim-tiny`
     * vi editor - compact version
   * `wget`

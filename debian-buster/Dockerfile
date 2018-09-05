@@ -37,7 +37,6 @@ RUN apt-get update \
        netcat-openbsd \
        procps \
        telnet \
-       tzdata \
        vim-tiny \
        wget \
        xmlstarlet \
