@@ -32,7 +32,6 @@ RUN apt-get update \
        dnsutils \
        dumb-init \
        gosu \
-       iputils-ping \
        jq \
        less \
        net-tools \
