@@ -31,14 +31,12 @@ RUN apt-get update \
        dumb-init \
        gnupg \
        gosu \
-       iputils-ping \
        jq \
        less \
        net-tools \
        netcat-openbsd \
        procps \
        telnet \
-       tzdata \
        vim-tiny \
        wget \
        xmlstarlet \
