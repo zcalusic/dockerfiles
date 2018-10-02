@@ -20,7 +20,7 @@ RUN apt-get update \
     && git checkout ${TRANSMISSION_VERSION} \
     && mkdir build \
     && cd build \
-    && cmake -D CMAKE_INSTALL_PREFIX=/usr .. \
+    && cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr .. \
     && make -j "$(nproc)" install/strip \
     && gzip -9 /usr/share/man/man1/transmission-daemon.1
 
