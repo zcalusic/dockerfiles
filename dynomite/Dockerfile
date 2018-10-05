@@ -52,6 +52,8 @@ COPY --from=builder /usr/src/dynomite/conf /conf
 
 COPY dynomite.yml /conf/dynomite.yml
 
+STOPSIGNAL SIGKILL
+
 EXPOSE 8101 8102 22222
 
 CMD [ "gosu", "daemon:daemon", "dynomite" ]
