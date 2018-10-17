@@ -1,7 +1,12 @@
 FROM golang:stretch as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-RUN go get -v github.com/gogs/gogs
+ARG GOGS_VERSION
+
+RUN go get -d -v github.com/gogs/gogs \
+    && cd src/github.com/gogs/gogs \
+    && git checkout "$GOGS_VERSION" \
+    && go install -v
 
 FROM zcalusic/debian-stretch
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
