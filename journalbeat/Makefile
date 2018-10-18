@@ -31,3 +31,5 @@ docker_push:
 ifeq ($(JOURNALBEAT_VERSION),$(JOURNALBEAT_CURRENT_VERSION))
 	docker push $(DOCKER_IMAGE):latest
 endif
+	curl -X POST https://hooks.microbadger.com/images/zcalusic/journalbeat/dwHyQ_QNnRMyBDDZLxCeOY5FB3Q=
+	@echo
