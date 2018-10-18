@@ -33,7 +33,7 @@ ENV JOURNALBEAT_HOME /usr/share/journalbeat
 ENV PATH $JOURNALBEAT_HOME/bin:$PATH
 
 COPY --from=builder /go/bin/journalbeat $JOURNALBEAT_HOME/bin/journalbeat
-COPY journalbeat.yml $JOURNALBEAT_HOME/journalbeat.yml
+COPY --from=builder /go/src/github.com/mheese/journalbeat/config/journalbeat.yml $JOURNALBEAT_HOME/journalbeat.yml
 
 WORKDIR $JOURNALBEAT_HOME
 
