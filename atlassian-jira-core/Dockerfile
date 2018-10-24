@@ -8,7 +8,7 @@ ENV JIRA_VERSION $JIRA_VERSION
 ENV JIRA_INSTALL_DIR /opt/atlassian/jira
 
 RUN mkdir "$JAVA_HOME" \
-    && wget --dot-style=mega -O- --header "Cookie: oraclelicense=a" "http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/server-jre-8u181-linux-x64.tar.gz" | tar xz --strip-components=1 -C "$JAVA_HOME" \
+    && wget --dot-style=mega -O- --header "Cookie: oraclelicense=a" "http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/server-jre-8u191-linux-x64.tar.gz" | tar xz --strip-components=1 -C "$JAVA_HOME" \
     && mkdir -p "$JIRA_INSTALL_DIR" \
     && wget --dot-style=mega -O- "https://downloads.atlassian.com/software/jira/downloads/atlassian-jira-core-${JIRA_VERSION}.tar.gz" | tar xz --strip-components=1 -C "$JIRA_INSTALL_DIR" \
     && sed -i -e 's/port="8080"/port="8080" secure="${catalinaConnectorSecure}" scheme="${catalinaConnectorScheme}" proxyName="${catalinaConnectorProxyName}" proxyPort="${catalinaConnectorProxyPort}"/' "$JIRA_INSTALL_DIR/conf/server.xml"
