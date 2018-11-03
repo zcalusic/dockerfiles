@@ -3,7 +3,7 @@
 # Use of this source code is governed by an MIT-style license that can be found in the LICENSE file.
 #
 
-DOCKER_IMAGE ?= zcalusic/geoipupdate
+DOCKER_IMAGE ?= zcalusic/geoip-update
 
 .PHONY: default docker_build docker_push
 
@@ -21,5 +21,3 @@ docker_build:
 
 docker_push:
 	docker push $(DOCKER_IMAGE):latest
-	curl -X POST https://hooks.microbadger.com/images/zcalusic/geoipupdate/xzuFhvolPpI0JKOgCVRUlGR5HMo=
-	@echo
