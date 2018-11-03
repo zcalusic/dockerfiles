@@ -5,6 +5,9 @@
 
 DOCKER_IMAGE ?= zcalusic/transmission
 
+TRANSMISSION_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/transmission/transmission/releases/latest | jq -r '.tag_name'))
+TRANSMISSION_VERSION ?= $(TRANSMISSION_CURRENT_VERSION)
+
 .PHONY: default docker_build docker_push
 
 default: docker_build
@@ -16,9 +19,16 @@ docker_build:
 		--build-arg VCS_URL=$(strip $(shell git config --get remote.origin.url)) \
 		--build-arg VCS_REF=$(strip $(shell git rev-parse --short HEAD)) \
 		--build-arg BUILD_DATE=$(strip $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")) \
-		-t $(DOCKER_IMAGE) .
+		--build-arg TRANSMISSION_VERSION=$(TRANSMISSION_VERSION) \
+		-t $(DOCKER_IMAGE):$(TRANSMISSION_VERSION) .
+ifeq ($(TRANSMISSION_VERSION),$(TRANSMISSION_CURRENT_VERSION))
+	docker tag $(DOCKER_IMAGE):$(TRANSMISSION_VERSION) $(DOCKER_IMAGE):latest
+endif
 
 docker_push:
+	docker push $(DOCKER_IMAGE):$(TRANSMISSION_VERSION)
+ifeq ($(TRANSMISSION_VERSION),$(TRANSMISSION_CURRENT_VERSION))
 	docker push $(DOCKER_IMAGE):latest
+endif
 	curl -X POST https://hooks.microbadger.com/images/zcalusic/transmission/8FtbXE4FdDiGXHZcJSwSuJyGGvQ=
 	@echo

@@ -1,7 +1,7 @@
 FROM zcalusic/debian-stretch as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-ENV TRANSMISSION_VERSION 2.94
+ARG TRANSMISSION_VERSION
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
