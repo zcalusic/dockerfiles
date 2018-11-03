@@ -1,11 +1,11 @@
 FROM golang:stretch as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-RUN go get -v -d github.com/gliderlabs/logspout \
-    && go get -v -d github.com/looplab/logspout-logstash \
-    && cd "/go/src/github.com/gliderlabs/logspout" \
+RUN go get github.com/gliderlabs/logspout \
+    && go get github.com/looplab/logspout-logstash \
+    && cd src/github.com/gliderlabs/logspout \
     && sed -i -e "s/^)$/\t_ \"github.com\/looplab\/logspout-logstash\"\n)/" modules.go \
-    && go build -v -ldflags "-X main.Version=$(cat VERSION)"
+    && go build -ldflags "-X main.Version=$(cat VERSION)"
 
 FROM zcalusic/debian-stretch
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>

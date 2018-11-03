@@ -1,7 +1,7 @@
 FROM golang:stretch as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-RUN go get -v github.com/maxmind/geoipupdate2/cmd/geoipupdate
+RUN go get github.com/maxmind/geoipupdate2/cmd/geoipupdate
 
 FROM zcalusic/debian-stretch
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>

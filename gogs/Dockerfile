@@ -3,10 +3,10 @@ MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG GOGS_VERSION
 
-RUN go get -d -v github.com/gogs/gogs \
+RUN go get github.com/gogs/gogs \
     && cd src/github.com/gogs/gogs \
     && git checkout "$GOGS_VERSION" \
-    && go install -v
+    && go install
 
 FROM zcalusic/debian-stretch
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>

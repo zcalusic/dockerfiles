@@ -6,10 +6,10 @@ ARG JOURNALBEAT_VERSION
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        libsystemd-dev \
-    && go get -d github.com/mheese/journalbeat \
+    && go get github.com/mheese/journalbeat \
     && cd src/github.com/mheese/journalbeat \
     && git checkout "$JOURNALBEAT_VERSION" \
-    && go install -v
+    && go install
 
 FROM zcalusic/debian-stretch
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
