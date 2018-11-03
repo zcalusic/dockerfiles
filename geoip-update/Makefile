@@ -21,3 +21,5 @@ docker_build:
 
 docker_push:
 	docker push $(DOCKER_IMAGE):latest
+	curl -X POST https://hooks.microbadger.com/images/zcalusic/geoip-update/5uaWyWqkY-qh-VkLrdK54-rxaaE=
+	@echo
