@@ -34,4 +34,4 @@ clean:
 	make -C chunkserver clean
 	make -C cgi clean
 	make -C cli clean
-	make -C client docker_push
+	make -C client clean
