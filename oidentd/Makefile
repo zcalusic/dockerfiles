@@ -10,7 +10,7 @@ DOCKER_IMAGE ?= zcalusic/oidentd
 default: docker_build
 
 docker_build:
-	docker pull alpine:3.7
+	docker pull alpine:3.8
 	docker build \
 		--build-arg URL=$(strip $(shell git config --get remote.origin.url | sed 's/\.git$$//')) \
 		--build-arg VCS_URL=$(strip $(shell git config --get remote.origin.url)) \
