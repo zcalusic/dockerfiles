@@ -20,5 +20,13 @@ ENV JRE_HOME /opt/java/openjdk
 ENV JAVA_TOOL_OPTIONS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap
 ENV PATH $JRE_HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-RUN mkdir -p "$JRE_HOME" \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       libasound2 \
+       libcups2 \
+       libfontconfig1 \
+       libxrender1 \
+       libxtst6 \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p "$JRE_HOME" \
     && wget --dot-style=mega -O- "https://api.adoptopenjdk.net/v2/binary/releases/openjdk8?openjdk_impl=hotspot&os=linux&type=jre&release=latest&heap_size=normal&arch=x64" | tar xzo --strip-components=2 -C "$JRE_HOME"
