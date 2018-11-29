@@ -20,3 +20,5 @@ docker_build:
 
 docker_push:
 	docker push $(DOCKER_IMAGE):latest
+	curl -X POST https://hooks.microbadger.com/images/zcalusic/openjdk8-jre/Opo0M4--MnrSX0U7OzPHxOpPSsY=
+	@echo
