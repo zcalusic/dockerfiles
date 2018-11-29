@@ -3,17 +3,14 @@ MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG JIRA_VERSION
 
-ENV JAVA_HOME /usr/java
 ENV JIRA_VERSION $JIRA_VERSION
 ENV JIRA_INSTALL_DIR /opt/atlassian/jira
 
-RUN mkdir "$JAVA_HOME" \
-    && wget --dot-style=mega -O- --header "Cookie: oraclelicense=a" "http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/server-jre-8u191-linux-x64.tar.gz" | tar xz --strip-components=1 -C "$JAVA_HOME" \
-    && mkdir -p "$JIRA_INSTALL_DIR" \
+RUN mkdir -p "$JIRA_INSTALL_DIR" \
     && wget --dot-style=mega -O- "https://downloads.atlassian.com/software/jira/downloads/atlassian-jira-core-${JIRA_VERSION}.tar.gz" | tar xz --strip-components=1 -C "$JIRA_INSTALL_DIR" \
     && sed -i -e 's/port="8080"/port="8080" secure="${catalinaConnectorSecure}" scheme="${catalinaConnectorScheme}" proxyName="${catalinaConnectorProxyName}" proxyPort="${catalinaConnectorProxyPort}"/' "$JIRA_INSTALL_DIR/conf/server.xml"
 
-FROM zcalusic/debian-stretch
+FROM zcalusic/openjdk8-jre
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL
@@ -37,10 +34,7 @@ ENV JIRA_INSTALL_DIR /opt/atlassian/jira
 ENV JIRA_HOME /var/atlassian/application-data/jira
 ENV JIRA_USER daemon
 ENV JIRA_GROUP daemon
-ENV JAVA_HOME /usr/java
-ENV PATH $JAVA_HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-COPY --from=builder $JAVA_HOME $JAVA_HOME
 COPY --from=builder $JIRA_INSTALL_DIR $JIRA_INSTALL_DIR
 
 RUN chown "$JIRA_USER:$JIRA_GROUP" "$JIRA_INSTALL_DIR/conf" "$JIRA_INSTALL_DIR/logs" "$JIRA_INSTALL_DIR/temp" "$JIRA_INSTALL_DIR/work"
