@@ -7,7 +7,10 @@
 [![Commit](https://images.microbadger.com/badges/commit/zcalusic/openjdk8-jre.svg)](https://microbadger.com/images/zcalusic/openjdk8-jre/)
 [![License](https://images.microbadger.com/badges/license/zcalusic/openjdk8-jre.svg)](https://microbadger.com/images/zcalusic/openjdk8-jre/)
 
-Based on AdoptOpenJDK prebuilt OpenJDK binaries.  Learn more about AdoptOpenJDK: <https://adoptopenjdk.net/>
+Based on AdoptOpenJDK prebuilt OpenJDK binaries + Apache Tomcat Native Library.
+
+Learn more about AdoptOpenJDK: <https://adoptopenjdk.net/>  
+Learn more about Apache Tomcat Native Library: <https://tomcat.apache.org/native-doc/>
 
 ## Usage
 
