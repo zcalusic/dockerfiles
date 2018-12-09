@@ -19,7 +19,7 @@ RUN apt-get update \
        python \
        zlib1g-dev \
     && mkdir -p /usr/src/moosefs \
-    && wget --dot-style=mega -O- "https://github.com/moosefs/moosefs/archive/v${MOOSEFS_VERSION}.tar.gz" | tar xz --strip-components=1 -C /usr/src/moosefs \
+    && wget --dot-style=mega -O- "https://github.com/moosefs/moosefs/archive/${MOOSEFS_VERSION}.tar.gz" | tar xz --strip-components=1 -C /usr/src/moosefs \
     && cd /usr/src/moosefs \
     && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var/lib --with-default-user="$MOOSEFS_USER" --with-default-group="$MOOSEFS_GROUP" --disable-mfssupervisor --disable-mfscgiserv \
     && make -j$(nproc) install

@@ -11,7 +11,7 @@ default: docker_build
 
 docker_build:
 	cat ../Dockerfile.in Dockerfile.head > Dockerfile
-	wget -q -O- https://raw.githubusercontent.com/moosefs/moosefs/v$(MOOSEFS_VERSION)/debian/moosefs-master.install | awk '{printf "COPY --from=builder /%s /%s\n", $$0, $$0}' >> Dockerfile
+	wget -q -O- https://raw.githubusercontent.com/moosefs/moosefs/$(MOOSEFS_VERSION)/debian/moosefs-master.install | awk '{printf "COPY --from=builder /%s /%s\n", $$0, $$0}' >> Dockerfile
 	cat Dockerfile.tail >> Dockerfile
 	docker build \
 		--build-arg URL=$(strip $(shell git config --get remote.origin.url | sed 's/\.git$$//')) \
@@ -20,9 +20,15 @@ docker_build:
 		--build-arg BUILD_DATE=$(strip $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")) \
 		--build-arg MOOSEFS_VERSION=$(MOOSEFS_VERSION) \
 		-t $(DOCKER_IMAGE):$(MOOSEFS_VERSION) .
+ifeq ($(MOOSEFS_VERSION),$(MOOSEFS_CURRENT_VERSION))
+	docker tag $(DOCKER_IMAGE):$(MOOSEFS_VERSION) $(DOCKER_IMAGE):latest
+endif
 
 docker_push:
 	docker push $(DOCKER_IMAGE):$(MOOSEFS_VERSION)
+ifeq ($(MOOSEFS_VERSION),$(MOOSEFS_CURRENT_VERSION))
+	docker push $(DOCKER_IMAGE):latest
+endif
 	curl -X POST https://hooks.microbadger.com/images/zcalusic/moosefs-master/Sy5T-20q0RfXaBrX8lrkCSnocIY=
 	@echo
 

@@ -3,8 +3,10 @@
 # Use of this source code is governed by an MIT-style license that can be found in the LICENSE file.
 #
 
-MOOSEFS_VERSION ?= 3.0.101
+MOOSEFS_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/moosefs/moosefs/releases/latest | jq -r '.tag_name'))
+MOOSEFS_VERSION ?= $(MOOSEFS_CURRENT_VERSION)
 
+export MOOSEFS_CURRENT_VERSION
 export MOOSEFS_VERSION
 
 .PHONY: default docker_build docker_push clean
