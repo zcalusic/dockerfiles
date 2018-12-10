@@ -23,4 +23,4 @@ RUN apt-get update \
        strongswan \
     && rm -rf /var/lib/apt/lists/*
 
-CMD [ "/usr/sbin/ipsec", "start", "--nofork" ]
+CMD [ "ipsec", "start", "--nofork" ]

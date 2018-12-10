@@ -56,4 +56,4 @@ STOPSIGNAL SIGKILL
 
 EXPOSE 8101 8102 22222
 
-CMD [ "gosu", "daemon:daemon", "dynomite" ]
+CMD [ "dynomite" ]

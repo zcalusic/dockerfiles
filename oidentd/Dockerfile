@@ -25,4 +25,4 @@ STOPSIGNAL SIGKILL
 
 EXPOSE 113
 
-CMD [ "/usr/sbin/oidentd", "-i", "-S", "-u", "oident", "-g", "oident" ]
+CMD [ "oidentd", "-i", "-S", "-u", "oident", "-g", "oident" ]
