@@ -1,16 +1,3 @@
-FROM golang:stretch as builder
-MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
-
-ARG JOURNALBEAT_VERSION
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-       libsystemd-dev \
-    && go get github.com/mheese/journalbeat \
-    && cd src/github.com/mheese/journalbeat \
-    && git checkout "$JOURNALBEAT_VERSION" \
-    && go install
-
 FROM zcalusic/debian-stretch
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
@@ -32,11 +19,14 @@ LABEL org.label-schema.name="Journalbeat in Docker" \
 ENV JOURNALBEAT_HOME /usr/share/journalbeat
 ENV PATH $JOURNALBEAT_HOME/bin:$PATH
 
-COPY --from=builder /go/bin/journalbeat $JOURNALBEAT_HOME/bin/journalbeat
-COPY --from=builder /go/src/github.com/mheese/journalbeat/config/journalbeat.yml $JOURNALBEAT_HOME/journalbeat.yml
+COPY elastic.list /etc/apt/sources.list.d/elastic.list
+
+RUN apt-key adv --recv-keys --keyserver hkp://ipv4.pool.sks-keyservers.net D88E42B4 \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+       journalbeat \
+    && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/elastic.list
 
 WORKDIR $JOURNALBEAT_HOME
-
-RUN mkdir data logs
 
 CMD [ "journalbeat", "-e" ]
