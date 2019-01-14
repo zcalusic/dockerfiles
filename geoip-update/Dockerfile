@@ -1,7 +1,12 @@
 FROM golang:stretch as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-RUN go get github.com/maxmind/geoipupdate2/cmd/geoipupdate
+ARG GEOIPUPDATE_VERSION
+
+RUN go get -d github.com/maxmind/geoipupdate/cmd/geoipupdate \
+    && cd src/github.com/maxmind/geoipupdate/cmd/geoipupdate \
+    && git checkout "$GEOIPUPDATE_VERSION" \
+    && go install
 
 FROM zcalusic/debian-stretch
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
@@ -24,4 +29,4 @@ LABEL org.label-schema.name="GeoIP update in Docker" \
 COPY --from=builder /go/bin/geoipupdate /usr/bin/geoipupdate
 COPY GeoIP.conf /etc/GeoIP.conf
 
-CMD [ "geoipupdate", "-v", "-f", "/etc/GeoIP.conf" ]
+CMD [ "geoipupdate", "-v", "-f", "/etc/GeoIP.conf", "-d", "/data" ]
