@@ -1,7 +1,7 @@
 FROM zcalusic/debian-stretch as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-ENV DYNOMITE_VERSION 0.6.12
+ARG DYNOMITE_VERSION
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -15,7 +15,7 @@ RUN apt-get update \
     && cd /usr/src \
     && git clone https://github.com/Netflix/dynomite \
     && cd dynomite \
-    && git checkout v${DYNOMITE_VERSION} \
+    && git checkout ${DYNOMITE_VERSION} \
     && autoreconf -fvi \
     && ./configure \
     && make -j "$(nproc)" \

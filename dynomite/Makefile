@@ -5,6 +5,8 @@
 
 DOCKER_IMAGE ?= zcalusic/dynomite
 
+DYNOMITE_VERSION ?= v0.6.13
+
 .PHONY: default docker_build docker_push
 
 default: docker_build
@@ -16,9 +18,10 @@ docker_build:
 		--build-arg VCS_URL=$(strip $(shell git config --get remote.origin.url)) \
 		--build-arg VCS_REF=$(strip $(shell git rev-parse --short HEAD)) \
 		--build-arg BUILD_DATE=$(strip $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")) \
-		-t $(DOCKER_IMAGE) .
+		--build-arg DYNOMITE_VERSION=$(DYNOMITE_VERSION) \
+		-t $(DOCKER_IMAGE):$(DYNOMITE_VERSION) .
 
 docker_push:
-	docker push $(DOCKER_IMAGE):latest
+	docker push $(DOCKER_IMAGE):$(DYNOMITE_VERSION)
 	curl -X POST https://hooks.microbadger.com/images/zcalusic/dynomite/j37bzxVbD95Pl7-SlIGRewwERAo=
 	@echo
