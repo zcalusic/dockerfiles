@@ -5,7 +5,7 @@
 
 DOCKER_IMAGE ?= zcalusic/dynomite
 
-DYNOMITE_VERSION ?= v0.6.13
+DYNOMITE_VERSION ?= v0.7.0
 
 .PHONY: default docker_build docker_push
 
