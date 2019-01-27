@@ -1,7 +1,7 @@
 FROM zcalusic/debian-stretch as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-ENV NGINX_VERSION 1.15.7
+ENV NGINX_VERSION 1.15.8
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -91,7 +91,8 @@ COPY --from=builder /etc/nginx /etc/nginx.default
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       geoip-database-contrib \
+       geoip-database \
+       geoip-database-extra \
        libgd3 \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir /var/cache/nginx
