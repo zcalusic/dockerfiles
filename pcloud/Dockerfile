@@ -15,7 +15,7 @@ RUN apt-get update \
     && cd /usr/src \
     && git clone https://github.com/pcloudcom/console-client \
     && cd console-client/pCloudCC \
-    && cmake -D CMAKE_INSTALL_PREFIX=/usr . \
+    && cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr . \
     && make pclsync mbedtls install/strip
 
 FROM zcalusic/debian-stretch
