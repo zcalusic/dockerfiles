@@ -22,5 +22,5 @@ RUN apt-get update \
     && wget --dot-style=mega -O- "https://github.com/moosefs/moosefs/archive/${MOOSEFS_VERSION}.tar.gz" | tar xz --strip-components=1 -C /usr/src/moosefs \
     && cd /usr/src/moosefs \
     && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var/lib --with-default-user="$MOOSEFS_USER" --with-default-group="$MOOSEFS_GROUP" --disable-mfssupervisor --disable-mfscgiserv \
-    && make -j$(nproc) install
+    && make -j$(nproc) install-strip
 
