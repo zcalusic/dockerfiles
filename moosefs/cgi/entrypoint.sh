@@ -12,7 +12,7 @@ set -eu
 # Timezone
 echo "$TZ" > /etc/timezone
 ln -nsf "/usr/share/zoneinfo/$TZ" /etc/localtime
-dpkg-reconfigure tzdata
+dpkg-reconfigure tzdata >/dev/null 2>&1
 
 /etc/init.d/fcgiwrap start
 

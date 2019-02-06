@@ -20,7 +20,7 @@ set -eu
 # Timezone
 echo "$TZ" > /etc/timezone
 ln -nsf "/usr/share/zoneinfo/$TZ" /etc/localtime
-dpkg-reconfigure tzdata
+dpkg-reconfigure tzdata >/dev/null 2>&1
 
 # PHP timezone
 echo "date.timezone = \"$TZ\"" > /etc/php/7.0/mods-available/local.ini
