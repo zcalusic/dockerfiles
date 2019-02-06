@@ -11,7 +11,7 @@ RUN apt-get update \
        libssl-dev \
        libtool \
     && mkdir -p "$JAVA_HOME" \
-    && wget --dot-style=mega -O- "https://api.adoptopenjdk.net/v2/binary/releases/openjdk8?openjdk_impl=hotspot&os=linux&type=jdk&release=latest&heap_size=normal&arch=x64" | tar xz --strip-components=2 -C "$JAVA_HOME" \
+    && wget --dot-style=mega -O- "https://api.adoptopenjdk.net/v2/binary/releases/openjdk8?openjdk_impl=hotspot&os=linux&type=jdk&release=latest&heap_size=normal&arch=x64" | tar xz --strip-components=1 -C "$JAVA_HOME" \
     && cd /usr/src \
     && wget --dot-style=mega -O- "https://www-eu.apache.org/dist/apr/apr-${APR_VERSION}.tar.gz" | tar xz \
     && cd "apr-${APR_VERSION}" \
@@ -54,7 +54,7 @@ RUN apt-get update \
        libxtst6 \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p "$JRE_HOME" \
-    && wget --dot-style=mega -O- "https://api.adoptopenjdk.net/v2/binary/releases/openjdk8?openjdk_impl=hotspot&os=linux&type=jre&release=latest&heap_size=normal&arch=x64" | tar xzo --strip-components=2 -C "$JRE_HOME"
+    && wget --dot-style=mega -O- "https://api.adoptopenjdk.net/v2/binary/releases/openjdk8?openjdk_impl=hotspot&os=linux&type=jre&release=latest&heap_size=normal&arch=x64" | tar xzo --strip-components=1 -C "$JRE_HOME"
 
 COPY --from=builder /usr/lib/libapr-1.* /usr/lib/
 COPY --from=builder /usr/lib/libtcnative-1.* /usr/lib/
