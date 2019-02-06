@@ -16,6 +16,6 @@ set -eu
 [ -f "/var/lib/mfs/metadata.mfs.empty" ] || cp -a /var/lib/mfs.default/metadata.mfs.empty /var/lib/mfs/metadata.mfs.empty
 [ -f "/var/lib/mfs/metadata.mfs" -o -f "/var/lib/mfs/metadata.mfs.back" ] || cp -a /var/lib/mfs/metadata.mfs.empty /var/lib/mfs/metadata.mfs
 
-chown -R "$MOOSEFS_USER:$MOOSEFS_GROUP" /var/lib/mfs
+chown "$MOOSEFS_USER:$MOOSEFS_GROUP" /var/lib/mfs
 
 exec mfsmaster -f -a

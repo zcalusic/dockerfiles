@@ -44,7 +44,7 @@ sed -i -e "s/^memory_limit = 128M$/memory_limit = $PHP_MEMORY_LIMIT/" /etc/php/7
 sed -i -e "s/LISTEN_ADDR/$LISTEN_ADDR/" /etc/nginx/sites-available/default
 
 # Observium volume ownership
-chown -R www-data:www-data "$OBSERVIUM_HOME/logs" "$OBSERVIUM_HOME/rrd"
+chown www-data:www-data "$OBSERVIUM_HOME/logs" "$OBSERVIUM_HOME/rrd"
 
 # Observium configuration
 cat > "$OBSERVIUM_HOME/config.php" <<EOF

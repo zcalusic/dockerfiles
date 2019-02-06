@@ -12,6 +12,6 @@ set -eu
 
 [ -f "/etc/mfs/mfsmetalogger.cfg" ] || cp -a /etc/mfs.default/mfsmetalogger.cfg.sample /etc/mfs/mfsmetalogger.cfg
 
-chown -R "$MOOSEFS_USER:$MOOSEFS_GROUP" /var/lib/mfs
+chown "$MOOSEFS_USER:$MOOSEFS_GROUP" /var/lib/mfs
 
 exec mfsmetalogger -f
