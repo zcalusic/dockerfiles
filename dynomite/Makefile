@@ -20,8 +20,10 @@ docker_build:
 		--build-arg BUILD_DATE=$(strip $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")) \
 		--build-arg DYNOMITE_VERSION=$(DYNOMITE_VERSION) \
 		-t $(DOCKER_IMAGE):$(DYNOMITE_VERSION) .
+	docker tag $(DOCKER_IMAGE):$(DYNOMITE_VERSION) $(DOCKER_IMAGE):latest
 
 docker_push:
 	docker push $(DOCKER_IMAGE):$(DYNOMITE_VERSION)
+	docker push $(DOCKER_IMAGE):latest
 	curl -X POST https://hooks.microbadger.com/images/zcalusic/dynomite/j37bzxVbD95Pl7-SlIGRewwERAo=
 	@echo
