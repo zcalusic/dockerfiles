@@ -3,7 +3,7 @@ MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG GOGS_VERSION
 
-RUN go get github.com/gogs/gogs \
+RUN go get -d github.com/gogs/gogs \
     && cd src/github.com/gogs/gogs \
     && git checkout "$GOGS_VERSION" \
     && go install

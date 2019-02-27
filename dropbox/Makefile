@@ -24,9 +24,9 @@ docker_push:
 	@echo
 
 dropbox: dropbox.go
-	go get -v github.com/golang/dep/cmd/dep
+	go get github.com/golang/dep/cmd/dep
 	dep ensure
-	go build -v
+	go build
 
 build:
 	docker run --rm -v $(shell pwd):/go/src/dropbox -w /go/src/dropbox golang:stretch make dropbox

@@ -1,8 +1,8 @@
 FROM golang:stretch as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-RUN go get github.com/gliderlabs/logspout \
-    && go get github.com/looplab/logspout-logstash \
+RUN go get -d github.com/gliderlabs/logspout \
+    && go get -d github.com/looplab/logspout-logstash \
     && cd src/github.com/gliderlabs/logspout \
     && sed -i -e "s/^)$/\t_ \"github.com\/looplab\/logspout-logstash\"\n)/" modules.go \
     && go build -ldflags "-X main.Version=$(cat VERSION)"
