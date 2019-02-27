@@ -56,5 +56,10 @@ RUN apt-get update \
     && mkdir -p "$JRE_HOME" \
     && wget --dot-style=mega -O- "https://api.adoptopenjdk.net/v2/binary/releases/openjdk8?openjdk_impl=hotspot&os=linux&type=jre&release=latest&heap_size=normal&arch=x64" | tar xzo --strip-components=1 -C "$JRE_HOME"
 
-COPY --from=builder /usr/lib/libapr-1.* /usr/lib/
-COPY --from=builder /usr/lib/libtcnative-1.* /usr/lib/
+COPY --from=builder /usr/lib/libapr-1.so.0.* /usr/lib/
+COPY --from=builder /usr/lib/libtcnative-1.so.0.* /usr/lib/
+
+RUN ldconfig \
+    && cd /usr/lib \
+    && ln -s $(ls libapr-1.so.0.*) /usr/lib/libapr-1.so \
+    && ln -s $(ls libtcnative-1.so.0.*) /usr/lib/libtcnative-1.so
