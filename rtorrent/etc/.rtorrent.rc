@@ -1,0 +1,206 @@
+## Run the rTorrent process as a daemon in the background
+system.daemon.set = true
+
+## Base directory
+method.insert = cfg.basedir, private|const|string, (cat, "/opt/rtorrent/share")
+
+## Download directory
+method.insert = cfg.download, private|const|string, (cat, "/data")
+directory.default.set = (cat, (cfg.download))
+
+## Session directory
+method.insert = cfg.session, private|const|string, (cat, (cfg.basedir), "/session")
+execute.throw = bash, -c, (cat, "mkdir -p \"", (cfg.session), "\"")
+session.path.set = (cat, (cfg.session))
+
+## Watch directories (add more as you like, but use unique schedule names)
+method.insert = cfg.watch, private|const|string, (cat, (cfg.basedir), "/watch")
+execute.throw = bash, -c, (cat, "mkdir -p \"", (cfg.watch), "/load\"")
+execute.throw = bash, -c, (cat, "mkdir -p \"", (cfg.watch), "/start\"")
+
+## Add torrent
+schedule2 = watch_load, 11, 10, ((load.verbose, (cat, (cfg.watch), "/load/*.torrent")))
+
+## Add & download straight away
+schedule2 = watch_start, 10, 10, ((load.start_verbose, (cat, (cfg.watch), "/start/*.torrent")))
+
+## Control daemon via XMLRPC socket
+network.scgi.open_port = 127.0.0.1:5000
+
+## Port range to use for listening
+network.port_range.set = 50000-50000
+
+## Start opening ports at a random position within the port range
+network.port_random.set = no
+
+## Get public IP address without the need of having dynamic DNS service, also works from behind NAT, through tunnel
+method.insert = get_public_ip_address, simple|private, "execute.capture = bash, -c, \"eval echo -n \$(dig -4 TXT +short o-o.myaddr.l.google.com @ns1.google.com)\""
+
+## The IP address reported to the tracker
+network.local_address.set = (get_public_ip_address)
+
+## Enable DHT support for trackerless torrents or when all trackers are down. May be set to:
+## `disable` (completely disable DHT),
+## `off` (do not start DHT)
+## `auto` (start and stop DHT as needed)
+## `on` (start DHT immediately)
+## For DHT to work, a session directory must be defined
+## Default: `off`
+# dht.mode.set = auto
+
+## UDP port to use for DHT
+# dht.port.set = 6881
+
+## Adding public DHT servers for easy bootstrapping
+# schedule2 = dht_node_1, 5, 0, "dht.add_node=router.utorrent.com:6881"
+# schedule2 = dht_node_2, 5, 0, "dht.add_node=dht.transmissionbt.com:6881"
+# schedule2 = dht_node_3, 5, 0, "dht.add_node=dht.vuze.com:6881"
+
+## Enable peer exchange (for torrents not marked private)
+# protocol.pex.set = yes
+
+## Set whether the client should try to connect to UDP trackers
+# trackers.use_udp.set = yes
+
+## Trackerless torrent and UDP tracker support (conservative settings for private trackers only)
+dht.mode.set = disable
+protocol.pex.set = no
+trackers.use_udp.set = no
+
+## Global upload and download rate in KiB, `0` for unlimited
+# throttle.global_down.max_rate.set_kb = 0
+# throttle.global_up.max_rate.set_kb = 0
+
+## Global maximum number of simultaneous download and upload slots
+# throttle.max_downloads.global.set = 300
+# throttle.max_uploads.global.set = 300
+
+## Minimum and maximum number of peers to connect to per torrent while downloading
+## Default: `100` and `200` respectively
+# throttle.min_peers.normal.set = 100
+# throttle.max_peers.normal.set = 200
+
+## Same as above, but while seeding completed torrents
+## `-1` for same as downloading
+## Default: `-1` for both
+# throttle.min_peers.seed.set = -1
+# throttle.max_peers.seed.set = -1
+
+## Maximum number of simultaneous download and upload slots per torrent
+## Default: `50` for both
+# throttle.max_downloads.set = 50
+# throttle.max_uploads.set = 50
+
+## Set the numwant field sent to the tracker, which indicates how many peers we want
+## A negative value disables this feature
+## Default: `-1`
+trackers.numwant.set = 100
+
+## Set the maximum amount of memory address space used to mapping file chunks
+## This refers to memory mapping, not physical memory allocation
+# pieces.memory.max.set = 2048M
+
+## Maximum number of connections rtorrent can accept/make
+network.max_open_sockets.set = 8192
+
+## Maximum number of open files rtorrent can keep open
+## Don't forget to modify the system wide settings with ulimit
+## Max open files must be between 4 and 2^16
+## Default: `256`
+network.max_open_files.set = 32768
+
+## Maximum number of simultaneous HTTP requests (used by announce or scrape requests)
+## Default: `32`
+# network.http.max_open.set = 32
+
+## Send and receive buffer size for socket
+## Disabled by default (`0`), this means OS defaults are used
+## Don't forget to modify the system wide settings
+## Increasing buffer sizes may help reduce disk seeking, connection polling as more data is buffered each time
+## the socket is written to. It will result in higher memory usage (not visible in rtorrent process)
+# network.receive_buffer.size.set = 4M
+# network.send_buffer.size.set = 12M
+
+## Preloading a piece of a file
+## Possible values: `0` (Off), `1` (Madvise), `2` (Direct paging)
+## Default: `0`
+# pieces.preload.type.set = 0
+# pieces.preload.min_size.set = 262144
+# pieces.preload.min_rate.set = 5120
+
+## Whether to allocate disk space for a new torrent
+## Default: `0`
+system.file.allocate.set = 1
+
+## TOS of peer connections
+## Possible values: `[default|lowdelay|throughput|reliability|mincost]` or a hex value
+## If the option is set to `default` then the system default TOS is used, a hex value may be used for non-standard settings
+## Default: `throughput`
+# network.tos.set = throughput
+
+## CURL options to add support for unofficial SSL trackers and peers
+network.http.capath.set = "/etc/ssl/certs"
+network.http.ssl_verify_host.set = 0
+network.http.ssl_verify_peer.set = 0
+
+## CURL option to lower DNS timeout
+## Default: `60`
+network.http.dns_cache_timeout.set = 25
+
+## Max packet size using XMLRPC
+## Default: `524288`
+network.xmlrpc.size_limit.set = 4M
+
+## Encryption options, set to none or any combination of the following:
+## allow_incoming, try_outgoing, require, require_RC4, enable_retry, prefer_plaintext
+
+## Allow incoming encrypted connections, start unencrypted outgoing connections, but retry
+## with encryption if they fail, preferring plaintext to RC4 encryption after the encrypted handshake
+# protocol.encryption.set = allow_incoming,prefer_plaintext,enable_retry
+
+## Prefer encryption
+# protocol.encryption.set = allow_incoming,try_outgoing,enable_retry
+
+## Require encryption (magnet links won't work due to a bug)
+# protocol.encryption.set = require,require_RC4
+
+## Save all sessions every 12 hours instead of the default 20 minutes
+# schedule2 = session_save, 1200, 43200, ((session.save))
+
+## Prune file status every 24 hours, this is the default setting
+# schedule2 = prune_file_status, 3600, 86400, ((system.file_status_cache.prune))
+
+## Close torrents when diskspace is low
+schedule2 = monitor_diskspace, 15, 60, ((close_low_diskspace, 1024M))
+
+## Check hash for finished torrents
+## Default: `yes`
+pieces.hash.on_completion.set = no
+
+## Other operational settings
+encoding.add = utf8
+system.umask.set = 0022
+system.cwd.set = (directory.default)
+
+## Some additional values and commands
+method.insert = system.startup_time, value|const, (system.time)
+method.insert = d.data_path, simple, "if = (d.is_multi_file), (cat, (d.directory), /), (cat, (d.directory), /, (d.name))"
+method.insert = d.session_file, simple, "cat = (session.path), (d.hash), .torrent"
+
+## Logging
+## levels: critical error warn notice info debug
+## groups: connection_* dht_* peer_* rpc_* storage_* thread_* tracker_* torrent_*
+log.open_file = "log", "/dev/stdout"
+log.add_output = "info", "log"
+
+## More logging
+# method.insert = cfg.logs, private|const|string, (cat, (cfg.basedir), "/logs")
+# execute.throw = bash, -c, (cat, "mkdir -p \"", (cfg.logs), "\"")
+# log.execute = (cat, (cfg.logs), "execute.log")
+# log.xmlrpc = (cat, (cfg.logs), "xmlrpc.log")
+
+## Load ‘Drop-In’ Config Fragments
+method.insert = cfg.drop_in, private|const|string, (cat, (cfg.basedir), "/config.d")
+execute.throw = bash, -c, (cat, "mkdir -p \"", (cfg.drop_in), "\"")
+execute.nothrow = bash, -c, (cat, "find ", (cfg.drop_in), " -name '*.rc' | sort | sed -e 's/^/import=/' > ", (cfg.drop_in), "/.import")
+try_import = (cat, (cfg.drop_in), "/.import")

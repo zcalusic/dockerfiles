@@ -1,0 +1,25 @@
+server {
+	listen 80 default_server;
+	root /opt/rtorrent;
+	index index.html;
+
+	access_log off;
+	client_max_body_size 0;
+
+	location /share {
+		return 404;
+	}
+
+	location /RPC2 {
+		include scgi_params;
+		scgi_buffering off;
+		scgi_pass 127.0.0.1:5000;
+	}
+
+	location ~ \.php$ {
+		include fastcgi.conf;
+		fastcgi_keep_conn on;
+		fastcgi_buffering off;
+		fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+	}
+}
