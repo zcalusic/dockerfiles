@@ -1,4 +1,4 @@
-FROM zcalusic/debian-stretch as builder
+FROM zcalusic/debian-buster as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG TRANSMISSION_VERSION
@@ -24,7 +24,7 @@ RUN apt-get update \
     && make -j "$(nproc)" install/strip \
     && gzip -9 /usr/share/man/man1/transmission-daemon.1
 
-FROM zcalusic/debian-stretch
+FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL
@@ -44,7 +44,8 @@ LABEL org.label-schema.name="Transmission in Docker" \
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       libevent-2.0-5 \
+       libcurl3-gnutls \
+       libevent-2.1-6 \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /usr/bin/transmission-daemon /usr/bin/transmission-daemon
