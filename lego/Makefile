@@ -5,7 +5,7 @@
 
 DOCKER_IMAGE ?= zcalusic/lego
 
-LEGO_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/xenolf/lego/releases/latest | jq -r '.tag_name'))
+LEGO_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/go-acme/lego/releases/latest | jq -r '.tag_name'))
 LEGO_VERSION ?= $(LEGO_CURRENT_VERSION)
 
 .PHONY: default docker_build docker_push

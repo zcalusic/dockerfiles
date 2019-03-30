@@ -3,8 +3,8 @@ MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG LEGO_VERSION
 
-RUN go get -d github.com/xenolf/lego/cmd/lego \
-    && cd src/github.com/xenolf/lego/cmd/lego \
+RUN go get -d github.com/go-acme/lego/cmd/lego \
+    && cd src/github.com/go-acme/lego/cmd/lego \
     && git checkout "$LEGO_VERSION" \
     && go install -ldflags "-X main.version=$LEGO_VERSION"
 

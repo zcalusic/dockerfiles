@@ -7,4 +7,4 @@
 [![Commit](https://images.microbadger.com/badges/commit/zcalusic/lego.svg)](https://microbadger.com/images/zcalusic/lego/)
 [![License](https://images.microbadger.com/badges/license/zcalusic/lego.svg)](https://microbadger.com/images/zcalusic/lego/)
 
-Lego is Let's Encrypt client and ACME library written in Go. More information: https://github.com/xenolf/lego
+Lego is Let's Encrypt client and ACME library written in Go. More information: https://github.com/go-acme/lego
