@@ -2,7 +2,7 @@ FROM zcalusic/debian-stretch as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ENV JAVA_HOME /opt/java/openjdk
-ENV APR_VERSION 1.6.5
+ENV APR_VERSION 1.7.0
 ENV TCNATIVE_VERSION 1.2.21
 
 RUN apt-get update \
