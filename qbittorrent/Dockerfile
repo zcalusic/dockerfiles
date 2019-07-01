@@ -1,3 +1,38 @@
+FROM zcalusic/debian-buster as builder
+MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
+
+ENV LIBTORRENT_VERSION 1_1_13
+ENV QBITTORRENT_VERSION 4.1.6
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       automake \
+       build-essential \
+       git \
+       libboost-chrono-dev \
+       libboost-random-dev \
+       libboost-system-dev \
+       libssl-dev \
+       libtool \
+       pkg-config \
+       qtbase5-dev \
+       qttools5-dev-tools \
+       zlib1g-dev \
+    && cd /usr/src \
+    && git clone https://github.com/arvidn/libtorrent \
+    && cd libtorrent \
+    && git checkout libtorrent-${LIBTORRENT_VERSION} \
+    && ./bootstrap.sh --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu \
+    && make -j $(nproc) install-strip \
+    && cd /usr/src \
+    && git clone https://github.com/qbittorrent/qBittorrent \
+    && cd qBittorrent \
+    && git checkout release-${QBITTORRENT_VERSION} \
+    && ./bootstrap.sh \
+    && ./configure --prefix=/usr --disable-gui \
+    && make -j $(nproc) install \
+    && gzip -9 /usr/share/man/man1/qbittorrent-nox.1
+
 FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
@@ -18,15 +53,24 @@ LABEL org.label-schema.name="qBittorrent in Docker" \
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       qbittorrent-nox \
+       libboost-chrono1.67.0 \
+       libboost-random1.67.0 \
+       libboost-system1.67.0 \
+       libqt5network5 \
+       libqt5xml5 \
     && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.9.0.0 /usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.9.0.0
+
+RUN ldconfig
+
+COPY --from=builder /usr/bin/qbittorrent-nox /usr/bin/qbittorrent-nox
+COPY --from=builder /usr/share/man/man1/qbittorrent-nox.1.gz /usr/share/man/man1/qbittorrent-nox.1.gz
 
 COPY qBittorrent.conf /etc/qBittorrent.conf
 
 EXPOSE 8080 8999
 
 COPY entrypoint.sh /entrypoint.sh
-
-# ENTRYPOINT [ "dumb-init" ]
 
 CMD [ "/entrypoint.sh" ]
