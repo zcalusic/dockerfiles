@@ -8,7 +8,7 @@ RUN go get -d github.com/ncw/rclone \
     && git checkout "$RCLONE_VERSION" \
     && go install --ldflags "-s -X github.com/ncw/rclone/fs.Version=${RCLONE_VERSION}"
 
-FROM zcalusic/debian-stretch
+FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL

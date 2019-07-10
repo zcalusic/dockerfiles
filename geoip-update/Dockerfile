@@ -8,7 +8,7 @@ RUN go get -d github.com/maxmind/geoipupdate/cmd/geoipupdate \
     && git checkout "$GEOIPUPDATE_VERSION" \
     && go install
 
-FROM zcalusic/debian-stretch
+FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL

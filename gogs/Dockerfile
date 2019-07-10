@@ -8,7 +8,7 @@ RUN go get -d github.com/gogs/gogs \
     && git checkout "$GOGS_VERSION" \
     && go install
 
-FROM zcalusic/debian-stretch
+FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL

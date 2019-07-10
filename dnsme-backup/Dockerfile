@@ -3,7 +3,7 @@ MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 RUN go get github.com/jswank/dnsme
 
-FROM zcalusic/debian-stretch
+FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL

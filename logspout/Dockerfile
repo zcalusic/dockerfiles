@@ -7,7 +7,7 @@ RUN go get -d github.com/gliderlabs/logspout \
     && sed -i -e "s/^)$/\t_ \"github.com\/looplab\/logspout-logstash\"\n)/" modules.go \
     && go build -ldflags "-X main.Version=$(cat VERSION)"
 
-FROM zcalusic/debian-stretch
+FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL

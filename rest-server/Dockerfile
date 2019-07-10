@@ -8,7 +8,7 @@ RUN go get -d github.com/restic/rest-server \
     && git checkout "$REST_SERVER_VERSION" \
     && go run build.go
 
-FROM zcalusic/debian-stretch
+FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL

@@ -7,4 +7,4 @@
 [![Commit](https://images.microbadger.com/badges/commit/zcalusic/gogs.svg)](https://microbadger.com/images/zcalusic/gogs/)
 [![License](https://images.microbadger.com/badges/license/zcalusic/gogs.svg)](https://microbadger.com/images/zcalusic/gogs/)
 
-Unofficial container image of Gogs, tracking master branch.  Based on Debian 9 Stretch.
+Gogs is a painless self-hosted Git service.  More info: <https://gogs.io/>

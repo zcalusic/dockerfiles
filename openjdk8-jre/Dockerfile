@@ -1,4 +1,4 @@
-FROM zcalusic/debian-stretch as builder
+FROM zcalusic/debian-buster as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ENV JAVA_HOME /opt/java/openjdk
@@ -23,7 +23,7 @@ RUN apt-get update \
     && ./configure --prefix=/usr \
     && make install
 
-FROM zcalusic/debian-stretch
+FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL
