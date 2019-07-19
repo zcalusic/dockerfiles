@@ -3,7 +3,7 @@ MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ENV JAVA_HOME /opt/java/openjdk
 ENV APR_VERSION 1.7.0
-ENV TCNATIVE_VERSION 1.2.21
+ENV TCNATIVE_VERSION 1.2.23
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
