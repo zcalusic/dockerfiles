@@ -10,7 +10,7 @@ DOCKER_IMAGE ?= zcalusic/logspout
 default: docker_build
 
 docker_build:
-	docker pull golang:stretch
+	docker pull golang:buster
 	docker pull zcalusic/debian-buster
 	docker build \
 		--build-arg URL=$(strip $(shell git config --get remote.origin.url | sed 's/\.git$$//')) \

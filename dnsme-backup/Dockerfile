@@ -1,4 +1,4 @@
-FROM golang:stretch as builder
+FROM golang:buster as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 RUN go get github.com/jswank/dnsme
