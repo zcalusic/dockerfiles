@@ -2,7 +2,7 @@ FROM zcalusic/debian-buster as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ENV LIBTORRENT_VERSION 1_1_13
-ENV QBITTORRENT_VERSION 4.1.6
+ENV QBITTORRENT_VERSION 4.1.7
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
