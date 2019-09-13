@@ -1,4 +1,4 @@
-FROM zcalusic/debian-stretch
+FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL
@@ -26,10 +26,9 @@ RUN apt-get update \
        nginx-light \
        php \
        php-pear \
-       php7.0-fpm \
-       php7.0-gd \
-       php7.0-mcrypt \
-       php7.0-mysql \
+       php7.3-fpm \
+       php7.3-gd \
+       php7.3-mysql \
        python-mysqldb \
        rrdtool \
        snmp \
