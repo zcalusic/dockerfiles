@@ -8,6 +8,7 @@ RUN apt-get update \
        git \
        libboost-program-options-dev \
        libboost-system-dev \
+       libcurl4-gnutls-dev \
        libfuse-dev \
        libudev-dev \
        make \
