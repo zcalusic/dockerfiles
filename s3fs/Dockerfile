@@ -1,4 +1,4 @@
-FROM zcalusic/debian-stretch as builder
+FROM zcalusic/debian-buster as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ENV S3FS_VERSION 1.84
@@ -10,7 +10,7 @@ RUN apt-get update \
        git \
        libcurl4-openssl-dev \
        libfuse-dev \
-       libssl1.0-dev \
+       libssl-dev \
        libxml2-dev \
        make \
        pkg-config \
@@ -23,7 +23,7 @@ RUN apt-get update \
     && make -j "$(nproc)" install-strip \
     && gzip -9 /usr/share/man/man1/s3fs.1
 
-FROM zcalusic/debian-stretch
+FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL
@@ -44,7 +44,7 @@ LABEL org.label-schema.name="s3fs in Docker" \
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        fuse \
-       libcurl3 \
+       libcurl4 \
        man \
        mime-support \
     && rm -rf /var/lib/apt/lists/*
