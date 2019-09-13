@@ -1,1 +1,1 @@
-deb https://repo.powerdns.com/debian stretch-rec-41 main
+deb https://repo.powerdns.com/debian buster-rec-42 main
