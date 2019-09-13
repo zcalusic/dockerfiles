@@ -1,4 +1,4 @@
-FROM zcalusic/debian-stretch as builder
+FROM zcalusic/debian-buster as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG DYNOMITE_VERSION
@@ -9,7 +9,7 @@ RUN apt-get update \
        gcc \
        git \
        libc6-dev \
-       libssl1.0-dev \
+       libssl-dev \
        libtool \
        make \
     && cd /usr/src \
@@ -21,7 +21,7 @@ RUN apt-get update \
     && make -j "$(nproc)" \
     && strip src/dynomite src/dynomite-test src/tools/dynomite-hash-tool
 
-FROM zcalusic/debian-stretch
+FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL

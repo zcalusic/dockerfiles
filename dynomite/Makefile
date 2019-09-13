@@ -12,7 +12,7 @@ DYNOMITE_VERSION ?= v0.7.0
 default: docker_build
 
 docker_build:
-	docker pull zcalusic/debian-stretch
+	docker pull zcalusic/debian-buster
 	docker build \
 		--build-arg URL=$(strip $(shell git config --get remote.origin.url | sed 's/\.git$$//')) \
 		--build-arg VCS_URL=$(strip $(shell git config --get remote.origin.url)) \
