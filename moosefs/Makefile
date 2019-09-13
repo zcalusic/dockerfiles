@@ -14,7 +14,7 @@ export MOOSEFS_VERSION
 default: docker_build
 
 docker_build:
-	docker pull zcalusic/debian-stretch
+	docker pull zcalusic/debian-buster
 	make -C master docker_build
 	make -C metalogger docker_build
 	make -C chunkserver docker_build

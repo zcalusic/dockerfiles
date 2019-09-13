@@ -1,4 +1,4 @@
-FROM zcalusic/debian-stretch as builder
+FROM zcalusic/debian-buster as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG MOOSEFS_VERSION
