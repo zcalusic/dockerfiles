@@ -1,16 +1,13 @@
 FROM zcalusic/debian-buster as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-ENV LIBTORRENT_VERSION 1_1_13
-ENV QBITTORRENT_VERSION 4.1.7
+ENV QBITTORRENT_VERSION 4.2.0
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        automake \
        build-essential \
        git \
-       libboost-chrono-dev \
-       libboost-random-dev \
        libboost-system-dev \
        libssl-dev \
        libtool \
@@ -21,7 +18,6 @@ RUN apt-get update \
     && cd /usr/src \
     && git clone https://github.com/arvidn/libtorrent \
     && cd libtorrent \
-    && git checkout libtorrent-${LIBTORRENT_VERSION} \
     && ./bootstrap.sh --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu \
     && make -j $(nproc) install-strip \
     && cd /usr/src \
@@ -53,14 +49,12 @@ LABEL org.label-schema.name="qBittorrent in Docker" \
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       libboost-chrono1.67.0 \
-       libboost-random1.67.0 \
        libboost-system1.67.0 \
        libqt5network5 \
        libqt5xml5 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.9.0.0 /usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.9.0.0
+COPY --from=builder /usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.10.0.0 /usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.10.0.0
 
 RUN ldconfig
 
