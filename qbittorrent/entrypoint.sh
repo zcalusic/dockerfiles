@@ -11,12 +11,14 @@ set -eu
 : "${QBITTORRENT_GID:=1000}"
 
 groupadd -g $QBITTORRENT_GID -o qbittorrent
-useradd -u $QBITTORRENT_UID -g $QBITTORRENT_GID -o -d /home/qbittorrent -s /usr/sbin/nologin -c qBittorrent qbittorrent
+useradd -u $QBITTORRENT_UID -g $QBITTORRENT_GID -o -s /usr/sbin/nologin qbittorrent
 
-cd /home/qbittorrent
+chown qbittorrent:qbittorrent /home/qbittorrent
 
-[ -f .config/qBittorrent/qBittorrent.conf ] || cp -a /etc/qBittorrent.conf .config/qBittorrent/qBittorrent.conf
-
-chown -R qbittorrent:qbittorrent . /data
+if [ ! -f /home/qbittorrent/.config/qBittorrent/qBittorrent.conf ]
+then
+    cp /etc/qBittorrent.conf /home/qbittorrent/.config/qBittorrent/qBittorrent.conf
+    chown qbittorrent:qbittorrent /home/qbittorrent/.config/qBittorrent/qBittorrent.conf
+fi
 
 exec gosu qbittorrent:qbittorrent qbittorrent-nox
