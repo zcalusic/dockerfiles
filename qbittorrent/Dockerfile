@@ -2,6 +2,7 @@ FROM zcalusic/debian-buster as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ENV QBITTORRENT_VERSION 4.2.1
+ENV LIBTORRENT_VERSION 1.2.3
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -18,6 +19,7 @@ RUN apt-get update \
     && cd /usr/src \
     && git clone https://github.com/arvidn/libtorrent \
     && cd libtorrent \
+    && git checkout libtorrent-$(echo ${LIBTORRENT_VERSION} | sed 's/\./_/g') \
     && ./bootstrap.sh --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu \
     && make -j $(nproc) install-strip \
     && cd /usr/src \
