@@ -1,7 +1,7 @@
 FROM zcalusic/debian-buster as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-ENV QBITTORRENT_VERSION 4.2.2
+ENV QBITTORRENT_VERSION 4.2.3
 ENV LIBTORRENT_VERSION 1.2.5
 
 RUN apt-get update \
