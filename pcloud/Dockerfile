@@ -1,4 +1,4 @@
-FROM zcalusic/debian-stretch as builder
+FROM zcalusic/debian-buster as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 RUN apt-get update \
@@ -19,7 +19,7 @@ RUN apt-get update \
     && cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr . \
     && make pclsync mbedtls install/strip
 
-FROM zcalusic/debian-stretch
+FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG URL
