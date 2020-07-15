@@ -26,7 +26,8 @@ RUN apt-key adv --recv-keys --keyserver hkp://ipv4.pool.sks-keyservers.net FD380
     && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/pdns.list /etc/apt/preferences.d/pdns.pref \
     && sed -i -e 's/^local-address=127.0.0.1/local-address=0.0.0.0/' \
        	      -e 's/^setuid=pdns/setuid=daemon/' \
-	      -e 's/^setgid=pdns/setgid=daemon/' /etc/powerdns/recursor.conf
+	      -e 's/^setgid=pdns/setgid=daemon/' \
+	      -e 's/^# socket-dir=/socket-dir=\/var\/run/' /etc/powerdns/recursor.conf
 
 STOPSIGNAL SIGKILL
 
