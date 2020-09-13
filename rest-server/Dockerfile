@@ -28,4 +28,8 @@ LABEL org.label-schema.name="Rest Server in Docker" \
 
 COPY --from=builder /go/src/github.com/restic/rest-server/rest-server /usr/bin/rest-server
 
-CMD [ "rest-server" ]
+EXPOSE 8000
+
+COPY entrypoint.sh /entrypoint.sh
+
+CMD [ "/entrypoint.sh" ]
