@@ -36,7 +36,8 @@ RUN apt-get update \
        whois \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p "$OBSERVIUM_HOME" \
-    && wget --dot-style=mega -O- "https://www.observium.org/observium-community-latest.tar.gz" | tar xzo --strip-components=1 -C "$OBSERVIUM_HOME"
+    && wget --dot-style=mega -O- "https://www.observium.org/observium-community-latest.tar.gz" | tar xzo --strip-components=1 -C "$OBSERVIUM_HOME" \
+    && sed -i -e "s/'samesite' => 'Strict'/'samesite' => 'Lax'/" $OBSERVIUM_HOME/html/includes/authenticate.inc.php
 
 COPY etc /etc
 COPY entrypoint.sh /entrypoint.sh
