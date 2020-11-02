@@ -5,6 +5,8 @@
 
 DOCKER_IMAGE ?= zcalusic/observium-ce
 
+OBSERVIUM_CE_VERSION := $(strip $(shell wget -qO- https://www.observium.org/versions.php | jq -r '.ce.version'))
+
 .PHONY: default docker_build docker_push
 
 default: docker_build
@@ -16,9 +18,11 @@ docker_build:
 		--build-arg VCS_URL=$(strip $(shell git config --get remote.origin.url)) \
 		--build-arg VCS_REF=$(strip $(shell git rev-parse --short HEAD)) \
 		--build-arg BUILD_DATE=$(strip $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")) \
-		-t $(DOCKER_IMAGE) .
+		-t $(DOCKER_IMAGE):$(OBSERVIUM_CE_VERSION) .
+	docker tag $(DOCKER_IMAGE):$(OBSERVIUM_CE_VERSION) $(DOCKER_IMAGE):latest
 
 docker_push:
+	docker push $(DOCKER_IMAGE):$(OBSERVIUM_CE_VERSION)
 	docker push $(DOCKER_IMAGE):latest
 	curl -X POST https://hooks.microbadger.com/images/zcalusic/observium-ce/0PPk59EVH7UkUilUTf5CI5ETV_8=
 	@echo
