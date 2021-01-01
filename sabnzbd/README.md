@@ -9,6 +9,7 @@ Run [SABnzbd](https://sabnzbd.org/) binary newsreader in a Docker container.
 
 - based on Debian 11 Bullseye base image
 - easy user mapping via environment variables (default: uid 1000, gid 1000)
+- configurable Web UI host & port
 - three host mounts: configuration, complete & incomplete downloads
 
 ## Usage
@@ -30,6 +31,7 @@ sudo docker run -d \
      -e TZ=Europe/Zagreb \
      -e SABNZBD_UID=1000 \
      -e SABNZBD_GID=100 \
+     -e SABNZBD_SERVER=0.0.0.0:8080 \
      --name sabnzbd \
      zcalusic/sabnzbd
 ```
