@@ -5,7 +5,7 @@
 
 DOCKER_IMAGE ?= zcalusic/rclone
 
-RCLONE_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/ncw/rclone/releases/latest | jq -r '.tag_name'))
+RCLONE_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/rclone/rclone/releases/latest | jq -r '.tag_name'))
 RCLONE_VERSION ?= $(RCLONE_CURRENT_VERSION)
 
 .PHONY: default docker_build docker_push
