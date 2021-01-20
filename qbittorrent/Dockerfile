@@ -1,62 +1,55 @@
-FROM zcalusic/debian-buster as builder
+FROM zcalusic/debian-bullseye as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-ENV QBITTORRENT_VERSION 4.2.3
-ENV LIBTORRENT_VERSION 1.2.5
+ARG QBITTORRENT_VERSION
+ARG LIBTORRENT_VERSION
+
+ENV QBITTORRENT_VERSION $QBITTORRENT_VERSION
+ENV LIBTORRENT_VERSION $LIBTORRENT_VERSION
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        automake \
        build-essential \
+       cmake \
        git \
        libboost-system-dev \
+       libicu-dev \
        libssl-dev \
        libtool \
        pkg-config \
        qtbase5-dev \
        qttools5-dev-tools \
        zlib1g-dev \
+    && MAKEFLAGS="-j $(nproc)" \
+    && export MAKEFLAGS \
     && cd /usr/src \
-    && git clone https://github.com/arvidn/libtorrent \
+    && git clone --branch v$LIBTORRENT_VERSION --depth 1 https://github.com/arvidn/libtorrent \
     && cd libtorrent \
-    && git checkout libtorrent-$(echo ${LIBTORRENT_VERSION} | sed 's/\./_/g') \
-    && ./bootstrap.sh --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu \
-    && make -j $(nproc) install-strip \
+    && mkdir build \
+    && cd build \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=17 -DCMAKE_INSTALL_PREFIX=/usr -G "Unix Makefiles" .. \
+    && make install/strip \
     && cd /usr/src \
-    && git clone https://github.com/qbittorrent/qBittorrent \
-    && cd qBittorrent \
-    && git checkout release-${QBITTORRENT_VERSION} \
+    && git clone --branch release-$QBITTORRENT_VERSION --depth 1 https://github.com/qbittorrent/qBittorrent \
+    && cd /usr/src/qBittorrent \
     && ./bootstrap.sh \
     && ./configure --prefix=/usr --disable-gui \
-    && make -j $(nproc) install \
+    && make install \
     && gzip -9 /usr/share/man/man1/qbittorrent-nox.1
 
-FROM zcalusic/debian-buster
+FROM zcalusic/debian-bullseye
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-ARG URL
-ARG VCS_URL
-ARG VCS_REF
-ARG BUILD_DATE
-
-LABEL org.label-schema.name="qBittorrent in Docker" \
-      org.label-schema.description="Run qBittorrent BitTorrent client in a Docker container" \
-      org.label-schema.vendor="Zlatko Čalušić" \
-      org.label-schema.license="MIT" \
-      org.label-schema.url=$URL \
-      org.label-schema.vcs-url=$VCS_URL \
-      org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.build-date=$BUILD_DATE \
-      org.label-schema.schema-version="1.0"
+ARG LIBTORRENT_VERSION
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       libboost-system1.67.0 \
        libqt5network5 \
        libqt5xml5 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.10.0.0 /usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.10.0.0
+COPY --from=builder /usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.$LIBTORRENT_VERSION /usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.$LIBTORRENT_VERSION
 
 RUN ldconfig
 

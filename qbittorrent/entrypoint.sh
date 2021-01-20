@@ -17,8 +17,9 @@ chown qbittorrent:qbittorrent /home/qbittorrent
 
 if [ ! -f /home/qbittorrent/.config/qBittorrent/qBittorrent.conf ]
 then
+    mkdir -p /home/qbittorrent/.config/qBittorrent
     cp /etc/qBittorrent.conf /home/qbittorrent/.config/qBittorrent/qBittorrent.conf
-    chown qbittorrent:qbittorrent /home/qbittorrent/.config/qBittorrent/qBittorrent.conf
+    chown -R qbittorrent:qbittorrent /home/qbittorrent/.config
 fi
 
 exec gosu qbittorrent:qbittorrent qbittorrent-nox

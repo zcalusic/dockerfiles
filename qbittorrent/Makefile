@@ -5,20 +5,19 @@
 
 DOCKER_IMAGE ?= zcalusic/qbittorrent
 
+QBITTORRENT_VERSION := 4.3.3
+LIBTORRENT_VERSION := 1.2.12
+
 .PHONY: default docker_build docker_push
 
 default: docker_build
 
 docker_build:
-	docker pull zcalusic/debian-buster
+	docker pull zcalusic/debian-bullseye
 	docker build \
-		--build-arg URL=$(strip $(shell git config --get remote.origin.url | sed 's/\.git$$//')) \
-		--build-arg VCS_URL=$(strip $(shell git config --get remote.origin.url)) \
-		--build-arg VCS_REF=$(strip $(shell git rev-parse --short HEAD)) \
-		--build-arg BUILD_DATE=$(strip $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")) \
-		-t $(DOCKER_IMAGE) .
+		--build-arg QBITTORRENT_VERSION=$(QBITTORRENT_VERSION) \
+		--build-arg LIBTORRENT_VERSION=$(LIBTORRENT_VERSION) \
+		-t $(DOCKER_IMAGE):$(QBITTORRENT_VERSION) .
 
 docker_push:
-	docker push $(DOCKER_IMAGE):latest
-	curl -X POST https://hooks.microbadger.com/images/zcalusic/qbittorrent/w7G-nsiSYHEeEHKuWYXrJTLNL_g=
-	@echo
+	docker push $(DOCKER_IMAGE):$(QBITTORRENT_VERSION)
