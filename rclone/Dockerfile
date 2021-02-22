@@ -3,12 +3,9 @@ MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG RCLONE_VERSION
 
-ENV GO111MODULE on
 ENV CGO_ENABLED 0
 
-RUN go get -d "github.com/rclone/rclone@$RCLONE_VERSION" \
-    && cd "pkg/mod/github.com/rclone/rclone@$RCLONE_VERSION" \
-    && go install --ldflags "-s -X github.com/rclone/rclone/fs.Version=$RCLONE_VERSION"
+RUN go install --ldflags "-s -X github.com/rclone/rclone/fs.Version=$RCLONE_VERSION" "github.com/rclone/rclone@$RCLONE_VERSION"
 
 FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
