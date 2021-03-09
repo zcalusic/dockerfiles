@@ -25,6 +25,6 @@ LABEL org.label-schema.name="Rclone in Docker" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0"
 
-COPY --from=builder /go/bin/rclone /usr/bin/rclone
+COPY --from=builder /go/bin /usr/bin
 
 CMD [ "rclone" ]
