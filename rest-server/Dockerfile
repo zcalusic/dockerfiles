@@ -4,8 +4,9 @@ MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 ARG REST_SERVER_VERSION
 
 RUN go get -d github.com/restic/rest-server \
-    && cd src/github.com/restic/rest-server \
-    && git checkout "$REST_SERVER_VERSION" \
+    && cd "pkg/mod/github.com/restic/rest-server@$REST_SERVER_VERSION" \
+    && go get -u \
+    && go mod tidy \
     && go run build.go
 
 FROM zcalusic/debian-buster
@@ -15,6 +16,7 @@ ARG URL
 ARG VCS_URL
 ARG VCS_REF
 ARG BUILD_DATE
+ARG REST_SERVER_VERSION
 
 LABEL org.label-schema.name="Rest Server in Docker" \
       org.label-schema.description="Run Rest Server in a Docker container" \
@@ -26,7 +28,7 @@ LABEL org.label-schema.name="Rest Server in Docker" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0"
 
-COPY --from=builder /go/src/github.com/restic/rest-server/rest-server /usr/bin/rest-server
+COPY --from=builder "/go/pkg/mod/github.com/restic/rest-server@$REST_SERVER_VERSION/rest-server" /usr/bin
 
 EXPOSE 8000
 
