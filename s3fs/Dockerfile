@@ -1,7 +1,7 @@
 FROM zcalusic/debian-buster as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-ENV S3FS_VERSION 1.84
+ARG S3FS_VERSION
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -17,7 +17,7 @@ RUN apt-get update \
     && cd /usr/src \
     && git clone https://github.com/s3fs-fuse/s3fs-fuse \
     && cd s3fs-fuse \
-    && git checkout v${S3FS_VERSION} \
+    && git checkout ${S3FS_VERSION} \
     && ./autogen.sh \
     && ./configure --prefix=/usr \
     && make -j "$(nproc)" install-strip \
