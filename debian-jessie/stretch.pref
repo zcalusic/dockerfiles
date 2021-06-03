@@ -1,7 +1,0 @@
-Package: *
-Pin: release stretch
-Pin-Priority: 400
-
-Package: *
-Pin: release stretch-updates
-Pin-Priority: 400

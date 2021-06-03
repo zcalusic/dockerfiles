@@ -1,3 +1,0 @@
-deb https://deb.debian.org/debian jessie main contrib non-free
-deb https://deb.debian.org/debian jessie-updates main contrib non-free
-deb https://deb.debian.org/debian-security jessie/updates main contrib non-free
