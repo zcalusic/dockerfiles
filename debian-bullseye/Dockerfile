@@ -26,9 +26,7 @@ RUN apt-get update \
        apt-utils \
        ca-certificates \
        dnsutils \
-       dirmngr \
        dumb-init \
-       gnupg \
        gosu \
        jq \
        less \
