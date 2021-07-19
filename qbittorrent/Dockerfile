@@ -24,14 +24,14 @@ RUN apt-get update \
     && MAKEFLAGS="-j $(nproc)" \
     && export MAKEFLAGS \
     && cd /usr/src \
-    && git clone --branch v$LIBTORRENT_VERSION --depth 1 https://github.com/arvidn/libtorrent \
+    && git clone --branch "v$LIBTORRENT_VERSION" --depth 1 https://github.com/arvidn/libtorrent \
     && cd libtorrent \
     && mkdir build \
     && cd build \
     && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=17 -DCMAKE_INSTALL_PREFIX=/usr -G "Unix Makefiles" .. \
     && make install/strip \
     && cd /usr/src \
-    && git clone --branch release-$QBITTORRENT_VERSION --depth 1 https://github.com/qbittorrent/qBittorrent \
+    && git clone --branch "release-$QBITTORRENT_VERSION" --depth 1 https://github.com/qbittorrent/qBittorrent \
     && cd /usr/src/qBittorrent \
     && ./bootstrap.sh \
     && ./configure --prefix=/usr --disable-gui \
@@ -49,7 +49,7 @@ RUN apt-get update \
        libqt5xml5 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.$LIBTORRENT_VERSION /usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.$LIBTORRENT_VERSION
+COPY --from=builder "/usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.$LIBTORRENT_VERSION" "/usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.$LIBTORRENT_VERSION"
 
 RUN ldconfig
 
