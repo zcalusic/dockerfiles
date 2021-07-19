@@ -20,8 +20,8 @@ RUN apt-get update \
        unrar \
        unzip \
     && rm -rf /var/lib/apt/lists/* \
-    && mkdir /opt/sabnzbd \
-    && wget --dot-style=mega -O- "https://github.com/sabnzbd/sabnzbd/releases/download/${SABNZBD_VERSION}/SABnzbd-${SABNZBD_VERSION}-src.tar.gz" | tar xz --strip-components=1 -C /opt/sabnzbd
+    && mkdir -p /opt/sabnzbd \
+    && wget --dot-style=mega -O- "https://github.com/sabnzbd/sabnzbd/releases/download/$SABNZBD_VERSION/SABnzbd-$SABNZBD_VERSION-src.tar.gz" | tar xz --strip-components=1 -C /opt/sabnzbd
 
 EXPOSE 8080
 
