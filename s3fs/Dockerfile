@@ -14,13 +14,14 @@ RUN apt-get update \
        libxml2-dev \
        make \
        pkg-config \
+    && MAKEFLAGS="-j $(nproc)" \
+    && export MAKEFLAGS \
     && cd /usr/src \
-    && git clone https://github.com/s3fs-fuse/s3fs-fuse \
+    && git clone --branch "$S3FS_VERSION" --depth 1 https://github.com/s3fs-fuse/s3fs-fuse \
     && cd s3fs-fuse \
-    && git checkout ${S3FS_VERSION} \
     && ./autogen.sh \
     && ./configure --prefix=/usr \
-    && make -j "$(nproc)" install-strip \
+    && make install-strip \
     && gzip -9 /usr/share/man/man1/s3fs.1
 
 FROM zcalusic/debian-buster
