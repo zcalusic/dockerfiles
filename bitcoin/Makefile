@@ -14,9 +14,7 @@ default: docker_build
 
 docker_build:
 	docker pull zcalusic/debian-bullseye
-	docker build \
-		--build-arg BITCOIN_VERSION=$(BITCOIN_VERSION) \
-		-t $(DOCKER_IMAGE):$(BITCOIN_VERSION) .
+	docker build --build-arg BITCOIN_VERSION=$(BITCOIN_VERSION) -t $(DOCKER_IMAGE):$(BITCOIN_VERSION) .
 ifeq ($(BITCOIN_VERSION),$(BITCOIN_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(BITCOIN_VERSION) $(DOCKER_IMAGE):latest
 endif

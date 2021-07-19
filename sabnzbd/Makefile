@@ -14,9 +14,7 @@ default: docker_build
 
 docker_build:
 	docker pull zcalusic/debian-bullseye
-	docker build \
-		--build-arg SABNZBD_VERSION=$(SABNZBD_VERSION) \
-		-t $(DOCKER_IMAGE):$(SABNZBD_VERSION) .
+	docker build --build-arg SABNZBD_VERSION=$(SABNZBD_VERSION) -t $(DOCKER_IMAGE):$(SABNZBD_VERSION) .
 ifeq ($(SABNZBD_VERSION),$(SABNZBD_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(SABNZBD_VERSION) $(DOCKER_IMAGE):latest
 endif

@@ -1,21 +1,6 @@
 FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-ARG URL
-ARG VCS_URL
-ARG VCS_REF
-ARG BUILD_DATE
-
-LABEL org.label-schema.name="PowerDNS Recursor in Docker" \
-      org.label-schema.description="Run PowerDNS Recursor high-end, high-performance resolving name server in a Docker container" \
-      org.label-schema.vendor="Zlatko Čalušić" \
-      org.label-schema.license="MIT" \
-      org.label-schema.url=$URL \
-      org.label-schema.vcs-url=$VCS_URL \
-      org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.build-date=$BUILD_DATE \
-      org.label-schema.schema-version="1.0"
-
 COPY powerdns-archive.gpg /etc/apt/trusted.gpg.d/powerdns-archive.gpg
 COPY pdns.list /etc/apt/sources.list.d/pdns.list
 COPY pdns.pref /etc/apt/preferences.d/pdns.pref
