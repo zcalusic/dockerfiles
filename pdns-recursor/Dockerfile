@@ -21,16 +21,10 @@ COPY pdns.list /etc/apt/sources.list.d/pdns.list
 COPY pdns.pref /etc/apt/preferences.d/pdns.pref
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-       pdns-recursor \
+    && apt-get install -y --no-install-recommends pdns-recursor \
     && rm -rf /var/lib/apt/lists/* \
-	      /etc/apt/trusted.gpg.d/powerdns-archive.gpg \
-	      /etc/apt/sources.list.d/pdns.list \
-	      /etc/apt/preferences.d/pdns.pref \
-    && sed -i -e 's/^local-address=127.0.0.1/local-address=0.0.0.0/' \
-       	      -e 's/^setuid=pdns/setuid=daemon/' \
-	      -e 's/^setgid=pdns/setgid=daemon/' \
-	      -e 's/^# socket-dir=/socket-dir=\/var\/run/' /etc/powerdns/recursor.conf
+    && mkdir -p /run/pdns-recursor \
+    && sed -i -e 's/^local-address=127.0.0.1/local-address=0.0.0.0/' /etc/powerdns/recursor.conf
 
 STOPSIGNAL SIGKILL
 
