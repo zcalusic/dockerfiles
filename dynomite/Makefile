@@ -30,5 +30,3 @@ docker_push:
 ifeq ($(DYNOMITE_VERSION),$(DYNOMITE_CURRENT_VERSION))
 	docker push $(DOCKER_IMAGE):latest
 endif
-	curl -X POST https://hooks.microbadger.com/images/zcalusic/dynomite/j37bzxVbD95Pl7-SlIGRewwERAo=
-	@echo

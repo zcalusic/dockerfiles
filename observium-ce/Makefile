@@ -24,5 +24,3 @@ docker_build:
 docker_push:
 	docker push $(DOCKER_IMAGE):$(OBSERVIUM_CE_VERSION)
 	docker push $(DOCKER_IMAGE):latest
-	curl -X POST https://hooks.microbadger.com/images/zcalusic/observium-ce/0PPk59EVH7UkUilUTf5CI5ETV_8=
-	@echo

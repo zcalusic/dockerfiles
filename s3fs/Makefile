@@ -30,5 +30,3 @@ docker_push:
 ifeq ($(S3FS_VERSION),$(S3FS_CURRENT_VERSION))
 	docker push $(DOCKER_IMAGE):latest
 endif
-	curl -X POST https://hooks.microbadger.com/images/zcalusic/s3fs/lJXm0kKFfa--WOY4SKe7gwLs8VU=
-	@echo

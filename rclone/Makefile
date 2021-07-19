@@ -31,5 +31,3 @@ docker_push:
 ifeq ($(RCLONE_VERSION),$(RCLONE_CURRENT_VERSION))
 	docker push $(DOCKER_IMAGE):latest
 endif
-	curl -X POST https://hooks.microbadger.com/images/zcalusic/rclone/OpsSCPgJrx6fRtKIEM1gwM8cQpU=
-	@echo

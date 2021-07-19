@@ -31,5 +31,3 @@ docker_push:
 ifeq ($(REST_SERVER_VERSION),$(REST_SERVER_CURRENT_VERSION))
 	docker push $(DOCKER_IMAGE):latest
 endif
-	curl -X POST https://hooks.microbadger.com/images/zcalusic/rest-server/y7-xBV3FSYak8ls3QJYImWeWWfY=
-	@echo

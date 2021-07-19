@@ -20,5 +20,3 @@ docker_build:
 
 docker_push:
 	docker push $(DOCKER_IMAGE):latest
-	curl -X POST https://hooks.microbadger.com/images/zcalusic/openvpn/PtVD0AuQ9LR5bO_qdHJgbBXGWdg=
-	@echo
