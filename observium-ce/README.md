@@ -2,10 +2,6 @@
 
 [![Pulls](https://img.shields.io/docker/pulls/zcalusic/observium-ce.svg)](https://hub.docker.com/r/zcalusic/observium-ce/)
 [![Stars](https://img.shields.io/docker/stars/zcalusic/observium-ce.svg)](https://hub.docker.com/r/zcalusic/observium-ce/)
-[![Image](https://images.microbadger.com/badges/image/zcalusic/observium-ce.svg)](https://microbadger.com/images/zcalusic/observium-ce/)
-[![Version](https://images.microbadger.com/badges/version/zcalusic/observium-ce.svg)](https://microbadger.com/images/zcalusic/observium-ce/)
-[![Commit](https://images.microbadger.com/badges/commit/zcalusic/observium-ce.svg)](https://microbadger.com/images/zcalusic/observium-ce/)
-[![License](https://images.microbadger.com/badges/license/zcalusic/observium-ce.svg)](https://microbadger.com/images/zcalusic/observium-ce/)
 
 This Docker container makes it easy to get an instance of Observium Community Edition up and running.  Learn more about Observium: <https://observium.org/>
 

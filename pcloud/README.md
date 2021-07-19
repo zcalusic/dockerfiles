@@ -2,10 +2,6 @@
 
 [![Pulls](https://img.shields.io/docker/pulls/zcalusic/pcloud.svg)](https://hub.docker.com/r/zcalusic/pcloud/)
 [![Stars](https://img.shields.io/docker/stars/zcalusic/pcloud.svg)](https://hub.docker.com/r/zcalusic/pcloud/)
-[![Image](https://images.microbadger.com/badges/image/zcalusic/pcloud.svg)](https://microbadger.com/images/zcalusic/pcloud/)
-[![Version](https://images.microbadger.com/badges/version/zcalusic/pcloud.svg)](https://microbadger.com/images/zcalusic/pcloud/)
-[![Commit](https://images.microbadger.com/badges/commit/zcalusic/pcloud.svg)](https://microbadger.com/images/zcalusic/pcloud/)
-[![License](https://images.microbadger.com/badges/license/zcalusic/pcloud.svg)](https://microbadger.com/images/zcalusic/pcloud/)
 
 This Docker container makes it easy to mount your pCloud storage.  Learn more about pCloud: <https://www.pcloud.com/>
 

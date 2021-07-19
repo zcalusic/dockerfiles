@@ -2,10 +2,6 @@
 
 [![Pulls](https://img.shields.io/docker/pulls/zcalusic/debian-buster.svg)](https://hub.docker.com/r/zcalusic/debian-buster/)
 [![Stars](https://img.shields.io/docker/stars/zcalusic/debian-buster.svg)](https://hub.docker.com/r/zcalusic/debian-buster/)
-[![Image](https://images.microbadger.com/badges/image/zcalusic/debian-buster.svg)](https://microbadger.com/images/zcalusic/debian-buster/)
-[![Version](https://images.microbadger.com/badges/version/zcalusic/debian-buster.svg)](https://microbadger.com/images/zcalusic/debian-buster/)
-[![Commit](https://images.microbadger.com/badges/commit/zcalusic/debian-buster.svg)](https://microbadger.com/images/zcalusic/debian-buster/)
-[![License](https://images.microbadger.com/badges/license/zcalusic/debian-buster.svg)](https://microbadger.com/images/zcalusic/debian-buster/)
 
 Based on the official Debian 10 Buster Docker base image.
 

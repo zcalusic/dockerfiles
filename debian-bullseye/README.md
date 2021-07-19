@@ -2,10 +2,6 @@
 
 [![Pulls](https://img.shields.io/docker/pulls/zcalusic/debian-bullseye.svg)](https://hub.docker.com/r/zcalusic/debian-bullseye/)
 [![Stars](https://img.shields.io/docker/stars/zcalusic/debian-bullseye.svg)](https://hub.docker.com/r/zcalusic/debian-bullseye/)
-[![Image](https://images.microbadger.com/badges/image/zcalusic/debian-bullseye.svg)](https://microbadger.com/images/zcalusic/debian-bullseye/)
-[![Version](https://images.microbadger.com/badges/version/zcalusic/debian-bullseye.svg)](https://microbadger.com/images/zcalusic/debian-bullseye/)
-[![Commit](https://images.microbadger.com/badges/commit/zcalusic/debian-bullseye.svg)](https://microbadger.com/images/zcalusic/debian-bullseye/)
-[![License](https://images.microbadger.com/badges/license/zcalusic/debian-bullseye.svg)](https://microbadger.com/images/zcalusic/debian-bullseye/)
 
 Based on the official Debian 11 Bullseye Docker base image.
 
