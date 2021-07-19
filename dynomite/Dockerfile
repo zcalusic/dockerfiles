@@ -12,27 +12,26 @@ RUN apt-get update \
        libssl-dev \
        libtool \
        make \
+    && MAKEFLAGS="-j $(nproc)" \
+    && export MAKEFLAGS \
     && cd /usr/src \
-    && git clone https://github.com/Netflix/dynomite \
+    && git clone --branch "$DYNOMITE_VERSION" --depth 1 https://github.com/Netflix/dynomite \
     && cd dynomite \
-    && git checkout ${DYNOMITE_VERSION} \
     && autoreconf -fvi \
-    && ./configure \
-    && make -j "$(nproc)" \
-    && strip src/dynomite src/dynomite-test src/tools/dynomite-hash-tool
+    && ./configure --prefix=/usr \
+    && make install-strip
 
 FROM zcalusic/debian-buster
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-       binutils \
+    && apt-get install -y --no-install-recommends binutils \
     && rm -rf /var/lib/apt/lists/* \
-    && mkdir /conf
+    && mkdir -p /conf
 
-COPY --from=builder /usr/src/dynomite/src/dynomite /usr/sbin/dynomite
-COPY --from=builder /usr/src/dynomite/src/dynomite-test /usr/sbin/dynomite-test
-COPY --from=builder /usr/src/dynomite/src/tools/dynomite-hash-tool /usr/bin/dynomite-hash-tool
+COPY --from=builder /usr/sbin/dynomite /usr/sbin/dynomite
+COPY --from=builder /usr/sbin/dynomite-test /usr/sbin/dynomite-test
+COPY --from=builder /usr/bin/dynomite-hash-tool /usr/bin/dynomite-hash-tool
 COPY --from=builder /usr/src/dynomite/conf /conf
 
 COPY dynomite.yml /conf/dynomite.yml
