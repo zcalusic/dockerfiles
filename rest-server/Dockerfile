@@ -1,4 +1,4 @@
-FROM golang:buster as builder
+FROM golang:bullseye as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG REST_SERVER_VERSION
@@ -9,7 +9,7 @@ RUN go get -d github.com/restic/rest-server \
     && go mod tidy \
     && go run build.go
 
-FROM zcalusic/debian-buster
+FROM zcalusic/debian-bullseye
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG REST_SERVER_VERSION

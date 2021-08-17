@@ -13,8 +13,8 @@ REST_SERVER_VERSION ?= $(REST_SERVER_CURRENT_VERSION)
 default: docker_build
 
 docker_build:
-	docker pull golang:buster
-	docker pull zcalusic/debian-buster
+	docker pull golang:bullseye
+	docker pull zcalusic/debian-bullseye
 	docker build --build-arg REST_SERVER_VERSION=$(REST_SERVER_VERSION) -t $(DOCKER_IMAGE):$(REST_SERVER_VERSION) .
 ifeq ($(REST_SERVER_VERSION),$(REST_SERVER_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(REST_SERVER_VERSION) $(DOCKER_IMAGE):latest
