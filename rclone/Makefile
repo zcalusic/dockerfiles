@@ -13,8 +13,8 @@ RCLONE_VERSION ?= $(RCLONE_CURRENT_VERSION)
 default: docker_build
 
 docker_build:
-	docker pull golang:buster
-	docker pull zcalusic/debian-buster
+	docker pull golang:bullseye
+	docker pull zcalusic/debian-bullseye
 	docker build --build-arg RCLONE_VERSION=$(RCLONE_VERSION) -t $(DOCKER_IMAGE):$(RCLONE_VERSION) .
 ifeq ($(RCLONE_VERSION),$(RCLONE_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(RCLONE_VERSION) $(DOCKER_IMAGE):latest
