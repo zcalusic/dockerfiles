@@ -1,4 +1,4 @@
-FROM zcalusic/debian-buster
+FROM zcalusic/debian-bullseye
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ENV OBSERVIUM_HOME /opt/observium
@@ -11,10 +11,11 @@ RUN apt-get update \
        nginx-light \
        php \
        php-pear \
-       php7.3-fpm \
-       php7.3-gd \
-       php7.3-mysql \
-       python-mysqldb \
+       php7.4-fpm \
+       php7.4-gd \
+       php7.4-mysql \
+       python-is-python3 \
+       python3-pymysql \
        rrdtool \
        snmp \
        snmp-mibs-downloader \

@@ -23,22 +23,22 @@ ln -nsf "/usr/share/zoneinfo/$TZ" /etc/localtime
 dpkg-reconfigure tzdata >/dev/null 2>&1
 
 # PHP timezone
-echo "date.timezone = \"$TZ\"" > /etc/php/7.3/mods-available/local.ini
-ln -nsf /etc/php/7.3/mods-available/local.ini /etc/php/7.3/cli/conf.d/20-local.ini
-ln -nsf /etc/php/7.3/mods-available/local.ini /etc/php/7.3/fpm/conf.d/20-local.ini
+echo "date.timezone = \"$TZ\"" > /etc/php/7.4/mods-available/local.ini
+ln -nsf /etc/php/7.4/mods-available/local.ini /etc/php/7.4/cli/conf.d/20-local.ini
+ln -nsf /etc/php/7.4/mods-available/local.ini /etc/php/7.4/fpm/conf.d/20-local.ini
 
 # PHP CLI opcache
 mkdir /dev/shm/php-opcache
 chown www-data:www-data /dev/shm/php-opcache
-echo "opcache.enable_cli=1" > /etc/php/7.3/mods-available/local_cli.ini
-echo "opcache.file_cache=/dev/shm/php-opcache" >> /etc/php/7.3/mods-available/local_cli.ini
-ln -nsf /etc/php/7.3/mods-available/local_cli.ini /etc/php/7.3/cli/conf.d/20-local_cli.ini
+echo "opcache.enable_cli=1" > /etc/php/7.4/mods-available/local_cli.ini
+echo "opcache.file_cache=/dev/shm/php-opcache" >> /etc/php/7.4/mods-available/local_cli.ini
+ln -nsf /etc/php/7.4/mods-available/local_cli.ini /etc/php/7.4/cli/conf.d/20-local_cli.ini
 
 # PHP logs
-sed -i -e "s/^error_log = \/var\/log\/php7\.3-fpm\.log$/error_log = $(echo "$OBSERVIUM_HOME" | sed -e 's/\//\\\//g')\/logs\/php7.3-fpm.log/" /etc/php/7.3/fpm/php-fpm.conf
+sed -i -e "s/^error_log = \/var\/log\/php7\.3-fpm\.log$/error_log = $(echo "$OBSERVIUM_HOME" | sed -e 's/\//\\\//g')\/logs\/php7.4-fpm.log/" /etc/php/7.4/fpm/php-fpm.conf
 
 # PHP memory limit
-sed -i -e "s/^memory_limit = 128M$/memory_limit = $PHP_MEMORY_LIMIT/" /etc/php/7.3/fpm/php.ini
+sed -i -e "s/^memory_limit = 128M$/memory_limit = $PHP_MEMORY_LIMIT/" /etc/php/7.4/fpm/php.ini
 
 # Nginx listen address:port
 sed -i -e "s/LISTEN_ADDR/$LISTEN_ADDR/" /etc/nginx/sites-available/default
@@ -63,7 +63,7 @@ gosu www-data "$OBSERVIUM_HOME/discovery.php" -u
 
 # Start services
 /etc/init.d/cron start
-/etc/init.d/php7.3-fpm start
+/etc/init.d/php7.4-fpm start
 /etc/init.d/nginx start
 
 # Wait indefinitely
