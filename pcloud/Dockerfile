@@ -1,4 +1,4 @@
-FROM zcalusic/debian-buster as builder
+FROM zcalusic/debian-bullseye as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 RUN apt-get update \
@@ -19,7 +19,7 @@ RUN apt-get update \
     && cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr . \
     && make pclsync mbedtls install/strip
 
-FROM zcalusic/debian-buster
+FROM zcalusic/debian-bullseye
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 RUN apt-get update \
