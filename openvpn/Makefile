@@ -10,7 +10,7 @@ DOCKER_IMAGE ?= zcalusic/openvpn
 default: docker_build
 
 docker_build:
-	docker pull zcalusic/debian-buster
+	docker pull zcalusic/debian-bullseye
 	docker build -t $(DOCKER_IMAGE) .
 
 docker_push:
