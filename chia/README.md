@@ -1,9 +1,9 @@
-# Run Chia blockchain python implementation in a Docker container
+# Run Chia blockchain Python implementation in a Docker container
 
 [![Pulls](https://img.shields.io/docker/pulls/zcalusic/chia.svg)](https://hub.docker.com/r/zcalusic/chia/)
 [![Stars](https://img.shields.io/docker/stars/zcalusic/chia.svg)](https://hub.docker.com/r/zcalusic/chia/)
 
-Run [Chia blockchain](https://www.chia.net/) python implementation in a Docker container.
+Run [Chia blockchain](https://www.chia.net/) Python implementation in a Docker container.
 
 ## Features
 
@@ -16,7 +16,7 @@ Very simple image, trying to overcome some shortcomings of the official one...
 - easy user mapping via environment variables (default: uid 1000, gid 1000)
 - easy selection of services to run (couldn't find a way to run full node, wallet and farmer, but not harvester with the official image)
 - remote harvesters don't change ID on each restart, easier for pools to track statistics
-- no need to add private keys on each restart (remembered in the python keyring, which is persisted on volume)
+- no need to add private keys on each restart (remembered in the Python keyring, which is persisted on volume)
 - zombie (defunct) processes properly reaped with dumb-init as PID 1 in container
 
 ## Usage
