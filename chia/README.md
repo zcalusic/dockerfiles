@@ -10,14 +10,13 @@ Run [Chia blockchain](https://www.chia.net/) Python implementation in a Docker c
 Very simple image, trying to overcome some shortcomings of the official one...
 
 - based on Debian 11 Bullseye base image, with Python 3.9
-- build properly tagged released versions only, not development ones like the official image [does](https://github.com/Chia-Network/chia-docker/issues/86)
-- include only necessary software packages, the final image is almost 3 times smaller than the official one
-- improve security: run services as regular user, not with superuser privileges
+- only necessary software packages included, to get much smaller final image
+- services run by an unpriviledged user to improve security
 - easy user mapping via environment variables (default: uid 1000, gid 1000)
-- easy selection of services to run (couldn't find a way to run full node, wallet and farmer, but not harvester with the official image)
+- easy selection of services to run (node, wallet, farmer, harvester...)
 - remote harvesters don't change ID on each restart, easier for pools to track statistics
-- no need to add private keys on each restart (remembered in the Python keyring, which is persisted on volume)
-- zombie (defunct) processes properly reaped with dumb-init as PID 1 in container
+- no need to add private keys on each restart (remembered in the Python keyring, which is persisted on the volume)
+- zombie (defunct) processes properly reaped by dumb-init as PID 1 in container
 
 ## Usage
 
