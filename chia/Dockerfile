@@ -12,9 +12,9 @@ RUN apt-get update \
     && git clone --branch "$CHIA_VERSION" --depth 1 https://github.com/Chia-Network/chia-blockchain.git \
     && cd chia-blockchain \
     && git submodule update --init --depth 1 mozilla-ca \
-    && pip install -e . --extra-index-url https://pypi.chia.net/simple/ \
+    && pip install --no-cache-dir -e . --extra-index-url https://pypi.chia.net/simple/ \
     && apt-get purge -y --autoremove git \
-    && rm -rf /var/lib/apt/lists/* /root/.cache
+    && rm -rf /var/lib/apt/lists/*
 
 COPY entrypoint.sh /entrypoint.sh
 
