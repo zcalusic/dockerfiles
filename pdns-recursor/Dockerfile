@@ -1,4 +1,4 @@
-FROM zcalusic/debian-buster
+FROM zcalusic/debian-bullseye
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 COPY powerdns-archive.gpg /etc/apt/trusted.gpg.d/powerdns-archive.gpg
