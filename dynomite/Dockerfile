@@ -14,7 +14,7 @@ RUN apt-get update \
        make \
     && MAKEFLAGS="-j $(nproc)" \
     && export MAKEFLAGS \
-    && cd /usr/src \
+    && cd /usr/local/src \
     && git clone --branch "$DYNOMITE_VERSION" --depth 1 https://github.com/Netflix/dynomite \
     && cd dynomite \
     && autoreconf -fvi \
@@ -32,7 +32,7 @@ RUN apt-get update \
 COPY --from=builder /usr/local/sbin/dynomite /usr/sbin/dynomite
 COPY --from=builder /usr/local/sbin/dynomite-test /usr/sbin/dynomite-test
 COPY --from=builder /usr/local/bin/dynomite-hash-tool /usr/bin/dynomite-hash-tool
-COPY --from=builder /usr/src/dynomite/conf /conf
+COPY --from=builder /usr/local/src/dynomite/conf /conf
 
 COPY dynomite.yml /conf/dynomite.yml
 
