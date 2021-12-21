@@ -1,0 +1,55 @@
+From 303d4ecae95aee9540c48ceac9e7c0f2137a4b52 Mon Sep 17 00:00:00 2001
+From: Dan Molik <dan@danmolik.com>
+Date: Fri, 21 Aug 2020 10:24:17 -0400
+Subject: [PATCH] Fix building and linking with GCC 10
+
+dyn_ring_queue.h defines 2 global variables that are used in many
+source files. This patch makes those variables ( C2G_InQ, C2G_OutQ )
+external in the header, and intiates them in dyn_ring_queue.c
+---
+ src/dyn_ring_queue.c |  2 ++
+ src/dyn_ring_queue.h | 11 +++++++----
+ 2 files changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/src/dyn_ring_queue.c b/src/dyn_ring_queue.c
+index a0107fef..e516c7dd 100644
+--- a/src/dyn_ring_queue.c
++++ b/src/dyn_ring_queue.c
+@@ -11,6 +11,8 @@
+ #include "dyn_gossip.h"
+ #include "dyn_token.h"
+ 
++_C2G_InQ C2G_InQ = {};
++_C2G_OutQ C2G_OutQ = {};
+ // should use pooling to store struct ring_message so that we can reuse
+ struct ring_msg *create_ring_msg(void) {
+   struct ring_msg *msg = dn_alloc(sizeof(*msg));
+diff --git a/src/dyn_ring_queue.h b/src/dyn_ring_queue.h
+index 0617402a..bd6d4224 100644
+--- a/src/dyn_ring_queue.h
++++ b/src/dyn_ring_queue.h
+@@ -16,17 +16,20 @@ struct gossip_node;
+ typedef rstatus_t (*callback_t)(void *msg);
+ typedef void (*data_func_t)(void *);
+ 
+-volatile struct {
++typedef volatile struct {
+   long m_getIdx;
+   long m_putIdx;
+   void *m_entry[C2G_InQ_SIZE];
+-} C2G_InQ;
++} _C2G_InQ;
+ 
+-volatile struct {
++typedef volatile struct {
+   long m_getIdx;
+   long m_putIdx;
+   void *m_entry[C2G_OutQ_SIZE];
+-} C2G_OutQ;
++} _C2G_OutQ ;
++
++extern _C2G_InQ C2G_InQ;
++extern _C2G_OutQ C2G_OutQ;
+ 
+ struct ring_msg {
+   callback_t cb;

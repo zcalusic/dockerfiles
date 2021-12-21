@@ -3,6 +3,8 @@ MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG DYNOMITE_VERSION
 
+COPY patches /usr/local/src/patches
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        automake \
@@ -12,11 +14,13 @@ RUN apt-get update \
        libssl-dev \
        libtool \
        make \
+       patch \
     && MAKEFLAGS="-j $(nproc)" \
     && export MAKEFLAGS \
     && cd /usr/local/src \
     && git clone --branch "$DYNOMITE_VERSION" --depth 1 https://github.com/Netflix/dynomite \
     && cd dynomite \
+    && patch -p1 < /usr/local/src/patches/01-gcc-10-fix.patch \
     && autoreconf -fvi \
     && ./configure \
     && make install-strip
