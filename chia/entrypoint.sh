@@ -21,4 +21,8 @@ then
     gosu chia:chia chia start $CHIA_START
 fi
 
-exec gosu chia:chia sleep infinity
+trap "gosu chia:chia chia stop all -d; sleep 5; exit 0" SIGTERM
+
+gosu chia:chia sleep infinity
+
+exit 0
