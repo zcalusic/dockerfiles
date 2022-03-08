@@ -19,7 +19,7 @@ RUN apt-get update \
        build-essential \
        git \
        python3-dev \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* /root/.cache
 
 COPY entrypoint.sh /entrypoint.sh
 
