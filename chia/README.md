@@ -63,7 +63,7 @@ chia keys generate (or add)
 
 Then respawn the container with `CHIA_START="farmer"` to run all services, just like the official image does by default.
 
-Use `CHIA_START="node wallet-only farmer-only"` to run all services except the harvester. Consult `chia start --help` to find all possible combinations.
+Use `CHIA_START="node wallet farmer-only"` to run all services except the harvester. Consult `chia start --help` to find all possible combinations.
 
 To spawn a remote harvester first follow instructions given by `chia init --help`, then further initialize with something like this:
 
