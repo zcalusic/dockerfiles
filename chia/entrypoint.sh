@@ -14,6 +14,7 @@ groupadd -g $CHIA_GID -o chia
 useradd -u $CHIA_UID -g $CHIA_GID -o -s /usr/sbin/nologin chia
 
 chown chia:chia /home/chia
+chown -R chia:chia /usr/local/lib/python3.9/dist-packages/chia/wallet/puzzles
 
 if [[ -n $CHIA_START ]]
 then
