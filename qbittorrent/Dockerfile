@@ -1,4 +1,4 @@
-FROM zcalusic/debian-bullseye as builder
+FROM zcalusic/debian-bookworm as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG QBITTORRENT_VERSION
@@ -9,47 +9,44 @@ ENV LIBTORRENT_VERSION $LIBTORRENT_VERSION
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       automake \
        build-essential \
        cmake \
        git \
        libboost-system-dev \
        libicu-dev \
        libssl-dev \
-       libtool \
-       pkg-config \
-       qtbase5-dev \
-       qttools5-dev-tools \
+       ninja-build \
+       qt6-base-dev \
+       qt6-tools-dev \
        zlib1g-dev \
-    && MAKEFLAGS="-j $(nproc)" \
-    && export MAKEFLAGS \
     && cd /usr/src \
     && git clone --branch "v$LIBTORRENT_VERSION" --depth 1 https://github.com/arvidn/libtorrent \
     && cd libtorrent \
-    && mkdir build \
-    && cd build \
-    && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=17 -DCMAKE_INSTALL_PREFIX=/usr -G "Unix Makefiles" .. \
-    && make install/strip \
+    && cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
+    && cmake --build build \
+    && cmake --install build \
     && cd /usr/src \
     && git clone --branch "release-$QBITTORRENT_VERSION" --depth 1 https://github.com/qbittorrent/qBittorrent \
-    && cd /usr/src/qBittorrent \
-    && ./bootstrap.sh \
-    && ./configure --prefix=/usr --disable-gui \
-    && make install \
+    && cd qBittorrent \
+    && cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DGUI=OFF -DQT6=ON -DSTACKTRACE=OFF \
+    && cmake --build build \
+    && cmake --install build \
     && gzip -9 /usr/share/man/man1/qbittorrent-nox.1
 
-FROM zcalusic/debian-bullseye
+FROM zcalusic/debian-bookworm
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG LIBTORRENT_VERSION
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       libqt5network5 \
-       libqt5xml5 \
+       libeatmydata1 \
+       libqt6network6 \
+       libqt6sql6 \
+       libqt6xml6 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder "/usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.$LIBTORRENT_VERSION" "/usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.$LIBTORRENT_VERSION"
+COPY --from=builder /usr/lib/x86_64-linux-gnu/libtorrent-rasterbar.so.*.*.* /usr/lib/x86_64-linux-gnu
 
 RUN ldconfig
 
