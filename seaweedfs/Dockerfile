@@ -3,7 +3,7 @@ MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG SEAWEEDFS_VERSION
 
-RUN go install "github.com/seaweedfs/seaweedfs/weed@$SEAWEEDFS_VERSION"
+RUN go install -trimpath -ldflags="-s" "github.com/seaweedfs/seaweedfs/weed@$SEAWEEDFS_VERSION"
 
 FROM zcalusic/debian-bullseye
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
