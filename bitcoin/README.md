@@ -24,7 +24,7 @@ Run container:
 sudo docker run -d \
      -p 127.0.0.1:8332:8332 \
      -p 8333:8333 \
-     -v your-data-dir:/home/bitcoin/.bitcoin \
+     -v your-data-dir:/home/bitcoin \
      -e TZ=Europe/Zagreb \
      -e BITCOIN_UID=1000 \
      -e BITCOIN_GID=100 \
