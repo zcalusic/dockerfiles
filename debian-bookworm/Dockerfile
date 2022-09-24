@@ -13,6 +13,7 @@ RUN apt-get update \
        dnsutils \
        dumb-init \
        gosu \
+       iproute2 \
        jq \
        less \
        net-tools \

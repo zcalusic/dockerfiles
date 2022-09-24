@@ -23,6 +23,8 @@ Based on the official Debian 12 Bookworm Docker base image.
     * minimal init system for containers, killing zombies, redirecting signals...
   * `gosu`
     * robust setuid + setgid + setgroups + exec with sane tty and signal forwarding behavior
+  * `iproute2`
+    * networking and traffic control tools
   * `jq`
     * lightweight and flexible command-line JSON processor
   * `less`
