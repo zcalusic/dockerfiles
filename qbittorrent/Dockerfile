@@ -23,14 +23,12 @@ RUN apt-get update \
     && git clone --branch "v$LIBTORRENT_VERSION" --depth 1 https://github.com/arvidn/libtorrent \
     && cd libtorrent \
     && cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
-    && cmake --build build \
-    && cmake --install build \
+    && cmake --build build --target install/strip \
     && cd /usr/src \
     && git clone --branch "release-$QBITTORRENT_VERSION" --depth 1 https://github.com/qbittorrent/qBittorrent \
     && cd qBittorrent \
     && cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DGUI=OFF -DQT6=ON -DSTACKTRACE=OFF \
-    && cmake --build build \
-    && cmake --install build \
+    && cmake --build build --target install/strip \
     && gzip -9 /usr/share/man/man1/qbittorrent-nox.1
 
 FROM zcalusic/debian-bookworm
