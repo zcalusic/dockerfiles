@@ -13,7 +13,7 @@ RUN apt-get update \
        libssl-dev \
        libxml2-dev \
        make \
-       pkg-config \
+       pkgconf \
     && MAKEFLAGS="-j $(nproc)" \
     && export MAKEFLAGS \
     && cd /usr/src \

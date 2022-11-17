@@ -17,7 +17,7 @@ RUN apt-get update \
        libsqlite3-dev \
        libtool \
        libzmq3-dev \
-       pkg-config \
+       pkgconf \
     && MAKEFLAGS="-j $(nproc)" \
     && export MAKEFLAGS \
     && cd /usr/src \

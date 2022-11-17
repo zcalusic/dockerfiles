@@ -15,7 +15,7 @@ RUN apt-get update \
        libpcap0.8 \
        libpcap0.8-dev \
        make \
-       pkg-config \
+       pkgconf \
        python3 \
        zlib1g-dev \
     && MAKEFLAGS="-j $(nproc)" \
@@ -32,7 +32,7 @@ RUN apt-get update \
        libfuse3-dev \
        libpcap0.8-dev \
        make \
-       pkg-config \
+       pkgconf \
        zlib1g-dev \
     && rm -rf /var/lib/apt/lists/* \
     && mv /etc/mfs /etc/mfs.default \
