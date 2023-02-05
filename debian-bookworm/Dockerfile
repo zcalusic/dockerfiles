@@ -6,7 +6,8 @@ ENV LANG C.UTF-8
 ENV LANGUAGE C.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update \
+RUN sed -i -e 's/^Components: main$/Components: main contrib non-free/g' /etc/apt/sources.list.d/debian.sources \
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
        apt-utils \
        ca-certificates \
@@ -24,5 +25,3 @@ RUN apt-get update \
        wget \
        xmlstarlet \
     && rm -rf /var/lib/apt/lists/*
-
-COPY sources.list /etc/apt/sources.list
