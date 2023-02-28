@@ -12,7 +12,7 @@ RUN apt-get update \
        build-essential \
        cmake \
        git \
-       libboost-system-dev \
+       libboost-system1.81-dev \
        libicu-dev \
        libssl-dev \
        ninja-build \
