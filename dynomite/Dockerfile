@@ -22,6 +22,7 @@ RUN apt-get update \
     && cd dynomite \
     && patch -p1 < /usr/local/src/patches/01-gcc-10-fix.patch \
     && patch -p1 < /usr/local/src/patches/02-stop-log-spam.patch \
+    && patch -p1 < /usr/local/src/patches/03-fix-memory-leak.patch \
     && autoreconf -fvi \
     && ./configure \
     && make install-strip
