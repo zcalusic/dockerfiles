@@ -21,6 +21,7 @@ RUN apt-get update \
     && git clone --branch "$DYNOMITE_VERSION" --depth 1 https://github.com/Netflix/dynomite \
     && cd dynomite \
     && patch -p1 < /usr/local/src/patches/01-gcc-10-fix.patch \
+    && patch -p1 < /usr/local/src/patches/02-stop-log-spam.patch \
     && autoreconf -fvi \
     && ./configure \
     && make install-strip
