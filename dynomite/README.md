@@ -3,7 +3,7 @@
 [![Pulls](https://img.shields.io/docker/pulls/zcalusic/dynomite.svg)](https://hub.docker.com/r/zcalusic/dynomite/)
 [![Stars](https://img.shields.io/docker/stars/zcalusic/dynomite.svg)](https://hub.docker.com/r/zcalusic/dynomite/)
 
-This Docker container makes it easy to get an instance of Dynomite up and running.  Learn more about Dynomite: <https://github.com/Netflix/dynomite>
+This Docker container makes it easy to get an instance of Dynomite up and running.  Learn more about Dynomite: <https://github.com/zcalusic/dynomite>
 
 ## Usage
 

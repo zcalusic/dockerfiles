@@ -5,7 +5,7 @@
 
 DOCKER_IMAGE ?= zcalusic/dynomite
 
-DYNOMITE_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/Netflix/dynomite/releases/latest | jq -r '.tag_name'))
+DYNOMITE_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/zcalusic/dynomite/releases/latest | jq -r '.tag_name'))
 DYNOMITE_VERSION ?= $(DYNOMITE_CURRENT_VERSION)
 
 .PHONY: default docker_build docker_push
