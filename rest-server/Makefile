@@ -5,7 +5,7 @@
 
 DOCKER_IMAGE ?= zcalusic/rest-server
 
-REST_SERVER_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/restic/rest-server/releases/latest | jq -r '.tag_name'))
+REST_SERVER_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/zcalusic/rest-server/releases/latest | jq -r '.tag_name'))
 REST_SERVER_VERSION ?= $(REST_SERVER_CURRENT_VERSION)
 
 .PHONY: default docker_build docker_push

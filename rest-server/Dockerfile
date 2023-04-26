@@ -3,7 +3,7 @@ MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG REST_SERVER_VERSION
 
-RUN go install -trimpath -ldflags="-s" "github.com/restic/rest-server/cmd/rest-server@$REST_SERVER_VERSION"
+RUN go install -trimpath -ldflags="-s" "github.com/zcalusic/rest-server/cmd/rest-server@$REST_SERVER_VERSION"
 
 FROM zcalusic/debian-bullseye
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
