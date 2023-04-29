@@ -14,6 +14,4 @@ COPY --from=builder /go/bin /usr/bin
 
 EXPOSE 8000
 
-COPY entrypoint.sh /entrypoint.sh
-
-CMD [ "/entrypoint.sh" ]
+CMD [ "rest-server" ]
