@@ -13,7 +13,7 @@ CHIA_VERSION ?= $(CHIA_CURRENT_VERSION)
 default: docker_build
 
 docker_build:
-	docker pull zcalusic/debian-bullseye
+	docker pull zcalusic/debian-bookworm
 	docker build --build-arg CHIA_VERSION=$(CHIA_VERSION) -t $(DOCKER_IMAGE):$(CHIA_VERSION) .
 ifeq ($(CHIA_VERSION),$(CHIA_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(CHIA_VERSION) $(DOCKER_IMAGE):latest

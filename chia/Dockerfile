@@ -1,7 +1,10 @@
-FROM zcalusic/debian-bullseye
+FROM zcalusic/debian-bookworm
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG CHIA_VERSION
+
+ENV PIP_BREAK_SYSTEM_PACKAGES 1
+ENV PIP_ROOT_USER_ACTION ignore
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
