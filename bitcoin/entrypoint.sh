@@ -10,8 +10,8 @@ set -eu
 : "${BITCOIN_UID:=1000}"
 : "${BITCOIN_GID:=1000}"
 
-groupadd -g $BITCOIN_GID -o bitcoin
-useradd -u $BITCOIN_UID -g $BITCOIN_GID -o -s /usr/sbin/nologin bitcoin
+groupadd -g "$BITCOIN_GID" -o bitcoin
+useradd -u "$BITCOIN_UID" -g "$BITCOIN_GID" -o -s /usr/sbin/nologin bitcoin
 
 chown bitcoin:bitcoin /home/bitcoin
 

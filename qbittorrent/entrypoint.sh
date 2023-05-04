@@ -11,8 +11,8 @@ set -eu
 : "${QBITTORRENT_GID:=1000}"
 : "${EATMYDATA:=no}"
 
-groupadd -g $QBITTORRENT_GID -o qbittorrent
-useradd -u $QBITTORRENT_UID -g $QBITTORRENT_GID -o -s /usr/sbin/nologin qbittorrent
+groupadd -g "$QBITTORRENT_GID" -o qbittorrent
+useradd -u "$QBITTORRENT_UID" -g "$QBITTORRENT_GID" -o -s /usr/sbin/nologin qbittorrent
 
 chown qbittorrent:qbittorrent /home/qbittorrent
 

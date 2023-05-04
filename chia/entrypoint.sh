@@ -10,8 +10,8 @@ set -e
 : "${CHIA_UID:=1000}"
 : "${CHIA_GID:=1000}"
 
-groupadd -g $CHIA_GID -o chia
-useradd -u $CHIA_UID -g $CHIA_GID -o -s /usr/sbin/nologin chia
+groupadd -g "$CHIA_GID" -o chia
+useradd -u "$CHIA_UID" -g "$CHIA_GID" -o -s /usr/sbin/nologin chia
 
 chown chia:chia /home/chia
 
