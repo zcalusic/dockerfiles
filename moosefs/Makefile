@@ -13,7 +13,7 @@ MOOSEFS_VERSION ?= $(MOOSEFS_CURRENT_VERSION)
 default: docker_build
 
 docker_build:
-	docker pull zcalusic/debian-bullseye
+	docker pull zcalusic/debian-bookworm
 	docker build --build-arg MOOSEFS_VERSION=$(MOOSEFS_VERSION) -t $(DOCKER_IMAGE):$(MOOSEFS_VERSION) .
 ifeq ($(MOOSEFS_VERSION),$(MOOSEFS_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(MOOSEFS_VERSION) $(DOCKER_IMAGE):latest

@@ -1,4 +1,4 @@
-FROM zcalusic/debian-bullseye as builder
+FROM zcalusic/debian-bookworm as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG MOOSEFS_VERSION
@@ -16,7 +16,7 @@ RUN apt-get update \
        libpcap0.8-dev \
        make \
        pkgconf \
-       python3 \
+       python-is-python3 \
        zlib1g-dev \
     && MAKEFLAGS="-j $(nproc)" \
     && export MAKEFLAGS \
