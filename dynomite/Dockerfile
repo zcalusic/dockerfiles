@@ -1,4 +1,4 @@
-FROM zcalusic/debian-bullseye as builder
+FROM zcalusic/debian-bookworm as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG DYNOMITE_VERSION
@@ -22,7 +22,7 @@ RUN apt-get update \
     && ./configure \
     && make install-strip
 
-FROM zcalusic/debian-bullseye
+FROM zcalusic/debian-bookworm
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 RUN apt-get update \

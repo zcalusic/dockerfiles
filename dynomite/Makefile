@@ -13,7 +13,7 @@ DYNOMITE_VERSION ?= $(DYNOMITE_CURRENT_VERSION)
 default: docker_build
 
 docker_build:
-	docker pull zcalusic/debian-bullseye
+	docker pull zcalusic/debian-bookworm
 	docker build --build-arg DYNOMITE_VERSION=$(DYNOMITE_VERSION) -t $(DOCKER_IMAGE):$(DYNOMITE_VERSION) .
 ifeq ($(DYNOMITE_VERSION),$(DYNOMITE_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(DYNOMITE_VERSION) $(DOCKER_IMAGE):latest
