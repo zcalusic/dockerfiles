@@ -12,7 +12,7 @@ OBSERVIUM_CE_VERSION := $(strip $(shell wget -qO- https://www.observium.org/vers
 default: docker_build
 
 docker_build:
-	docker pull zcalusic/debian-bullseye
+	docker pull zcalusic/debian-bookworm
 	docker build -t $(DOCKER_IMAGE):$(OBSERVIUM_CE_VERSION) .
 	docker tag $(DOCKER_IMAGE):$(OBSERVIUM_CE_VERSION) $(DOCKER_IMAGE):latest
 

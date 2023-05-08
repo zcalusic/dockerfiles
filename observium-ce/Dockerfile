@@ -1,4 +1,4 @@
-FROM zcalusic/debian-bullseye
+FROM zcalusic/debian-bookworm
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ENV OBSERVIUM_HOME /opt/observium
@@ -8,12 +8,12 @@ RUN apt-get update \
        fping \
        logrotate \
        mtr-tiny \
-       nginx-light \
+       nginx \
        php \
        php-pear \
-       php7.4-fpm \
-       php7.4-gd \
-       php7.4-mysql \
+       php8.2-fpm \
+       php8.2-gd \
+       php8.2-mysql \
        python-is-python3 \
        python3-pymysql \
        rrdtool \
