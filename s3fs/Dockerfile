@@ -1,4 +1,4 @@
-FROM zcalusic/debian-bullseye as builder
+FROM zcalusic/debian-bookworm as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG S3FS_VERSION
@@ -24,7 +24,7 @@ RUN apt-get update \
     && make install-strip \
     && gzip -9 /usr/share/man/man1/s3fs.1
 
-FROM zcalusic/debian-bullseye
+FROM zcalusic/debian-bookworm
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 RUN apt-get update \
