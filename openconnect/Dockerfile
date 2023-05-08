@@ -1,4 +1,4 @@
-FROM zcalusic/debian-bullseye
+FROM zcalusic/debian-bookworm
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 RUN apt-get update \
