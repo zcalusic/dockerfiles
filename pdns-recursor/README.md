@@ -25,4 +25,4 @@ Run container with additional arguments:
 sudo docker run -d -p 53:53 -p 53:53/udp --name pdns_recursor zcalusic/pdns-recursor pdns_recursor --quiet=no --allow-from=0.0.0.0/0
 ```
 
-PowerDNS Recursor will run with ```daemon``` user privileges
+PowerDNS Recursor is configured to run as a regular user.
