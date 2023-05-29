@@ -5,8 +5,8 @@
 
 DOCKER_IMAGE ?= zcalusic/qbittorrent
 
-QBITTORRENT_VERSION := 4.5.2
-LIBTORRENT_VERSION := 1.2.18
+QBITTORRENT_VERSION := 4.5.3
+LIBTORRENT_VERSION := 1.2.19
 
 .PHONY: default docker_build docker_push
 
