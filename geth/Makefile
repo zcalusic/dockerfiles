@@ -13,8 +13,8 @@ GETH_VERSION ?= $(GETH_CURRENT_VERSION)
 default: docker_build
 
 docker_build:
-	docker pull golang:bullseye
-	docker pull zcalusic/debian-bullseye
+	docker pull golang
+	docker pull zcalusic/debian-bookworm
 	docker build --build-arg GETH_VERSION=$(GETH_VERSION) -t $(DOCKER_IMAGE):$(GETH_VERSION) .
 ifeq ($(GETH_VERSION),$(GETH_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(GETH_VERSION) $(DOCKER_IMAGE):latest

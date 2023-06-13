@@ -1,4 +1,4 @@
-FROM zcalusic/debian-bullseye as builder
+FROM zcalusic/debian-bookworm as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG PRYSM_VERSION
@@ -21,7 +21,7 @@ RUN apt-get update \
     && bazel-6.1.0 build //cmd/beacon-chain --config=release \
     && strip bazel-bin/cmd/beacon-chain/beacon-chain_/beacon-chain
 
-FROM zcalusic/debian-bullseye
+FROM zcalusic/debian-bookworm
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 COPY --from=builder /usr/src/prysm/bazel-bin/cmd/beacon-chain/beacon-chain_/beacon-chain /usr/bin

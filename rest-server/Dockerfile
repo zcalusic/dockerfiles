@@ -1,11 +1,11 @@
-FROM golang:bullseye as builder
+FROM golang as builder
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG REST_SERVER_VERSION
 
 RUN go install -trimpath -ldflags="-s" "github.com/zcalusic/rest-server/cmd/rest-server@$REST_SERVER_VERSION"
 
-FROM zcalusic/debian-bullseye
+FROM zcalusic/debian-bookworm
 MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 ARG REST_SERVER_VERSION
