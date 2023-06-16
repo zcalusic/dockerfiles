@@ -9,7 +9,7 @@ Run [Chia blockchain](https://www.chia.net/) Python implementation in a Docker c
 
 Very simple image, trying to overcome some shortcomings of the official one...
 
-- based on Debian 11 Bullseye base image, with Python 3.9
+- based on Debian 12 Bookworm base image, with Python 3.11
 - only necessary software packages included, to get much smaller final image
 - services run by an unpriviledged user to improve security
 - easy user mapping via environment variables (default: uid 1000, gid 1000)

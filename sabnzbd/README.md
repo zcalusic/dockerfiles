@@ -7,7 +7,7 @@ Run [SABnzbd](https://sabnzbd.org/) binary newsreader in a Docker container.
 
 ## Features
 
-- based on Debian 11 Bullseye base image
+- based on Debian 12 Bookworm base image
 - easy user mapping via environment variables (default: uid 1000, gid 1000)
 - configurable Web UI host & port
 - three host mounts: configuration, complete & incomplete downloads
