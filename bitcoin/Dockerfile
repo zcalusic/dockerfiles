@@ -33,7 +33,7 @@ RUN apt-get update \
     && git clone --branch "$BITCOIN_VERSION" --depth 1 https://github.com/bitcoin/bitcoin \
     && cd bitcoin \
     && ./autogen.sh \
-    && ./configure --prefix=/usr --disable-tests --disable-bench --without-gui --without-miniupnpc \
+    && ./configure --prefix=/usr --disable-tests --disable-bench --without-gui --without-miniupnpc --without-natpmp \
     && make install-strip \
     && gzip -9 /usr/share/man/man1/bitcoin-cli.1 /usr/share/man/man1/bitcoin-tx.1 /usr/share/man/man1/bitcoin-wallet.1 /usr/share/man/man1/bitcoind.1
 
