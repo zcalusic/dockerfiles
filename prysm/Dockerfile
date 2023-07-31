@@ -10,7 +10,6 @@ RUN apt-get update \
        git \
        gpg \
        patch \
-       python-is-python3 \
     && wget --dot-style=mega -qO- https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > /etc/apt/trusted.gpg.d/bazel-archive.gpg \
     && echo "deb https://storage.googleapis.com/bazel-apt stable jdk1.8" > /etc/apt/sources.list.d/bazel.list \
     && apt-get update \
