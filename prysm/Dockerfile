@@ -18,7 +18,7 @@ RUN apt-get update \
     && cd /usr/src \
     && git clone --branch "$PRYSM_VERSION" --depth 1 https://github.com/prysmaticlabs/prysm \
     && cd prysm \
-    && bazel-6.1.0 build //cmd/beacon-chain --config=release \
+    && bazel-6.1.0 build //cmd/beacon-chain --config=release --define=blst_modern=true \
     && strip bazel-bin/cmd/beacon-chain/beacon-chain_/beacon-chain
 
 FROM zcalusic/debian-bookworm
