@@ -13,7 +13,6 @@ PRYSM_VERSION ?= $(PRYSM_CURRENT_VERSION)
 default: docker_build
 
 docker_build:
-	docker pull golang
 	docker pull zcalusic/debian-bookworm
 	docker build --build-arg PRYSM_VERSION=$(PRYSM_VERSION) -t $(DOCKER_IMAGE):$(PRYSM_VERSION) .
 ifeq ($(PRYSM_VERSION),$(PRYSM_CURRENT_VERSION))
