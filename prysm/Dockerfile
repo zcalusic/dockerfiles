@@ -10,14 +10,15 @@ RUN apt-get update \
        git \
        gpg \
        patch \
+    && cd /usr/src \
+    && git clone --branch "$PRYSM_VERSION" --depth 1 https://github.com/prysmaticlabs/prysm \
     && wget --dot-style=mega -qO- https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > /etc/apt/trusted.gpg.d/bazel-archive.gpg \
     && echo "deb https://storage.googleapis.com/bazel-apt stable jdk1.8" > /etc/apt/sources.list.d/bazel.list \
     && apt-get update \
-    && apt-get install -y --no-install-recommends bazel-6.1.0 \
-    && cd /usr/src \
-    && git clone --branch "$PRYSM_VERSION" --depth 1 https://github.com/prysmaticlabs/prysm \
+    && BAZEL_VERSION=$(cat prysm/.bazelversion) \
+    && apt-get install -y --no-install-recommends "bazel-$BAZEL_VERSION" \
     && cd prysm \
-    && bazel-6.1.0 build //cmd/beacon-chain --config=release --define=blst_modern=true \
+    && "bazel-$BAZEL_VERSION" build //cmd/beacon-chain --config=release --define=blst_modern=true \
     && strip bazel-bin/cmd/beacon-chain/beacon-chain_/beacon-chain
 
 FROM zcalusic/debian-bookworm
