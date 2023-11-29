@@ -11,6 +11,7 @@ RUN apt-get update \
        nginx \
        php \
        php-pear \
+       php8.2-curl \
        php8.2-fpm \
        php8.2-gd \
        php8.2-mysql \
