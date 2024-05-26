@@ -16,7 +16,7 @@ RUN apt-get update \
        libicu-dev \
        libssl-dev \
        ninja-build \
-       qt6-base-dev \
+       qt6-base-private-dev \
        qt6-tools-dev \
        zlib1g-dev \
     && cd /usr/src \
