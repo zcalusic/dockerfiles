@@ -1,9 +1,8 @@
-FROM zcalusic/debian-bookworm as builder
-MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
+FROM zcalusic/debian-bookworm AS builder
 
 ARG BITCOIN_VERSION
 
-ENV BITCOIN_VERSION $BITCOIN_VERSION
+ENV BITCOIN_VERSION=$BITCOIN_VERSION
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -38,7 +37,6 @@ RUN apt-get update \
     && gzip -9 /usr/share/man/man1/bitcoin-cli.1 /usr/share/man/man1/bitcoin-tx.1 /usr/share/man/man1/bitcoin-wallet.1 /usr/share/man/man1/bitcoind.1
 
 FROM zcalusic/debian-bookworm
-MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

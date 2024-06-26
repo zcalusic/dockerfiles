@@ -1,5 +1,4 @@
-FROM zcalusic/debian-bookworm as builder
-MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
+FROM zcalusic/debian-bookworm AS builder
 
 ARG DYNOMITE_VERSION
 
@@ -23,7 +22,6 @@ RUN apt-get update \
     && make install-strip
 
 FROM zcalusic/debian-bookworm
-MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends binutils \

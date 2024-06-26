@@ -1,5 +1,4 @@
-FROM zcalusic/debian-bookworm as builder
-MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
+FROM zcalusic/debian-bookworm AS builder
 
 ARG S3FS_VERSION
 
@@ -25,7 +24,6 @@ RUN apt-get update \
     && gzip -9 /usr/share/man/man1/s3fs.1
 
 FROM zcalusic/debian-bookworm
-MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

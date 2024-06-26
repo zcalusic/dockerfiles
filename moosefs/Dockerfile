@@ -1,9 +1,8 @@
-FROM zcalusic/debian-bookworm as builder
-MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
+FROM zcalusic/debian-bookworm AS builder
 
 ARG MOOSEFS_VERSION
 
-ENV MOOSEFS_VERSION $MOOSEFS_VERSION
+ENV MOOSEFS_VERSION=$MOOSEFS_VERSION
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

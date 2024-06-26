@@ -1,7 +1,6 @@
 FROM zcalusic/debian-bookworm
-MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
-ENV OBSERVIUM_HOME /opt/observium
+ENV OBSERVIUM_HOME=/opt/observium
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

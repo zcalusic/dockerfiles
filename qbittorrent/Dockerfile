@@ -1,11 +1,10 @@
-FROM zcalusic/debian-bookworm as builder
-MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
+FROM zcalusic/debian-bookworm AS builder
 
 ARG QBITTORRENT_VERSION
 ARG LIBTORRENT_VERSION
 
-ENV QBITTORRENT_VERSION $QBITTORRENT_VERSION
-ENV LIBTORRENT_VERSION $LIBTORRENT_VERSION
+ENV QBITTORRENT_VERSION=$QBITTORRENT_VERSION
+ENV LIBTORRENT_VERSION=$LIBTORRENT_VERSION
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -32,7 +31,6 @@ RUN apt-get update \
     && gzip -9 /usr/share/man/man1/qbittorrent-nox.1
 
 FROM zcalusic/debian-bookworm
-MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

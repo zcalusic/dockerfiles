@@ -1,5 +1,4 @@
-FROM golang as builder
-MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
+FROM golang AS builder
 
 ARG RCLONE_VERSION
 
@@ -11,7 +10,6 @@ RUN cd src \
     && go install -trimpath -ldflags "-s -X github.com/rclone/rclone/fs.Version=$RCLONE_VERSION"
 
 FROM zcalusic/debian-bookworm
-MAINTAINER Zlatko Čalušić <zcalusic@bitsync.net>
 
 COPY --from=builder /go/bin /usr/bin
 
