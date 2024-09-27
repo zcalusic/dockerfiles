@@ -13,6 +13,7 @@ case $MOOSEFS_START in
 	[ -f "/etc/mfs/mfsmaster.cfg" ] || cp -a /etc/mfs.default/mfsmaster.cfg.sample /etc/mfs/mfsmaster.cfg
 	[ -f "/etc/mfs/mfsexports.cfg" ] || cp -a /etc/mfs.default/mfsexports.cfg.sample /etc/mfs/mfsexports.cfg
 	[ -f "/etc/mfs/mfstopology.cfg" ] || cp -a /etc/mfs.default/mfstopology.cfg.sample /etc/mfs/mfstopology.cfg
+	[ -f "/etc/mfs/mfsipmap.cfg" ] || cp -a /etc/mfs.default/mfsipmap.cfg.sample /etc/mfs/mfsipmap.cfg
 
 	[ -d "/var/lib/mfs" ] || exit 1
 	[ -f "/var/lib/mfs/metadata.mfs.empty" ] || cp -a /var/lib/mfs.default/metadata.mfs.empty /var/lib/mfs/metadata.mfs.empty
