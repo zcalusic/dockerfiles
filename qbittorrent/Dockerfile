@@ -1,4 +1,4 @@
-FROM zcalusic/debian-bookworm AS builder
+FROM zcalusic/debian-trixie AS builder
 
 ARG QBITTORRENT_VERSION
 ARG LIBTORRENT_VERSION
@@ -11,7 +11,7 @@ RUN apt-get update \
        build-essential \
        cmake \
        git \
-       libboost-system1.81-dev \
+       libboost-system-dev \
        libicu-dev \
        libssl-dev \
        ninja-build \
@@ -26,11 +26,11 @@ RUN apt-get update \
     && cd /usr/src \
     && git clone --branch "release-$QBITTORRENT_VERSION" --depth 1 https://github.com/qbittorrent/qBittorrent \
     && cd qBittorrent \
-    && cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DQT6=ON -DGUI=OFF -DSTACKTRACE=OFF \
+    && cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DGUI=OFF -DSTACKTRACE=OFF \
     && cmake --build build --target install/strip \
     && gzip -9 /usr/share/man/man1/qbittorrent-nox.1
 
-FROM zcalusic/debian-bookworm
+FROM zcalusic/debian-trixie
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

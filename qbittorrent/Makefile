@@ -5,7 +5,7 @@
 
 DOCKER_IMAGE ?= zcalusic/qbittorrent
 
-QBITTORRENT_VERSION := 4.6.7
+QBITTORRENT_VERSION := 5.0.0
 LIBTORRENT_VERSION := 1.2.19
 
 .PHONY: default docker_build docker_push
@@ -13,7 +13,7 @@ LIBTORRENT_VERSION := 1.2.19
 default: docker_build
 
 docker_build:
-	docker pull zcalusic/debian-bookworm
+	docker pull zcalusic/debian-trixie
 	docker build \
 		--build-arg QBITTORRENT_VERSION=$(QBITTORRENT_VERSION) \
 		--build-arg LIBTORRENT_VERSION=$(LIBTORRENT_VERSION) \
