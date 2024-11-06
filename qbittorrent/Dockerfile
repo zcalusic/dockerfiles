@@ -19,7 +19,7 @@ RUN apt-get update \
        qt6-tools-dev \
        zlib1g-dev \
     && cd /usr/src \
-    && git clone --branch "v$LIBTORRENT_VERSION" --depth 1 https://github.com/arvidn/libtorrent \
+    && git clone --branch "v$LIBTORRENT_VERSION" --depth 1 --recurse-submodules --shallow-submodules https://github.com/arvidn/libtorrent \
     && cd libtorrent \
     && cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
     && cmake --build build --target install/strip \
