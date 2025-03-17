@@ -17,8 +17,8 @@ Based on the official Debian 13 Trixie Docker base image.
     * optimize installation of additional Debian packages
   * `ca-certificates`
     * verify communication when downloading third-party software
-  * `dnsutils`
-    * client programs related to DNS
+  * `bind9-dnsutils`
+    * clients provided with BIND 9
   * `dumb-init`
     * minimal init system for containers, killing zombies, redirecting signals...
   * `gosu`

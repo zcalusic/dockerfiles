@@ -9,8 +9,8 @@ RUN sed -i -e 's/^Components: main$/Components: main contrib non-free non-free-f
     && apt-get update \
     && apt-get install -y --no-install-recommends \
        apt-utils \
+       bind9-dnsutils \
        ca-certificates \
-       dnsutils \
        dumb-init \
        gosu \
        iproute2 \
