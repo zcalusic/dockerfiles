@@ -28,7 +28,7 @@ ln -nsf /etc/php/8.2/mods-available/local.ini /etc/php/8.2/cli/conf.d/20-local.i
 ln -nsf /etc/php/8.2/mods-available/local.ini /etc/php/8.2/fpm/conf.d/20-local.ini
 
 # PHP CLI opcache
-mkdir /dev/shm/php-opcache
+mkdir -p /dev/shm/php-opcache
 chown www-data:www-data /dev/shm/php-opcache
 echo "opcache.enable_cli=1" > /etc/php/8.2/mods-available/local_cli.ini
 echo "opcache.file_cache=/dev/shm/php-opcache" >> /etc/php/8.2/mods-available/local_cli.ini
