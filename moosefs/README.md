@@ -36,4 +36,4 @@ sudo make docker_build
 
 ## Instructions
 
-`MOOSEFS_START` should be one of: master, metalogger, chunkserver, client or cgi.
+`MOOSEFS_START` should be one of: master, metalogger, chunkserver, client or gui.

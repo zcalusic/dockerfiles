@@ -47,11 +47,14 @@ case $MOOSEFS_START in
 
 	CMD="mfsmount -f"
 	;;
-    cgi)
+    gui)
+	[ -d "/etc/mfs" ] || exit 1
+	[ -f "/etc/mfs/mfsgui.cfg" ] || cp -a /etc/mfs.default/mfsgui.cfg.sample /etc/mfs/mfsgui.cfg
+
 	[ -d "/var/lib/mfs" ] || exit 1
 	chown -R daemon:daemon /var/lib/mfs
 
-	CMD="mfscgiserv -f"
+	CMD="mfsgui -f"
 	;;
     *)
 	CMD="sleep infinity"
