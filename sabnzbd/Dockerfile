@@ -1,4 +1,4 @@
-FROM zcalusic/debian-bookworm
+FROM zcalusic/debian-trixie
 
 ARG SABNZBD_VERSION
 
