@@ -1,0 +1,6 @@
+recursor:
+  setuid: pdns
+  setgid: pdns
+incoming:
+  listen:
+  - 0.0.0.0
