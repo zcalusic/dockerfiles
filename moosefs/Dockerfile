@@ -1,4 +1,4 @@
-FROM zcalusic/debian-bookworm AS builder
+FROM zcalusic/debian-trixie
 
 ARG MOOSEFS_VERSION
 
