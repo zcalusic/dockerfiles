@@ -13,7 +13,7 @@ S3FS_VERSION ?= $(S3FS_CURRENT_VERSION)
 default: docker_build
 
 docker_build:
-	docker pull zcalusic/debian-bookworm
+	docker pull zcalusic/debian-trixie
 	docker build --build-arg S3FS_VERSION=$(S3FS_VERSION) -t $(DOCKER_IMAGE):$(S3FS_VERSION) .
 ifeq ($(S3FS_VERSION),$(S3FS_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(S3FS_VERSION) $(DOCKER_IMAGE):latest
