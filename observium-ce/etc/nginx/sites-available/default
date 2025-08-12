@@ -16,6 +16,6 @@ server {
 		include fastcgi.conf;
 		fastcgi_param REMOTE_ADDR $http_x_forwarded_for;
 		fastcgi_param REMOTE_USER $http_remote_user;
-		fastcgi_pass unix:/run/php/php8.2-fpm.sock;
+		fastcgi_pass unix:/run/php/php8.4-fpm.sock;
 	}
 }
