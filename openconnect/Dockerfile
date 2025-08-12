@@ -1,4 +1,4 @@
-FROM zcalusic/debian-bookworm
+FROM zcalusic/debian-trixie
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends openconnect \

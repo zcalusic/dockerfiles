@@ -10,7 +10,7 @@ DOCKER_IMAGE ?= zcalusic/vpnc
 default: docker_build
 
 docker_build:
-	docker pull zcalusic/debian-bookworm
+	docker pull zcalusic/debian-trixie
 	docker build -t $(DOCKER_IMAGE) .
 
 docker_push:
