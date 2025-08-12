@@ -1,4 +1,4 @@
-FROM zcalusic/debian-bookworm AS builder
+FROM zcalusic/debian-trixie AS builder
 
 ARG BITCOIN_VERSION
 
@@ -26,7 +26,7 @@ RUN apt-get update \
     && cmake --build build --target install/strip \
     && gzip -9 /usr/share/man/man1/bitcoin*
 
-FROM zcalusic/debian-bookworm
+FROM zcalusic/debian-trixie
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
