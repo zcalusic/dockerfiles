@@ -9,7 +9,7 @@ RUN cd src \
     && sed -i -e '1d;2d' backend/local/fadvise_other.go \
     && go install -trimpath -ldflags "-s -X github.com/rclone/rclone/fs.Version=$RCLONE_VERSION"
 
-FROM zcalusic/debian-bookworm
+FROM zcalusic/debian-trixie
 
 COPY --from=builder /go/bin /usr/bin
 
