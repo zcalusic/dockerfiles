@@ -15,7 +15,6 @@ RUN apt-get update \
     && cd /usr/local \
     && git clone --branch "$CHIA_VERSION" --depth 1 https://github.com/Chia-Network/chia-blockchain.git \
     && cd chia-blockchain \
-    && git submodule update --init --depth 1 mozilla-ca \
     && pip install --no-cache-dir "chia-blockchain==$CHIA_VERSION" \
     && apt-get purge -y --autoremove \
        build-essential \
