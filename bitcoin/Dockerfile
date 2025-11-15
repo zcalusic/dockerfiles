@@ -22,7 +22,7 @@ RUN apt-get update \
     && cd /usr/src \
     && git clone --branch "$BITCOIN_VERSION" --depth 1 https://github.com/bitcoin/bitcoin \
     && cd bitcoin \
-    && cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_TESTS=OFF -DWITH_ZMQ=ON -DBUILD_TX=ON -DBUILD_UTIL=ON -DBUILD_WALLET_TOOL=ON \
+    && cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_IPC=OFF -DBUILD_TESTS=OFF -DWITH_ZMQ=ON -DBUILD_TX=ON -DBUILD_UTIL=ON -DBUILD_WALLET_TOOL=ON \
     && cmake --build build --target install/strip \
     && gzip -9 /usr/share/man/man1/bitcoin*
 
