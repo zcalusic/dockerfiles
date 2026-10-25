@@ -8,9 +8,11 @@
 #   VERSION_VAR   name of the version variable, e.g. BITCOIN_VERSION, also
 #                 passed to docker build as a build arg; unset for images
 #                 that are only tagged latest
-#   GITHUB_REPO   owner/repo whose latest release tag is the current version
+#   GITHUB_REPO   owner/repo whose latest release tag is the current version,
+#                 read from the github.com redirect rather than the API, which
+#                 allows only 60 unauthenticated requests per hour
 #   VERSION_URL   or a URL that returns the current version as JSON ...
-#   VERSION_JQ    ... and the jq filter that extracts it (default .tag_name)
+#   VERSION_JQ    ... and the jq filter that extracts it
 #
 # A versioned image is tagged with its version, and also latest when that is
 # the current version. Build an older one with e.g. make BITCOIN_VERSION=v30.0.
@@ -19,10 +21,12 @@ DOCKER_BUILD_FLAGS := --pull --no-cache
 
 ifdef VERSION_VAR
 
-VERSION_URL ?= https://api.github.com/repos/$(GITHUB_REPO)/releases/latest
-VERSION_JQ ?= .tag_name
-
+ifdef GITHUB_REPO
+VERSION_URL := https://github.com/$(GITHUB_REPO)/releases/latest
+CURRENT_VERSION := $(strip $(shell wget -q --max-redirect=0 --server-response $(VERSION_URL) 2>&1 | sed -n 's|^ *Location: .*/releases/tag/||p'))
+else
 CURRENT_VERSION := $(strip $(shell wget -qO- $(VERSION_URL) | jq -r '$(VERSION_JQ) // empty'))
+endif
 $(VERSION_VAR) ?= $(CURRENT_VERSION)
 
 ifeq ($($(VERSION_VAR)),)
