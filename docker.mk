@@ -16,8 +16,22 @@
 #
 # A versioned image is tagged with its version, and also latest when that is
 # the current version. Build an older one with e.g. make BITCOIN_VERSION=v30.0.
+#
+# Images are labelled with the OCI source annotation pointing to this repo,
+# versioned images also with their version, and images built from a clean
+# checkout (no changes in the image directory or here) with the git commit.
 
 DOCKER_BUILD_FLAGS := --pull --no-cache
+DOCKER_BUILD_FLAGS += --label org.opencontainers.image.source=https://github.com/zcalusic/dockerfiles
+
+GIT_REVISION := $(shell git rev-parse -q --verify HEAD 2>/dev/null)
+GIT_CHANGES := $(shell git status --porcelain -- . ../docker.mk 2>/dev/null)
+
+ifneq ($(GIT_REVISION),)
+ifeq ($(GIT_CHANGES),)
+DOCKER_BUILD_FLAGS += --label org.opencontainers.image.revision=$(GIT_REVISION)
+endif
+endif
 
 ifdef VERSION_VAR
 
@@ -35,6 +49,7 @@ endif
 
 DOCKER_TAG := $($(VERSION_VAR))
 DOCKER_BUILD_FLAGS += --build-arg $(VERSION_VAR)=$(DOCKER_TAG)
+DOCKER_BUILD_FLAGS += --label org.opencontainers.image.version=$(DOCKER_TAG)
 
 ifeq ($(DOCKER_TAG),$(CURRENT_VERSION))
 TAG_LATEST := yes
