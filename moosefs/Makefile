@@ -13,7 +13,7 @@ MOOSEFS_VERSION ?= $(MOOSEFS_CURRENT_VERSION)
 default: docker_build
 
 docker_build:
-	docker build --pull --build-arg MOOSEFS_VERSION=$(MOOSEFS_VERSION) -t $(DOCKER_IMAGE):$(MOOSEFS_VERSION) .
+	docker build --pull --no-cache --build-arg MOOSEFS_VERSION=$(MOOSEFS_VERSION) -t $(DOCKER_IMAGE):$(MOOSEFS_VERSION) .
 ifeq ($(MOOSEFS_VERSION),$(MOOSEFS_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(MOOSEFS_VERSION) $(DOCKER_IMAGE):latest
 endif

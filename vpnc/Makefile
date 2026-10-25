@@ -10,7 +10,7 @@ DOCKER_IMAGE ?= zcalusic/vpnc
 default: docker_build
 
 docker_build:
-	docker build --pull -t $(DOCKER_IMAGE) .
+	docker build --pull --no-cache -t $(DOCKER_IMAGE) .
 
 docker_push:
 	docker push $(DOCKER_IMAGE):latest

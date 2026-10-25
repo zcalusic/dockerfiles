@@ -13,7 +13,7 @@ SABNZBD_VERSION ?= $(SABNZBD_CURRENT_VERSION)
 default: docker_build
 
 docker_build:
-	docker build --pull --build-arg SABNZBD_VERSION=$(SABNZBD_VERSION) -t $(DOCKER_IMAGE):$(SABNZBD_VERSION) .
+	docker build --pull --no-cache --build-arg SABNZBD_VERSION=$(SABNZBD_VERSION) -t $(DOCKER_IMAGE):$(SABNZBD_VERSION) .
 ifeq ($(SABNZBD_VERSION),$(SABNZBD_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(SABNZBD_VERSION) $(DOCKER_IMAGE):latest
 endif

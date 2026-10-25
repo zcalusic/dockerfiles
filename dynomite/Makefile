@@ -13,7 +13,7 @@ DYNOMITE_VERSION ?= $(DYNOMITE_CURRENT_VERSION)
 default: docker_build
 
 docker_build:
-	docker build --pull --build-arg DYNOMITE_VERSION=$(DYNOMITE_VERSION) -t $(DOCKER_IMAGE):$(DYNOMITE_VERSION) .
+	docker build --pull --no-cache --build-arg DYNOMITE_VERSION=$(DYNOMITE_VERSION) -t $(DOCKER_IMAGE):$(DYNOMITE_VERSION) .
 ifeq ($(DYNOMITE_VERSION),$(DYNOMITE_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(DYNOMITE_VERSION) $(DOCKER_IMAGE):latest
 endif

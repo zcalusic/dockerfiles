@@ -13,7 +13,7 @@ BITCOIN_VERSION ?= $(BITCOIN_CURRENT_VERSION)
 default: docker_build
 
 docker_build:
-	docker build --pull --build-arg BITCOIN_VERSION=$(BITCOIN_VERSION) -t $(DOCKER_IMAGE):$(BITCOIN_VERSION) .
+	docker build --pull --no-cache --build-arg BITCOIN_VERSION=$(BITCOIN_VERSION) -t $(DOCKER_IMAGE):$(BITCOIN_VERSION) .
 ifeq ($(BITCOIN_VERSION),$(BITCOIN_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(BITCOIN_VERSION) $(DOCKER_IMAGE):latest
 endif

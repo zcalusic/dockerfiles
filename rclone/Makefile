@@ -13,7 +13,7 @@ RCLONE_VERSION ?= $(RCLONE_CURRENT_VERSION)
 default: docker_build
 
 docker_build:
-	docker build --pull --build-arg RCLONE_VERSION=$(RCLONE_VERSION) -t $(DOCKER_IMAGE):$(RCLONE_VERSION) .
+	docker build --pull --no-cache --build-arg RCLONE_VERSION=$(RCLONE_VERSION) -t $(DOCKER_IMAGE):$(RCLONE_VERSION) .
 ifeq ($(RCLONE_VERSION),$(RCLONE_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(RCLONE_VERSION) $(DOCKER_IMAGE):latest
 endif
