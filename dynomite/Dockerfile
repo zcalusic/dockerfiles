@@ -10,8 +10,8 @@ RUN apt-get update \
        libc6-dev \
        libssl-dev \
        libtool \
+       libyaml-dev \
        make \
-       patch \
     && MAKEFLAGS="-j $(nproc)" \
     && export MAKEFLAGS \
     && cd /usr/local/src \
@@ -24,7 +24,9 @@ RUN apt-get update \
 FROM zcalusic/debian-trixie
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends binutils \
+    && apt-get install -y --no-install-recommends \
+       binutils \
+       libyaml-0-2 \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /conf
 
