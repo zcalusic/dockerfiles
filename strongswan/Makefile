@@ -5,12 +5,4 @@
 
 DOCKER_IMAGE ?= zcalusic/strongswan
 
-.PHONY: default docker_build docker_push
-
-default: docker_build
-
-docker_build:
-	docker build --pull --no-cache -t $(DOCKER_IMAGE) .
-
-docker_push:
-	docker push $(DOCKER_IMAGE):latest
+include ../docker.mk

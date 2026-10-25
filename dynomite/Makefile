@@ -5,25 +5,7 @@
 
 DOCKER_IMAGE ?= zcalusic/dynomite
 
-DYNOMITE_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/zcalusic/dynomite/releases/latest | jq -r '.tag_name // empty'))
-DYNOMITE_VERSION ?= $(DYNOMITE_CURRENT_VERSION)
+VERSION_VAR := DYNOMITE_VERSION
+GITHUB_REPO := zcalusic/dynomite
 
-ifeq ($(DYNOMITE_VERSION),)
-$(error Could not look up the latest dynomite version, set DYNOMITE_VERSION explicitly)
-endif
-
-.PHONY: default docker_build docker_push
-
-default: docker_build
-
-docker_build:
-	docker build --pull --no-cache --build-arg DYNOMITE_VERSION=$(DYNOMITE_VERSION) -t $(DOCKER_IMAGE):$(DYNOMITE_VERSION) .
-ifeq ($(DYNOMITE_VERSION),$(DYNOMITE_CURRENT_VERSION))
-	docker tag $(DOCKER_IMAGE):$(DYNOMITE_VERSION) $(DOCKER_IMAGE):latest
-endif
-
-docker_push:
-	docker push $(DOCKER_IMAGE):$(DYNOMITE_VERSION)
-ifeq ($(DYNOMITE_VERSION),$(DYNOMITE_CURRENT_VERSION))
-	docker push $(DOCKER_IMAGE):latest
-endif
+include ../docker.mk

@@ -5,25 +5,7 @@
 
 DOCKER_IMAGE ?= zcalusic/rclone
 
-RCLONE_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/rclone/rclone/releases/latest | jq -r '.tag_name // empty'))
-RCLONE_VERSION ?= $(RCLONE_CURRENT_VERSION)
+VERSION_VAR := RCLONE_VERSION
+GITHUB_REPO := rclone/rclone
 
-ifeq ($(RCLONE_VERSION),)
-$(error Could not look up the latest rclone version, set RCLONE_VERSION explicitly)
-endif
-
-.PHONY: default docker_build docker_push
-
-default: docker_build
-
-docker_build:
-	docker build --pull --no-cache --build-arg RCLONE_VERSION=$(RCLONE_VERSION) -t $(DOCKER_IMAGE):$(RCLONE_VERSION) .
-ifeq ($(RCLONE_VERSION),$(RCLONE_CURRENT_VERSION))
-	docker tag $(DOCKER_IMAGE):$(RCLONE_VERSION) $(DOCKER_IMAGE):latest
-endif
-
-docker_push:
-	docker push $(DOCKER_IMAGE):$(RCLONE_VERSION)
-ifeq ($(RCLONE_VERSION),$(RCLONE_CURRENT_VERSION))
-	docker push $(DOCKER_IMAGE):latest
-endif
+include ../docker.mk

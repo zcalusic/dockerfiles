@@ -5,25 +5,7 @@
 
 DOCKER_IMAGE ?= zcalusic/seaweedfs
 
-SEAWEEDFS_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/seaweedfs/seaweedfs/releases/latest | jq -r '.tag_name // empty'))
-SEAWEEDFS_VERSION ?= $(SEAWEEDFS_CURRENT_VERSION)
+VERSION_VAR := SEAWEEDFS_VERSION
+GITHUB_REPO := seaweedfs/seaweedfs
 
-ifeq ($(SEAWEEDFS_VERSION),)
-$(error Could not look up the latest seaweedfs version, set SEAWEEDFS_VERSION explicitly)
-endif
-
-.PHONY: default docker_build docker_push
-
-default: docker_build
-
-docker_build:
-	docker build --pull --no-cache --build-arg SEAWEEDFS_VERSION=$(SEAWEEDFS_VERSION) -t $(DOCKER_IMAGE):$(SEAWEEDFS_VERSION) .
-ifeq ($(SEAWEEDFS_VERSION),$(SEAWEEDFS_CURRENT_VERSION))
-	docker tag $(DOCKER_IMAGE):$(SEAWEEDFS_VERSION) $(DOCKER_IMAGE):latest
-endif
-
-docker_push:
-	docker push $(DOCKER_IMAGE):$(SEAWEEDFS_VERSION)
-ifeq ($(SEAWEEDFS_VERSION),$(SEAWEEDFS_CURRENT_VERSION))
-	docker push $(DOCKER_IMAGE):latest
-endif
+include ../docker.mk

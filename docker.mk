@@ -1,0 +1,59 @@
+# Copyright © 2026 Zlatko Čalušić
+#
+# Use of this source code is governed by an MIT-style license that can be found in the LICENSE file.
+#
+# Shared build rules, included at the end of each image's Makefile.
+#
+#   DOCKER_IMAGE  image name, required
+#   VERSION_VAR   name of the version variable, e.g. BITCOIN_VERSION, also
+#                 passed to docker build as a build arg; unset for images
+#                 that are only tagged latest
+#   GITHUB_REPO   owner/repo whose latest release tag is the current version
+#   VERSION_URL   or a URL that returns the current version as JSON ...
+#   VERSION_JQ    ... and the jq filter that extracts it (default .tag_name)
+#
+# A versioned image is tagged with its version, and also latest when that is
+# the current version. Build an older one with e.g. make BITCOIN_VERSION=v30.0.
+
+DOCKER_BUILD_FLAGS := --pull --no-cache
+
+ifdef VERSION_VAR
+
+VERSION_URL ?= https://api.github.com/repos/$(GITHUB_REPO)/releases/latest
+VERSION_JQ ?= .tag_name
+
+CURRENT_VERSION := $(strip $(shell wget -qO- $(VERSION_URL) | jq -r '$(VERSION_JQ) // empty'))
+$(VERSION_VAR) ?= $(CURRENT_VERSION)
+
+ifeq ($($(VERSION_VAR)),)
+$(error Could not look up $(VERSION_VAR) from $(VERSION_URL), set it explicitly)
+endif
+
+DOCKER_TAG := $($(VERSION_VAR))
+DOCKER_BUILD_FLAGS += --build-arg $(VERSION_VAR)=$(DOCKER_TAG)
+
+ifeq ($(DOCKER_TAG),$(CURRENT_VERSION))
+TAG_LATEST := yes
+endif
+
+else
+
+DOCKER_TAG := latest
+
+endif
+
+.PHONY: default docker_build docker_push
+
+default: docker_build
+
+docker_build:
+	docker build $(DOCKER_BUILD_FLAGS) -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
+ifdef TAG_LATEST
+	docker tag $(DOCKER_IMAGE):$(DOCKER_TAG) $(DOCKER_IMAGE):latest
+endif
+
+docker_push:
+	docker push $(DOCKER_IMAGE):$(DOCKER_TAG)
+ifdef TAG_LATEST
+	docker push $(DOCKER_IMAGE):latest
+endif
