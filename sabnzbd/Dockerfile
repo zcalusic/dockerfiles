@@ -1,5 +1,7 @@
 FROM zcalusic/debian-trixie AS builder
 
+SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        automake \
@@ -17,6 +19,8 @@ RUN apt-get update \
     && make install-strip
 
 FROM zcalusic/debian-trixie
+
+SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 
 ARG SABNZBD_VERSION
 

@@ -1,5 +1,7 @@
 FROM zcalusic/debian-trixie
 
+SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
+
 ARG MOOSEFS_VERSION
 
 ENV MOOSEFS_VERSION=$MOOSEFS_VERSION
