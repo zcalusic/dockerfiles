@@ -5,8 +5,12 @@
 
 DOCKER_IMAGE ?= zcalusic/bitcoin
 
-BITCOIN_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/bitcoin/bitcoin/releases/latest | jq -r '.tag_name'))
+BITCOIN_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/bitcoin/bitcoin/releases/latest | jq -r '.tag_name // empty'))
 BITCOIN_VERSION ?= $(BITCOIN_CURRENT_VERSION)
+
+ifeq ($(BITCOIN_VERSION),)
+$(error Could not look up the latest bitcoin version, set BITCOIN_VERSION explicitly)
+endif
 
 .PHONY: default docker_build docker_push
 

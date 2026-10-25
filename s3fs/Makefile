@@ -5,8 +5,12 @@
 
 DOCKER_IMAGE ?= zcalusic/s3fs
 
-S3FS_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/s3fs-fuse/s3fs-fuse/releases/latest | jq -r '.tag_name'))
+S3FS_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/s3fs-fuse/s3fs-fuse/releases/latest | jq -r '.tag_name // empty'))
 S3FS_VERSION ?= $(S3FS_CURRENT_VERSION)
+
+ifeq ($(S3FS_VERSION),)
+$(error Could not look up the latest s3fs version, set S3FS_VERSION explicitly)
+endif
 
 .PHONY: default docker_build docker_push
 

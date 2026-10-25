@@ -5,8 +5,12 @@
 
 DOCKER_IMAGE ?= zcalusic/sabnzbd
 
-SABNZBD_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/sabnzbd/sabnzbd/releases/latest | jq -r '.tag_name'))
+SABNZBD_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/sabnzbd/sabnzbd/releases/latest | jq -r '.tag_name // empty'))
 SABNZBD_VERSION ?= $(SABNZBD_CURRENT_VERSION)
+
+ifeq ($(SABNZBD_VERSION),)
+$(error Could not look up the latest sabnzbd version, set SABNZBD_VERSION explicitly)
+endif
 
 .PHONY: default docker_build docker_push
 

@@ -5,8 +5,12 @@
 
 DOCKER_IMAGE ?= zcalusic/moosefs
 
-MOOSEFS_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/moosefs/moosefs/releases/latest | jq -r '.tag_name'))
+MOOSEFS_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/moosefs/moosefs/releases/latest | jq -r '.tag_name // empty'))
 MOOSEFS_VERSION ?= $(MOOSEFS_CURRENT_VERSION)
+
+ifeq ($(MOOSEFS_VERSION),)
+$(error Could not look up the latest moosefs version, set MOOSEFS_VERSION explicitly)
+endif
 
 .PHONY: default docker_build docker_push
 

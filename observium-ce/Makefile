@@ -5,7 +5,11 @@
 
 DOCKER_IMAGE ?= zcalusic/observium-ce
 
-OBSERVIUM_CE_VERSION := $(strip $(shell wget -qO- https://www.observium.org/versions.php | jq -r '.ce.version'))
+OBSERVIUM_CE_VERSION := $(strip $(shell wget -qO- https://www.observium.org/versions.php | jq -r '.ce.version // empty'))
+
+ifeq ($(OBSERVIUM_CE_VERSION),)
+$(error Could not look up the latest observium-ce version)
+endif
 
 .PHONY: default docker_build docker_push
 

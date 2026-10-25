@@ -5,8 +5,12 @@
 
 DOCKER_IMAGE ?= zcalusic/chia
 
-CHIA_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/Chia-Network/chia-blockchain/releases/latest | jq -r '.tag_name'))
+CHIA_CURRENT_VERSION := $(strip $(shell wget -qO- https://api.github.com/repos/Chia-Network/chia-blockchain/releases/latest | jq -r '.tag_name // empty'))
 CHIA_VERSION ?= $(CHIA_CURRENT_VERSION)
+
+ifeq ($(CHIA_VERSION),)
+$(error Could not look up the latest chia version, set CHIA_VERSION explicitly)
+endif
 
 .PHONY: default docker_build docker_push
 
