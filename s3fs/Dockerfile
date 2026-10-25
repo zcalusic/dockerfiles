@@ -8,7 +8,7 @@ RUN apt-get update \
        g++ \
        git \
        libcurl4-openssl-dev \
-       libfuse-dev \
+       libfuse3-dev \
        libssl-dev \
        libxml2-dev \
        make \
@@ -27,9 +27,9 @@ FROM zcalusic/debian-trixie
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       fuse \
+       fuse3 \
        libcurl4 \
-       libfuse2t64 \
+       libfuse3-4 \
        man \
        media-types \
     && rm -rf /var/lib/apt/lists/*
