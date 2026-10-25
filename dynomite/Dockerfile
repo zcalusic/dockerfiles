@@ -1,4 +1,4 @@
-FROM zcalusic/debian-bookworm AS builder
+FROM zcalusic/debian-trixie AS builder
 
 ARG DYNOMITE_VERSION
 
@@ -21,7 +21,7 @@ RUN apt-get update \
     && ./configure \
     && make install-strip
 
-FROM zcalusic/debian-bookworm
+FROM zcalusic/debian-trixie
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends binutils \
