@@ -10,8 +10,7 @@ DOCKER_IMAGE ?= zcalusic/debian-trixie
 default: docker_build
 
 docker_build:
-	docker pull debian:trixie
-	docker build -t $(DOCKER_IMAGE) .
+	docker build --pull -t $(DOCKER_IMAGE) .
 
 docker_push:
 	docker push $(DOCKER_IMAGE):latest

@@ -13,9 +13,7 @@ RCLONE_VERSION ?= $(RCLONE_CURRENT_VERSION)
 default: docker_build
 
 docker_build:
-	docker pull golang
-	docker pull zcalusic/debian-trixie
-	docker build --build-arg RCLONE_VERSION=$(RCLONE_VERSION) -t $(DOCKER_IMAGE):$(RCLONE_VERSION) .
+	docker build --pull --build-arg RCLONE_VERSION=$(RCLONE_VERSION) -t $(DOCKER_IMAGE):$(RCLONE_VERSION) .
 ifeq ($(RCLONE_VERSION),$(RCLONE_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(RCLONE_VERSION) $(DOCKER_IMAGE):latest
 endif

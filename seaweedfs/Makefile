@@ -13,9 +13,7 @@ SEAWEEDFS_VERSION ?= $(SEAWEEDFS_CURRENT_VERSION)
 default: docker_build
 
 docker_build:
-	docker pull golang
-	docker pull zcalusic/debian-trixie
-	docker build --build-arg SEAWEEDFS_VERSION=$(SEAWEEDFS_VERSION) -t $(DOCKER_IMAGE):$(SEAWEEDFS_VERSION) .
+	docker build --pull --build-arg SEAWEEDFS_VERSION=$(SEAWEEDFS_VERSION) -t $(DOCKER_IMAGE):$(SEAWEEDFS_VERSION) .
 ifeq ($(SEAWEEDFS_VERSION),$(SEAWEEDFS_CURRENT_VERSION))
 	docker tag $(DOCKER_IMAGE):$(SEAWEEDFS_VERSION) $(DOCKER_IMAGE):latest
 endif
