@@ -29,7 +29,6 @@ RUN apt-get update \
     && mkdir -p /conf
 
 COPY --from=builder /usr/local/sbin/dynomite /usr/sbin/dynomite
-COPY --from=builder /usr/local/sbin/dynomite-test /usr/sbin/dynomite-test
 COPY --from=builder /usr/local/bin/dynomite-hash-tool /usr/bin/dynomite-hash-tool
 COPY --from=builder /usr/local/src/dynomite/conf /conf
 
