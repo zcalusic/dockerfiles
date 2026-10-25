@@ -2,6 +2,9 @@ FROM zcalusic/debian-trixie
 
 SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 
+ARG OBSERVIUM_CE_VERSION
+
+ENV OBSERVIUM_CE_VERSION=$OBSERVIUM_CE_VERSION
 ENV OBSERVIUM_HOME=/opt/observium
 
 RUN apt-get update \
