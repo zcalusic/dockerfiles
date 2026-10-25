@@ -13,15 +13,19 @@ Pull image:
 sudo docker pull zcalusic/dynomite
 ```
 
-Run container:
+Run container with your ```dynomite.yml``` configuration file:
 
 ```
-sudo docker run -d -p 8101:8101 -p 8102:8102 -p 22222:22222 zcalusic/dynomite
+sudo docker run -d -p 8101:8101 -p 8102:8102 -p 22222:22222 -v /your/dynomite.yml:/usr/local/etc/dynomite.yml zcalusic/dynomite
 ```
 
-You need to expose Dynomite TCP ports when starting the container.  Dynomite will run with ```daemon``` user privileges
+You need to expose Dynomite TCP ports when starting the container.  Dynomite reads its configuration from ```/usr/local/etc/dynomite.yml```, and exits if it's missing.
 
-To provide custom ```dynomite.yml``` configuration file, add ```-v /your/dynomite.yml:/conf/dynomite.yml``` argument to the docker run command.
+Example configuration files are in ```/conf```.  To try out ```/conf/dynomite.yml``` (a single node with Redis on 127.0.0.1:6379, listening on 127.0.0.1 except for stats), run:
+
+```
+sudo docker run -d -p 22222:22222 zcalusic/dynomite dynomite -c /conf/dynomite.yml
+```
 
 ## Building container image
 
