@@ -1,0 +1,12 @@
+# Rules ignored on purpose, for all images in this repo:
+#   DL3003: cd inside RUN, to build in a temporary directory
+#   DL3006: base images follow their latest tag, rebuilt with --pull
+#   DL3008: apt packages follow the Debian release, not pinned versions
+#   DL3013: pip packages follow the upstream release being installed
+#   DL3047: wget uses --dot-style=mega, which hadolint doesn't recognise
+ignored:
+  - DL3003
+  - DL3006
+  - DL3008
+  - DL3013
+  - DL3047
