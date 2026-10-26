@@ -24,7 +24,6 @@ FROM zcalusic/debian-trixie
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       binutils \
        libyaml-0-2 \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /conf
