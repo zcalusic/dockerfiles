@@ -9,7 +9,6 @@ RUN apt-get update \
        git \
        libc6-dev \
        libssl-dev \
-       libtool \
        libyaml-dev \
        make \
     && MAKEFLAGS="-j $(nproc)" \
