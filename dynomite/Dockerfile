@@ -24,6 +24,7 @@ FROM zcalusic/debian-trixie
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+       libssl3t64 \
        libyaml-0-2 \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /conf
