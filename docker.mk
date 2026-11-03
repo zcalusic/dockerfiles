@@ -11,8 +11,7 @@
 #   GITHUB_REPO   owner/repo whose latest release tag is the current version,
 #                 read from the github.com redirect rather than the API, which
 #                 allows only 60 unauthenticated requests per hour
-#   VERSION_URL   or a URL that returns the current version as JSON ...
-#   VERSION_JQ    ... and the jq filter that extracts it
+#   VERSION_CMD   or a shell command that prints the current version
 #
 # A versioned image is tagged with its version, and also latest when that is
 # the current version. Build an older one with e.g. make BITCOIN_VERSION=v30.0.
@@ -40,14 +39,13 @@ ifdef VERSION_VAR
 
 ifdef GITHUB_REPO
 VERSION_URL := https://github.com/$(GITHUB_REPO)/releases/latest
-CURRENT_VERSION := $(strip $(shell wget -q --max-redirect=0 --server-response $(VERSION_URL) 2>&1 | sed -n 's|^ *Location: .*/releases/tag/||p'))
-else
-CURRENT_VERSION := $(strip $(shell wget -qO- $(VERSION_URL) | jq -r '$(VERSION_JQ) // empty'))
+VERSION_CMD := wget -q --max-redirect=0 --server-response $(VERSION_URL) 2>&1 | sed -n 's|^ *Location: .*/releases/tag/||p'
 endif
+CURRENT_VERSION := $(strip $(shell $(VERSION_CMD)))
 $(VERSION_VAR) ?= $(CURRENT_VERSION)
 
 ifeq ($($(VERSION_VAR)),)
-$(error Could not look up $(VERSION_VAR) from $(VERSION_URL), set it explicitly)
+$(error Could not look up $(VERSION_VAR), set it explicitly)
 endif
 
 DOCKER_TAG := $($(VERSION_VAR))
